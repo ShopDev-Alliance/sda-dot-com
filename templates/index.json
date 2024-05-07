@@ -6,25 +6,21 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Browse our latest products",
+            "heading": "<strong>WELCOME TO THE ALLIANCE<\/strong>",
             "heading_size": "h0"
           }
         },
-        "button": {
-          "type": "buttons",
+        "text_izC46V": {
+          "type": "text",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify:\/\/collections\/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "text": "<strong>A community of freelance Shopify developers.<\/strong>",
+            "text_style": "subtitle"
           }
         }
       },
       "block_order": [
         "heading",
-        "button"
+        "text_izC46V"
       ],
       "settings": {
         "image_overlay_opacity": 40,
