@@ -13,7 +13,7 @@
         "text_izC46V": {
           "type": "text",
           "settings": {
-            "text": "<strong>A community of freelance Shopify developers.<\/strong>",
+            "text": "<strong>A <\/strong>curated<strong> community of freelance Shopify developers.<\/strong>",
             "text_style": "subtitle"
           }
         }
