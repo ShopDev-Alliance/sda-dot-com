@@ -1,12 +1,11 @@
 {
   "current": {
-    "logo": "shopify:\/\/shop_images\/SDA-icon.jpg",
     "logo_width": 60,
     "favicon": "shopify:\/\/shop_images\/SDA-icon.jpg",
-    "type_header_font": "assistant_n4",
-    "heading_scale": 100,
-    "type_body_font": "titillium_web_n4",
-    "body_scale": 100,
+    "type_header_font": "titillium_web_n9",
+    "heading_scale": 140,
+    "type_body_font": "mono",
+    "body_scale": 110,
     "page_width": 1200,
     "spacing_sections": 0,
     "spacing_grid_horizontal": 8,
