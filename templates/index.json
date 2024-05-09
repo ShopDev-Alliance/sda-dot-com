@@ -129,19 +129,21 @@
         "column_97bPXL": {
           "type": "column",
           "settings": {
+            "image": "shopify:\/\/shop_images\/twitter-austriker27.jpg",
             "title": "David A. Lindahl",
-            "text": "<p>Part Shopify merchant, part Shopify developer. Shaken not stired. <br\/>SDA Cofounder.<\/p>",
-            "link_label": "His tweets",
+            "text": "<p>Part Shopify merchant, part Shopify developer. Shaken not stired. SDA Cofounder.<\/p>",
+            "link_label": "@austriker27",
             "link": "https:\/\/twitter.com\/austriker27"
           }
         },
         "column_GbYL7h": {
           "type": "column",
           "settings": {
+            "image": "shopify:\/\/shop_images\/twitter-taylor.jpg",
             "title": "Taylor Page",
             "text": "<p>One of the GOAT Shopify Freelance Developers & SDA Cofounder.<\/p>",
-            "link_label": "",
-            "link": ""
+            "link_label": "@TRPage_dev",
+            "link": "https:\/\/twitter.com\/TRPage_dev"
           }
         },
         "column_kgzUjj": {
@@ -172,9 +174,9 @@
       "settings": {
         "title": "Founding Members",
         "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "columns_desktop": 3,
+        "image_width": "third",
+        "image_ratio": "circle",
+        "columns_desktop": 4,
         "column_alignment": "left",
         "background_style": "primary",
         "button_label": "Button label",
