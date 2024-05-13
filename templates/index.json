@@ -41,14 +41,14 @@
         "heading_NDVKaW": {
           "type": "heading",
           "settings": {
-            "heading": "By Shopify Developers, For Shopify Developers",
+            "heading": "You may be building solo, but you don't have to do it alone.",
             "heading_size": "h2"
           }
         },
         "text_NJVPXR": {
           "type": "text",
           "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>"
+            "text": "<p>Just like you we are freelancers, freelancers battling scope creep, crazy expectations, and an evolving web development world - Running a freelance business is a lot.<\/p>"
           }
         },
         "button_KezFLm": {
@@ -75,6 +75,167 @@
         "full_width": true,
         "padding_top": 40,
         "padding_bottom": 52
+      }
+    },
+    "rich_text_cKHH6T": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_9UCrWx": {
+          "type": "heading",
+          "settings": {
+            "heading": "By Shopify Developers, For Shopify Developers",
+            "heading_size": "h2"
+          }
+        },
+        "text_DNTj8U": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Just like you we are freelancers, freelancers battling scope creep, crazy expectations, and an evolving web development world - Running a freelance business is a lot.<\/p>"
+          }
+        },
+        "button_CQUUqx": {
+          "type": "button",
+          "settings": {
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_9UCrWx",
+        "text_DNTj8U",
+        "button_CQUUqx"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "multirow_4fzUye": {
+      "type": "multirow",
+      "blocks": {
+        "row_Exrn6Q": {
+          "type": "row",
+          "settings": {
+            "caption": "Caption",
+            "heading": "",
+            "text": "<p>Pro Slack membership so we can maintain a searchable history of great content, not just the last 90 days.<\/p>",
+            "button_label": "Button label",
+            "button_link": ""
+          }
+        },
+        "row_HWTjFU": {
+          "type": "row",
+          "settings": {
+            "caption": "Caption",
+            "heading": "",
+            "text": "<p>High-quality engagement from other successful full time Freelance Shopify Developers.<\/p>",
+            "button_label": "Button label",
+            "button_link": ""
+          }
+        },
+        "row_NffeN3": {
+          "type": "row",
+          "settings": {
+            "caption": "Caption",
+            "heading": "Row",
+            "text": "<p>Moderators who enforce a code of conduct.<\/p>",
+            "button_label": "Button label",
+            "button_link": ""
+          }
+        },
+        "row_FTbgK6": {
+          "type": "row",
+          "settings": {
+            "caption": "Caption",
+            "heading": "Row",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "button_label": "Button label",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "row_Exrn6Q",
+        "row_HWTjFU",
+        "row_NffeN3",
+        "row_FTbgK6"
+      ],
+      "settings": {
+        "image_height": "medium",
+        "desktop_image_width": "medium",
+        "heading_size": "h1",
+        "text_style": "body",
+        "button_style": "secondary",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "image_layout": "alternate-left",
+        "section_color_scheme": "",
+        "row_color_scheme": "",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "multicolumn_ACKpiK": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_6YeePm": {
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pro Slack membership so we can maintain a searchable history of great content, not just the last 90 days.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_PyGLJh": {
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>High-quality engagement from other successful full time Freelance Shopify Developers.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_cVixbK": {
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_6YeePm",
+        "column_PyGLJh",
+        "column_cVixbK"
+      ],
+      "settings": {
+        "title": "The benefits:",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "button_label": "Button label",
+        "button_link": "",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "image_with_text_gHBR8B": {
@@ -240,6 +401,9 @@
   "order": [
     "image_banner",
     "rich_text_g6GfTU",
+    "rich_text_cKHH6T",
+    "multirow_4fzUye",
+    "multicolumn_ACKpiK",
     "image_with_text_gHBR8B",
     "multicolumn_WJJTA9",
     "image_banner_mVqgi4"
