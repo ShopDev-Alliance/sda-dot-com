@@ -191,8 +191,8 @@
         "column_6YeePm": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pro Slack membership so we can maintain a searchable history of great content, not just the last 90 days.<\/p>",
+            "title": "",
+            "text": "<p>Pro Slack membership so we can maintain a searchable history of great content, not just the last 90 days<\/p>",
             "link_label": "",
             "link": ""
           }
@@ -200,8 +200,8 @@
         "column_PyGLJh": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>High-quality engagement from other successful full time Freelance Shopify Developers.<\/p>",
+            "title": "",
+            "text": "<p>High-quality engagement from other successful full time Freelance Shopify Developers<\/p>",
             "link_label": "",
             "link": ""
           }
@@ -209,8 +209,44 @@
         "column_cVixbK": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "title": "",
+            "text": "<p>Job and project leads<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_Lk9MGD": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<p>Access to a growing library of resources<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_G9PgKT": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<p>Stay updated on Shopify product and code releases<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_GAmkVN": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<p>Ask for help on coding problems or client puzzles<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_JViXrL": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<p>A community full of members who can directly relate to you<\/p>",
             "link_label": "",
             "link": ""
           }
@@ -219,7 +255,11 @@
       "block_order": [
         "column_6YeePm",
         "column_PyGLJh",
-        "column_cVixbK"
+        "column_cVixbK",
+        "column_Lk9MGD",
+        "column_G9PgKT",
+        "column_GAmkVN",
+        "column_JViXrL"
       ],
       "settings": {
         "title": "The benefits:",
