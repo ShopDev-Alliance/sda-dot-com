@@ -8,8 +8,8 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "Welcome to the Alliance! 🚀",
-            "link": ""
+            "text": "Apply to the waitlist",
+            "link": "shopify:\/\/pages\/waitlist"
           }
         }
       },
