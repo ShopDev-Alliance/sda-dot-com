@@ -169,6 +169,7 @@
         "row_NffeN3",
         "row_FTbgK6"
       ],
+      "disabled": true,
       "settings": {
         "image_height": "medium",
         "desktop_image_width": "medium",
@@ -188,6 +189,15 @@
     "multicolumn_ACKpiK": {
       "type": "multicolumn",
       "blocks": {
+        "column_JViXrL": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<p>A community full of members who can directly relate to you<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
         "column_6YeePm": {
           "type": "column",
           "settings": {
@@ -210,7 +220,7 @@
           "type": "column",
           "settings": {
             "title": "",
-            "text": "<p>Job and project leads<\/p>",
+            "text": "<p>Leads on Shopify projects and jobs<\/p>",
             "link_label": "",
             "link": ""
           }
@@ -242,15 +252,6 @@
             "link": ""
           }
         },
-        "column_JViXrL": {
-          "type": "column",
-          "settings": {
-            "title": "",
-            "text": "<p>A community full of members who can directly relate to you<\/p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
         "column_hFKENw": {
           "type": "column",
           "settings": {
@@ -259,17 +260,28 @@
             "link_label": "",
             "link": ""
           }
+        },
+        "column_x6Dk6X": {
+          "type": "column",
+          "disabled": true,
+          "settings": {
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
         }
       },
       "block_order": [
+        "column_JViXrL",
         "column_6YeePm",
         "column_PyGLJh",
         "column_cVixbK",
         "column_Lk9MGD",
         "column_G9PgKT",
         "column_GAmkVN",
-        "column_JViXrL",
-        "column_hFKENw"
+        "column_hFKENw",
+        "column_x6Dk6X"
       ],
       "settings": {
         "title": "Why Join SDA?",
