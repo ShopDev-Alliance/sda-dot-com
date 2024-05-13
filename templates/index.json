@@ -250,6 +250,15 @@
             "link_label": "",
             "link": ""
           }
+        },
+        "column_hFKENw": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "<p>Moderators who enforce a code of conduct - no shilling allowed<\/p>",
+            "link_label": "",
+            "link": ""
+          }
         }
       },
       "block_order": [
@@ -259,17 +268,18 @@
         "column_Lk9MGD",
         "column_G9PgKT",
         "column_GAmkVN",
-        "column_JViXrL"
+        "column_JViXrL",
+        "column_hFKENw"
       ],
       "settings": {
-        "title": "The benefits:",
-        "heading_size": "h1",
+        "title": "Why Join SDA?",
+        "heading_size": "h2",
         "image_width": "full",
         "image_ratio": "adapt",
         "columns_desktop": 3,
-        "column_alignment": "left",
-        "background_style": "primary",
-        "button_label": "Button label",
+        "column_alignment": "center",
+        "background_style": "none",
+        "button_label": "",
         "button_link": "",
         "color_scheme": "",
         "columns_mobile": "1",
