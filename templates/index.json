@@ -149,14 +149,15 @@
         "column_kgzUjj": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "title": "Your Name Here",
+            "text": "<p>You could be a founding member of this amazing community! <\/p>",
+            "link_label": "Join the waitlist",
+            "link": "shopify:\/\/pages\/waitlist"
           }
         },
         "column_eJ9VN6": {
           "type": "column",
+          "disabled": true,
           "settings": {
             "title": "Column",
             "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
