@@ -195,24 +195,24 @@
         "heading_MaQLDK": {
           "type": "heading",
           "settings": {
-            "heading": "Image banner",
+            "heading": "LET THE REBELLION BEGIN",
             "heading_size": "h1"
           }
         },
         "text_LYijmz": {
           "type": "text",
           "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text": "We are building the most worthwhile community for Shopify Freelance Developers.",
             "text_style": "body"
           }
         },
         "buttons_xAiLzK": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "Apply to the alliance waitlist",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Button label",
+            "button_label_1": "Apply to the waitlist",
+            "button_link_1": "shopify:\/\/pages\/waitlist",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
             "button_link_2": "",
             "button_style_secondary_2": false
           }
