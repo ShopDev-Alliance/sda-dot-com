@@ -29,7 +29,8 @@
     "header": {
       "type": "header",
       "custom_css": [
-        ".header__icon--cart {display: none;}"
+        ".header__icon--cart {display: none;}",
+        ".header__search {display: none;}"
       ],
       "settings": {
         "logo_position": "middle-center",
