@@ -54,7 +54,7 @@
         "button_KezFLm": {
           "type": "button",
           "settings": {
-            "button_label": "Button label",
+            "button_label": "",
             "button_link": "",
             "button_style_secondary": false,
             "button_label_2": "",
@@ -90,13 +90,13 @@
         "text_DNTj8U": {
           "type": "text",
           "settings": {
-            "text": "<p>Just like you we are freelancers, freelancers battling scope creep, crazy expectations, and an evolving web development world - Running a freelance business is a lot.<\/p>"
+            "text": "<p>A community founded by two freelance Shopify developers who have been in your shoes.<\/p>"
           }
         },
         "button_CQUUqx": {
           "type": "button",
           "settings": {
-            "button_label": "Button label",
+            "button_label": "",
             "button_link": "",
             "button_style_secondary": false,
             "button_label_2": "",
@@ -331,6 +331,7 @@
         "text_UVVEtF",
         "button_9EbbMM"
       ],
+      "disabled": true,
       "settings": {
         "height": "adapt",
         "desktop_image_width": "medium",
