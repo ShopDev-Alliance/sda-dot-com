@@ -22,7 +22,6 @@
     assign show_mobile_slider = true
   endif
 -%}
-
 <div class="multicolumn color-{{ section.settings.color_scheme }} gradient{% unless section.settings.background_style == 'none' and settings.text_boxes_border_thickness > 0 or settings.text_boxes_shadow_opacity > 0 %} background-{{ section.settings.background_style }}{% endunless %}{% if section.settings.title == blank %} no-heading{% endif %}">
   <div
     class="page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
@@ -56,30 +55,29 @@
             endif
           endfor
         -%}
-        {%- for block in section.blocks -%}
+        {%- for metaobject in shop.metaobjects.members.values -%}
           {%- assign empty_column = '' -%}
-          {%- if block.settings.image == blank
+          {% comment %} {%- if block.settings.image == blank
             and block.settings.title == blank
             and block.settings.text == blank
             and block.settings.link_label == blank
           -%}
             {%- assign empty_column = ' multicolumn-list__item--empty' -%}
-          {%- endif -%}
+          {%- endif -%} {% endcomment %}
 
           <li
             id="Slide-{{ section.id }}-{{ forloop.index }}"
             class="multicolumn-list__item grid__item{% if section.settings.swipe_on_mobile %} slider__slide{% endif %}{% if section.settings.column_alignment == 'center' %} center{% endif %}{{ empty_column }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-            {{ block.shopify_attributes }}
             {% if settings.animations_reveal_on_scroll %}
               data-cascade
               style="--animation-order: {{ forloop.index }};"
             {% endif %}
           >
             <div class="multicolumn-card content-container">
-              {%- if block.settings.image != blank -%}
-                {% if section.settings.image_ratio == 'adapt' or section.settings.image_ratio == 'circle' %}
+              {%- if metaobject.profile_photo != blank -%}
+                {% comment %} {% if section.settings.image_ratio == 'adapt' or section.settings.image_ratio == 'circle' %} {% endcomment %}
                   {% assign spaced_image = true %}
-                {% endif %}
+                {% comment %} {% endif %} {% endcomment %}
                 <div class="multicolumn-card__image-wrapper multicolumn-card__image-wrapper--{{ section.settings.image_width }}-width{% if section.settings.image_width != 'full' or spaced_image %} multicolumn-card-spacing{% endif %}">
                   <div
                     class="media media--transparent media--{{ section.settings.image_ratio }}"
@@ -108,7 +106,7 @@
                       calc((100vw - {{ grid_space_mobile }}) * {{ image_width }} / {{ number_of_columns_mobile }})
                     {% endcapture %}
                     {{
-                      block.settings.image
+                      metaobject.profile_photo.value
                       | image_url: width: 3200
                       | image_tag:
                         widths: '50, 75, 100, 150, 200, 300, 400, 500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3200',
@@ -119,13 +117,13 @@
                 </div>
               {%- endif -%}
               <div class="multicolumn-card__info">
-                {%- if block.settings.title != blank -%}
-                  <h3 class="inline-richtext">{{ block.settings.title }}</h3>
+                {%- if metaobject.name != blank -%}
+                  <h3 class="inline-richtext">{{ metaobject.name.value }}</h3>
                 {%- endif -%}
-                {%- if block.settings.text != blank -%}
-                  <div class="rte">{{ block.settings.text }}</div>
+                {%- if metaobject.description != blank -%}
+                  <div class="rte">{{ metaobject.description | metafield_tag }}</div>
                 {%- endif -%}
-                {%- if block.settings.link_label != blank -%}
+                {% comment %} {%- if block.settings.link_label != blank -%}
                   <a
                     class="link animate-arrow"
                     {% if block.settings.link == blank %}
@@ -137,7 +135,7 @@
                     {{- block.settings.link_label | escape -}}
                     <span class="icon-wrap">&nbsp;{% render 'icon-arrow' %}</span></a
                   >
-                {%- endif -%}
+                {%- endif -%} {% endcomment %}
               </div>
             </div>
           </li>
