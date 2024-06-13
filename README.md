@@ -2,7 +2,7 @@
 shopdev-alliance.myshopify.com 
 
 ## Preview URL
-https://shopdev-alliance.myshopify.com/?preview_theme_id=[THEME_ID]
+https://shopdev-alliance.myshopify.com/?preview_theme_id=141122470129
 
 ## Requirements  
 It is recommended for this project to use Shopify CLI 
