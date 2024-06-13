@@ -120,8 +120,8 @@
                 {%- if metaobject.name != blank -%}
                   <h3 class="inline-richtext">{{ metaobject.name.value }}</h3>
                 {%- endif -%}
-                {%- if metaobject.description != blank -%}
-                  <div class="rte">{{ metaobject.description | metafield_tag }}</div>
+                {%- if metaobject.tagline != blank -%}
+                  <div class="rte">{{ metaobject.tagline.value }}</div>
                 {%- endif -%}
                 {% comment %} {%- if block.settings.link_label != blank -%}
                   <a
