@@ -512,15 +512,6 @@
         "padding_bottom": 36
       }
     },
-    "custom_liquid_9dRpnY": {
-      "type": "custom-liquid",
-      "settings": {
-        "custom_liquid": "",
-        "color_scheme": "",
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
     "image_banner_mVqgi4": {
       "type": "image-banner",
       "blocks": {
@@ -579,7 +570,6 @@
     "members_metaobjects_TRHyJk",
     "members_metaobjects_4rJ8DF",
     "multicolumn_WJJTA9",
-    "custom_liquid_9dRpnY",
     "image_banner_mVqgi4"
   ]
 }
