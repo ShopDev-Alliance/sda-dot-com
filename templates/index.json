@@ -350,32 +350,6 @@
     },
     "members_metaobjects_TRHyJk": {
       "type": "members-metaobjects",
-      "blocks": {
-        "member_BqNqbA": {
-          "type": "member",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/twitter-austriker27.jpg",
-            "title": "David Lindahl",
-            "text": "<p>Part Shopify merchant, part Shopify developer. Shaken not stired. SDA Cofounder.<\/p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "member_kctjLP": {
-          "type": "member",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/twitter-taylor.jpg",
-            "title": "Taylor Page",
-            "text": "<p>One of the GOAT Shopify Freelance Developers & SDA Cofounder.<\/p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "member_BqNqbA",
-        "member_kctjLP"
-      ],
       "settings": {
         "title": "Founders",
         "heading_size": "h1",
@@ -385,59 +359,6 @@
         "column_alignment": "left",
         "background_style": "primary",
         "button_label": "",
-        "button_link": "",
-        "color_scheme": "",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "members_metaobjects_4rJ8DF": {
-      "type": "members-metaobjects",
-      "blocks": {
-        "member_zxXqRL": {
-          "type": "member",
-          "settings": {
-            "title": "Member Name",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "member_VCMYVq": {
-          "type": "member",
-          "settings": {
-            "title": "Member Name",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "member_FrXkTF": {
-          "type": "member",
-          "settings": {
-            "title": "Member Name",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "member_zxXqRL",
-        "member_VCMYVq",
-        "member_FrXkTF"
-      ],
-      "settings": {
-        "title": "Members",
-        "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "columns_desktop": 3,
-        "column_alignment": "left",
-        "background_style": "primary",
-        "button_label": "Button label",
         "button_link": "",
         "color_scheme": "",
         "columns_mobile": "1",
@@ -568,7 +489,6 @@
     "multicolumn_ACKpiK",
     "image_with_text_gHBR8B",
     "members_metaobjects_TRHyJk",
-    "members_metaobjects_4rJ8DF",
     "multicolumn_WJJTA9",
     "image_banner_mVqgi4"
   ]
