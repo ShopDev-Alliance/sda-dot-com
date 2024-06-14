@@ -409,8 +409,8 @@
           "settings": {
             "image": "shopify:\/\/shop_images\/twitter-taylor.jpg",
             "title": "Taylor Page",
-            "text": "",
-            "link_label": "",
+            "text": "<p>One of the GOAT Shopify Freelance Developers & SDA Cofounder.<\/p>",
+            "link_label": "@TRPage_dev",
             "link": "https:\/\/twitter.com\/TRPage_dev"
           }
         },
