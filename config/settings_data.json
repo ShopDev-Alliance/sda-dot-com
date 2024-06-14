@@ -161,12 +161,12 @@
       "scheme-3": {
         "settings": {
           "background": "#0e1220",
-          "background_gradient": "radial-gradient(rgba(255, 154, 98, 1), rgba(255, 204, 75, 1) 100%)",
-          "text": "#f7f9fc",
-          "button": "#f7f9fc",
-          "button_label": "#0e1220",
+          "background_gradient": "linear-gradient(191.74deg, #FB8A5E -3.09%, #B94356 35.46%, #6F4460 64.37%, #173C5F 93.28%)",
+          "text": "#0e1220",
+          "button": "#0e1220",
+          "button_label": "#f7f9fc",
           "secondary_button_label": "#f7f9fc",
-          "shadow": "#e5414d"
+          "shadow": "rgba(0,0,0,0)"
         }
       },
       "scheme-4": {

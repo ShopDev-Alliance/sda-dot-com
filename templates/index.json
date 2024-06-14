@@ -1,5 +1,48 @@
 {
   "sections": {
+    "rich_text_a9KGWB": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_zFbR9U": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>WELCOME TO THE ALLIANCE<\/strong>",
+            "heading_size": "hxl"
+          }
+        },
+        "text_QdzPai": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>A curated community of freelance Shopify developers.<\/strong><\/p>"
+          }
+        },
+        "button_Pm48am": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button_label": "Apply to the waitlist",
+            "button_link": "shopify:\/\/pages\/waitlist",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_zFbR9U",
+        "text_QdzPai",
+        "button_Pm48am"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "image_banner": {
       "type": "image-banner",
       "blocks": {
@@ -22,8 +65,8 @@
         "heading",
         "text_izC46V"
       ],
+      "disabled": true,
       "settings": {
-        "image": "shopify:\/\/shop_images\/SDA-icon.jpg",
         "image_overlay_opacity": 60,
         "image_height": "small",
         "desktop_content_position": "middle-center",
@@ -468,21 +511,65 @@
         "text_LYijmz",
         "buttons_xAiLzK"
       ],
+      "disabled": true,
       "settings": {
         "image_overlay_opacity": 0,
         "image_height": "medium",
         "desktop_content_position": "middle-center",
         "show_text_box": true,
         "desktop_content_alignment": "center",
-        "color_scheme": "",
+        "color_scheme": "scheme-3",
         "image_behavior": "none",
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": true,
         "show_text_below": true
       }
+    },
+    "rich_text_GwcEP3": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_j3jaKQ": {
+          "type": "heading",
+          "settings": {
+            "heading": "LET THE REBELLION BEGIN",
+            "heading_size": "h1"
+          }
+        },
+        "text_WAN6QR": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We are building the most worthwhile community for Shopify Freelance Developers.<\/p>"
+          }
+        },
+        "button_NCiXXT": {
+          "type": "button",
+          "settings": {
+            "button_label": "Apply to the waitlist",
+            "button_link": "shopify:\/\/pages\/waitlist",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_j3jaKQ",
+        "text_WAN6QR",
+        "button_NCiXXT"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
+    "rich_text_a9KGWB",
     "image_banner",
     "rich_text_g6GfTU",
     "rich_text_cKHH6T",
@@ -491,6 +578,7 @@
     "image_with_text_gHBR8B",
     "multicolumn_WJJTA9",
     "members_metaobjects_TRHyJk",
-    "image_banner_mVqgi4"
+    "image_banner_mVqgi4",
+    "rich_text_GwcEP3"
   ]
 }
