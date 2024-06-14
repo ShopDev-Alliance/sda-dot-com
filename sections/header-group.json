@@ -30,7 +30,8 @@
       "type": "header",
       "custom_css": [
         ".header__icon--cart {display: none;}",
-        ".header__search {display: none;}"
+        ".header__search {display: none;}",
+        ".header__heading-link {text-transform: uppercase;}"
       ],
       "settings": {
         "logo_position": "middle-center",
