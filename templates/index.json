@@ -399,9 +399,9 @@
           "settings": {
             "image": "shopify:\/\/shop_images\/twitter-austriker27.jpg",
             "title": "David A. Lindahl",
-            "text": "<p>Part Shopify merchant, part Shopify developer. Shaken not stired. SDA Cofounder.<\/p>",
-            "link_label": "@austriker27",
-            "link": "https:\/\/twitter.com\/austriker27"
+            "text": "",
+            "link_label": "",
+            "link": ""
           }
         },
         "column_GbYL7h": {
@@ -409,8 +409,8 @@
           "settings": {
             "image": "shopify:\/\/shop_images\/twitter-taylor.jpg",
             "title": "Taylor Page",
-            "text": "<p>One of the GOAT Shopify Freelance Developers & SDA Cofounder.<\/p>",
-            "link_label": "@TRPage_dev",
+            "text": "",
+            "link_label": "",
             "link": "https:\/\/twitter.com\/TRPage_dev"
           }
         },
