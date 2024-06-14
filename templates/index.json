@@ -348,25 +348,6 @@
         "padding_bottom": 36
       }
     },
-    "members_metaobjects_TRHyJk": {
-      "type": "members-metaobjects",
-      "settings": {
-        "title": "Founders",
-        "heading_size": "h1",
-        "image_width": "third",
-        "image_ratio": "circle",
-        "columns_desktop": 3,
-        "column_alignment": "left",
-        "background_style": "primary",
-        "button_label": "",
-        "button_link": "",
-        "color_scheme": "scheme-1",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "multicolumn_WJJTA9": {
       "type": "multicolumn",
       "blocks": {
@@ -392,6 +373,7 @@
         },
         "column_kgzUjj": {
           "type": "column",
+          "disabled": true,
           "settings": {
             "title": "Your Name Here",
             "text": "<p>You could be a founding member of this amazing community! <\/p>",
@@ -417,18 +399,37 @@
         "column_eJ9VN6"
       ],
       "settings": {
-        "title": "Founding Members",
+        "title": "Founders",
         "heading_size": "h1",
         "image_width": "third",
         "image_ratio": "circle",
-        "columns_desktop": 4,
+        "columns_desktop": 2,
         "column_alignment": "left",
         "background_style": "primary",
-        "button_label": "Button label",
+        "button_label": "",
         "button_link": "",
         "color_scheme": "",
         "columns_mobile": "2",
         "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "members_metaobjects_TRHyJk": {
+      "type": "members-metaobjects",
+      "settings": {
+        "title": "Founding Members",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "circle",
+        "columns_desktop": 6,
+        "column_alignment": "left",
+        "background_style": "none",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "scheme-1",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -488,8 +489,8 @@
     "multirow_4fzUye",
     "multicolumn_ACKpiK",
     "image_with_text_gHBR8B",
-    "members_metaobjects_TRHyJk",
     "multicolumn_WJJTA9",
+    "members_metaobjects_TRHyJk",
     "image_banner_mVqgi4"
   ]
 }
