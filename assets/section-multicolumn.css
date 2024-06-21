@@ -231,3 +231,9 @@
     display: list-item;
   }
 }
+
+/* # Custom  */
+/* ## Members Metaobjects */
+.multicolumn-list--members {
+  justify-content: center;
+}
