@@ -1,3 +1,12 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "current": {
     "logo_width": 60,
@@ -161,7 +170,7 @@
       "scheme-3": {
         "settings": {
           "background": "#0e1220",
-          "background_gradient": "linear-gradient(191.74deg, #FB8A5E -3.09%, #B94356 35.46%, #6F4460 64.37%, #173C5F 93.28%)",
+          "background_gradient": "linear-gradient(191.74deg, rgba(251, 138, 94, 1) 3.09%, rgba(185, 67, 86, 1) 35.46%, rgba(111, 68, 96, 1) 64.37%, rgba(23, 60, 95, 1) 93.28%)",
           "text": "#0e1220",
           "button": "#0e1220",
           "button_label": "#f7f9fc",
