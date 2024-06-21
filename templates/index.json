@@ -1,3 +1,12 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "sections": {
     "rich_text_a9KGWB": {
@@ -465,8 +474,8 @@
         "heading_size": "h1",
         "image_width": "full",
         "image_ratio": "circle",
-        "columns_desktop": 6,
-        "column_alignment": "left",
+        "columns_desktop": 5,
+        "column_alignment": "center",
         "background_style": "none",
         "button_label": "",
         "button_link": "",
