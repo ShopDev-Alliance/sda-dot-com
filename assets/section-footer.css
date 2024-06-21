@@ -457,7 +457,8 @@
   display: inline;
 }
 
-.policies li {
+.policies li,
+.coc-info li {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -507,4 +508,9 @@
       padding-left: 3rem;
     }
   }
+}
+ /* # Custom  */
+ .coc-info li:not(:last-of-type)::after {
+  content: ' | ';
+  padding: 0 0.8rem;
 }
