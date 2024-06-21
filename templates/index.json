@@ -88,6 +88,48 @@
         "show_text_below": false
       }
     },
+    "rich_text_enUFz6": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_4qBFBN": {
+          "type": "heading",
+          "settings": {
+            "heading": "ShopDev Alliance is a paid Slack community for freelance Shopify developers.",
+            "heading_size": "h2"
+          }
+        },
+        "text_qriGQU": {
+          "type": "text",
+          "settings": {
+            "text": ""
+          }
+        },
+        "button_8ULaUy": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_4qBFBN",
+        "text_qriGQU",
+        "button_8ULaUy"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "rich_text_g6GfTU": {
       "type": "rich-text",
       "blocks": {
@@ -101,7 +143,7 @@
         "text_NJVPXR": {
           "type": "text",
           "settings": {
-            "text": "<p>Just like you we are freelancers, freelancers battling scope creep, crazy expectations, and an evolving web development world - Running a freelance business is a lot.<\/p>"
+            "text": "<p>Just like you we are freelancers, freelancers battling scope creep, crazy expectations, and an evolving web development world - Running a freelance business is a lot. That's why we started this community.<\/p>"
           }
         },
         "button_KezFLm": {
@@ -143,7 +185,7 @@
         "text_DNTj8U": {
           "type": "text",
           "settings": {
-            "text": "<p>A community founded by two freelance Shopify developers who have been in your shoes.<\/p>"
+            "text": "<p>A paid and private community founded by two freelance Shopify developers who have been in your shoes.<\/p>"
           }
         },
         "button_CQUUqx": {
@@ -534,6 +576,60 @@
         "show_text_below": true
       }
     },
+    "slideshow_cnQD3K": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_kwemU8": {
+          "type": "slide",
+          "settings": {
+            "heading": "\"This is the greatest thing\"",
+            "heading_size": "h1",
+            "subheading": "- SDA Member",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_dEHkKV": {
+          "type": "slide",
+          "settings": {
+            "heading": "\"The first thing I check each day!\"",
+            "heading_size": "h1",
+            "subheading": "- Another SDA member",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "",
+            "text_alignment_mobile": "center"
+          }
+        }
+      },
+      "block_order": [
+        "slide_kwemU8",
+        "slide_dEHkKV"
+      ],
+      "disabled": true,
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "small",
+        "slider_visual": "dots",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": false,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
     "rich_text_GwcEP3": {
       "type": "rich-text",
       "blocks": {
@@ -580,6 +676,7 @@
   "order": [
     "rich_text_a9KGWB",
     "image_banner",
+    "rich_text_enUFz6",
     "rich_text_g6GfTU",
     "rich_text_cKHH6T",
     "multirow_4fzUye",
@@ -588,6 +685,7 @@
     "multicolumn_WJJTA9",
     "members_metaobjects_TRHyJk",
     "image_banner_mVqgi4",
+    "slideshow_cnQD3K",
     "rich_text_GwcEP3"
   ]
 }
