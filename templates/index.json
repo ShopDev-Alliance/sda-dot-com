@@ -585,8 +585,8 @@
         "slide_kwemU8": {
           "type": "slide",
           "settings": {
-            "heading": "\"This is the greatest thing\"",
-            "heading_size": "h1",
+            "heading": "\"Honestly this thread alone is probably worth the price of my subscription, as I'm currently thinking about the most promising vectors for achieving stability of inbound leads. Appreciating all the veteran insights.\"",
+            "heading_size": "h2",
             "subheading": "- SDA Member",
             "button_label": "",
             "link": "",
@@ -602,7 +602,7 @@
         "slide_dEHkKV": {
           "type": "slide",
           "settings": {
-            "heading": "\"The first thing I check each day!\"",
+            "heading": "this is more valuable than most things I've attended in the past",
             "heading_size": "h1",
             "subheading": "- Another SDA member",
             "button_label": "",
@@ -630,7 +630,103 @@
         "change_slides_speed": 5,
         "image_behavior": "none",
         "show_text_below": false,
-        "accessibility_info": "Slideshow about our brand"
+        "accessibility_info": "testimonials from members"
+      }
+    },
+    "rich_text_ddVDah": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_MrbaWw": {
+          "type": "heading",
+          "settings": {
+            "heading": "Pricing",
+            "heading_size": "h1"
+          }
+        },
+        "text_cFKhtU": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Your paid membership includes a Slack Pro account, access to a moderated Slack with an enforced <a href=\"\/pages\/code-of-conduct\" title=\"Code of Conduct\">Code of Conduct<\/a>, and much more.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_MrbaWw",
+        "text_cFKhtU"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 0
+      }
+    },
+    "multicolumn_VU3Ryb": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_n94z6L": {
+          "type": "column",
+          "settings": {
+            "title": "Monthly Membership",
+            "text": "<p>$30<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_DYYFig": {
+          "type": "column",
+          "settings": {
+            "title": "Annual Membership",
+            "text": "<p>$300<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_n94z6L",
+        "column_DYYFig"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "circle_border": false,
+        "image_ratio": "adapt",
+        "columns_desktop": 2,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "rich_text_gCV36H": {
+      "type": "rich-text",
+      "blocks": {
+        "text_qEqjLT": {
+          "type": "text",
+          "settings": {
+            "text": "<p><em>Our commitment to pricing. As a member of the ShopDev Alliance your membership cost stays the same while your membership is active. <\/em><\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_qEqjLT"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 52
       }
     },
     "rich_text_GwcEP3": {
@@ -689,6 +785,9 @@
     "members_metaobjects_TRHyJk",
     "image_banner_mVqgi4",
     "slideshow_cnQD3K",
+    "rich_text_ddVDah",
+    "multicolumn_VU3Ryb",
+    "rich_text_gCV36H",
     "rich_text_GwcEP3"
   ]
 }
