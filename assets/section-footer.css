@@ -509,6 +509,7 @@
     }
   }
 }
+
  /* # Custom  */
  .coc-info li:not(:last-of-type)::after {
   content: ' | ';
