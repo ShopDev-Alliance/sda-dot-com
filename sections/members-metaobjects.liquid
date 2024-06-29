@@ -40,6 +40,10 @@
   if section.settings.swipe_on_mobile and section.blocks.size > columns_mobile_int
     assign show_mobile_slider = true
   endif
+  assign img_classes = 'multi-column__image'
+  if section.settings.circle_border 
+    assign img_classes = img_classes | append: ' multi-column__image--circle'
+  endif
 -%}
 <div class="multicolumn color-{{ section.settings.color_scheme }} gradient{% unless section.settings.background_style == 'none' and settings.text_boxes_border_thickness > 0 or settings.text_boxes_shadow_opacity > 0 %} background-{{ section.settings.background_style }}{% endunless %}{% if section.settings.title == blank %} no-heading{% endif %}">
   <div
@@ -130,7 +134,7 @@
                         | image_tag:
                           widths: '50, 75, 100, 150, 200, 300, 400, 500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3200',
                           sizes: sizes,
-                          class: 'multicolumn-card__image'
+                          class: img_classes
                       }}
                     </div>
                   </div>
@@ -260,6 +264,13 @@
       ],
       "default": "full",
       "label": "t:sections.multicolumn.settings.image_width.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "circle_border",
+      "default": false,
+      "label": "Image shape is a circle with border",
+      "info": "If true, set the image ratio to 'square' in the next setting to avoid conflicts"
     },
     {
       "type": "select",

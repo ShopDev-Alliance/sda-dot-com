@@ -237,3 +237,7 @@
 .multicolumn-list--members {
   justify-content: center;
 }
+.multi-column__image--circle {
+  border-radius: 50%;
+  border: 3px solid white;
+}
