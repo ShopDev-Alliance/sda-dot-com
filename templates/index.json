@@ -390,7 +390,7 @@
         "button_label": "",
         "button_link": "",
         "color_scheme": "scheme-1",
-        "columns_mobile": "2",
+        "columns_mobile": "1",
         "swipe_on_mobile": true,
         "padding_top": 36,
         "padding_bottom": 36
@@ -451,7 +451,7 @@
           "settings": {
             "image": "shopify:\/\/shop_images\/twitter-austriker27.jpg",
             "title": "David A. Lindahl",
-            "text": "<p>One part Shopify merchant, one part Shopify developer, and one part frontend girl dad. Shaken not stired. SDA Cofounder.<\/p>",
+            "text": "<p>One part Freelance Shopify Developer, one part Shopify merchant, and one part girl dad. Shaken not stired. SDA Cofounder.<\/p>",
             "link_label": "@austriker27",
             "link": "https:\/\/twitter.com\/austriker27"
           }
