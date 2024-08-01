@@ -3571,3 +3571,52 @@ details-disclosure > details {
 .text-center {
   text-align: center;
 }
+
+/* page-members section */
+.members-row--container {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  padding: 1rem;
+  max-width: 100%;
+  margin: 0 auto;
+  border-bottom: .1rem solid rgba(var(--color-foreground),.08);
+}
+.members-row--label {
+  grid-column: span 3;
+}
+.members-row--members {
+  grid-column: span 9;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.members-row--member {
+  padding: 1rem;
+  border-radius: 5px;
+  display: grid;
+  min-height: 200px;
+  width: 200px;
+  text-align: center;
+}
+.members-row--member img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  max-width: 125px;
+  max-height: 125px;
+}
+.members-row--member h3 {
+  margin-top: 0;
+}
+@media screen and (max-width: 749px) {
+  .members-row--container {
+    display: block;
+  }
+  .members-row--members {
+    justify-content: center;
+  }
+  .members-row--member {
+    width: 150px;
+  }
+}
