@@ -1,0 +1,54 @@
+<section class="page-members page-width">
+  <div class="members-row--container">
+    <h2 class="members-row--label">
+      {{ section.settings.member_role | capitalize }}
+    </h2>
+    <div class="members-row--members">
+      {%- for metaobject in shop.metaobjects.members.values -%}
+        {% if metaobject.role == section.settings.member_role %}
+          <a class="members-row--member" href="{{ metaobject.system.url }}">
+            <div class="members-row--member-image">
+              {{ metaobject.profile_photo.value | image_url: width: 300 | image_tag: widths: '200, 300, 400', sizes: '(max-width: 400px) 360px' }}
+            </div>
+            <h3>
+              {{ metaobject.name.value }}
+            </h3>
+          </a>
+        {% endif %}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Members",
+    "settings": [
+      {
+        "type": "select",
+        "id": "member_role",
+        "label": "Member Role",
+        "options": [
+          {
+            "value": "Founder",
+            "label": "Founder"
+          },
+          {
+            "value": "Founding Member",
+            "label": "Founding Member"
+          },
+          {
+            "value": "Member",
+            "label": "Member"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Members",
+        "settings": {}
+      }
+    ]
+  }
+{% endschema %}
