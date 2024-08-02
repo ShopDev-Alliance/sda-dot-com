@@ -28,11 +28,18 @@
       "settings": {
         "member_role": "Founding Member"
       }
+    },
+    "page_members_9TcyFc": {
+      "type": "page-members",
+      "settings": {
+        "member_role": "Member"
+      }
     }
   },
   "order": [
     "main",
     "page_members_feELtF",
-    "page_members_PVtw8d"
+    "page_members_PVtw8d",
+    "page_members_9TcyFc"
   ]
 }
