@@ -3,13 +3,15 @@
     <h2 class="members-row--label">
       {{ section.settings.member_role | capitalize }}
     </h2>
-    <div class="members-row--members">
+    <div class="members-row--members" data-member-type="{{ section.settings.member_role }}">
       {%- for metaobject in shop.metaobjects.members.values -%}
         {% if metaobject.role == section.settings.member_role %}
           <a class="members-row--member" href="{{ metaobject.system.url }}">
-            <div class="members-row--member-image">
-              {{ metaobject.profile_photo.value | image_url: width: 300 | image_tag: widths: '200, 300, 400', sizes: '(max-width: 400px) 360px' }}
-            </div>
+            {% if section.settings.hide_image != true and metaobject.profile_photo != null %}
+              <div class="members-row--member-image">
+                {{ metaobject.profile_photo.value | image_url: width: 300 | image_tag: widths: '200, 300, 400', sizes: '(max-width: 400px) 360px' }}
+              </div>
+            {% endif %}
             <h3>
               {{ metaobject.name.value }}
             </h3>
@@ -42,6 +44,11 @@
             "label": "Member"
           }
         ]
+      },
+      {
+        "type": "checkbox",
+        "id": "hide_image",
+        "label": "Hide Image"
       }
     ],
     "presets": [
