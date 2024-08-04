@@ -78,16 +78,10 @@
             endif
           endfor
         -%}
-        {%- for metaobject in shop.metaobjects.members.values -%}
-          {%- assign empty_column = '' -%}
-          {% comment %} {%- if block.settings.image == blank
-            and block.settings.title == blank
-            and block.settings.text == blank
-            and block.settings.link_label == blank
-          -%}
-            {%- assign empty_column = ' multicolumn-list__item--empty' -%}
-          {%- endif -%} {% endcomment %}
-          {% if metaobject.role == 'Founding Member' %}
+        {% paginate shop.metaobjects.members.values by 100 %}
+          {% assign founding_members = shop.metaobjects.members.values | where: "role", "Founding Member" %}
+          {%- for metaobject in founding_members -%}
+            {%- assign empty_column = '' -%}
             <li
               id="Slide-{{ section.id }}-{{ forloop.index }}"
               class="multicolumn-list__item grid__item{% if section.settings.swipe_on_mobile %} slider__slide{% endif %}{% if section.settings.column_alignment == 'center' %} center{% endif %}{{ empty_column }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
@@ -162,8 +156,8 @@
                 </div>
               </div>
             </li>
-          {% endif %}
-        {%- endfor -%}
+          {%- endfor -%}
+        {% endpaginate %}
       </ul>
 
       {%- if show_mobile_slider -%}

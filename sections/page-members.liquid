@@ -4,8 +4,9 @@
       {{ section.settings.member_role | capitalize }}
     </h2>
     <div class="members-row--members" data-member-type="{{ section.settings.member_role }}">
-      {%- for metaobject in shop.metaobjects.members.values -%}
-        {% if metaobject.role == section.settings.member_role %}
+      {% paginate shop.metaobjects.members.values by 100 %}
+        {% assign member_type = shop.metaobjects.members.values | where: "role", section.settings.member_role %}
+        {%- for metaobject in member_type -%}
           <a class="members-row--member" href="{{ metaobject.system.url }}">
             {% if section.settings.hide_image != true and metaobject.profile_photo != null %}
               <div class="members-row--member-image">
@@ -16,8 +17,8 @@
               {{ metaobject.name.value }}
             </h3>
           </a>
-        {% endif %}
-      {%- endfor -%}
+        {%- endfor -%}
+      {% endpaginate %}
     </div>
   </div>
 </section>
