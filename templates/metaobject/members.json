@@ -1,68 +1,12 @@
-/*
-* ------------------------------------------------------------
-* IMPORTANT: The contents of this file are auto-generated.
-*
-* This file may be updated by the Shopify admin theme editor
-* or related systems. Please exercise caution as any changes
-* made to this file may be overwritten.
-* ------------------------------------------------------------
-*/
 {
   "sections": {
-    "custom_member_LMX7FK": {
+    "custom_member_LdEWQL": {
       "type": "custom-member",
       "settings": {
-      }
-    },
-    "image_with_text_YgzxHU": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_aPMGLJ": {
-          "type": "heading",
-          "settings": {
-            "heading": "Image with text",
-            "heading_size": "h1"
-          }
-        },
-        "text_UEbW4e": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "text_style": "body"
-          }
-        },
-        "button_jDWrtp": {
-          "type": "button",
-          "settings": {
-            "button_label": "Button label",
-            "button_link": "",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_aPMGLJ",
-        "text_UEbW4e",
-        "button_jDWrtp"
-      ],
-      "settings": {
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "image_first",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "content_layout": "no-overlap",
-        "section_color_scheme": "",
-        "color_scheme": "",
-        "image_behavior": "none",
-        "mobile_content_alignment": "left",
-        "padding_top": 36,
-        "padding_bottom": 36
       }
     }
   },
   "order": [
-    "custom_member_LMX7FK",
-    "image_with_text_YgzxHU"
+    "custom_member_LdEWQL"
   ]
 }

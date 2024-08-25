@@ -3,29 +3,90 @@
     <div class="profile-left">
       <div class="profile-left--container">
         <div class="profile-left--image">
-          {{ metaobject.profile_photo.value | image_url: width: 300 | image_tag: widths: '200, 300, 400', sizes: '(max-width: 400px) 360px' }}
+          {{ metaobject.profile_photo.value | image_url: width: 350 | image_tag: widths: '350, 500, 650', sizes: '(max-width: 650px) 350px' }}
         </div>
         <div class="profile-left--info">
-          <h2 class="profile-left--name">Name</h2>
-          <p class="profile-left--role">Role</p>
-          <p class="profile-left--tag">Tagline</p>
+          <h1 class="profile-left--name">{{ metaobject.name.value }}</h1>
+          <h2 class="profile-left--role h3">{{ metaobject.role.value }}</h2>
+          <p class="profile-left--tag">{{ metaobject.tagline.value }}</p>
+          <h3 class="h4">Working hours availability:</h3> 
+          <p class="profile-left--working_hours">{{ metaobject.working_hours.value }}</p>
         </div>
         <div class="profile-left--socials">
           <ul>
-            <li>website</li>
-            <li>twitter</li>
-            <li>linkedin</li>
-            <li>github</li>
-            <li>youtube</li>
+            <li><a href="{{ metaobject.website.value }}">Website</a></li>
+            <li><a href="{{ metaobject.twitter.value }}">Twitter</a></li>
+            <li><a href="{{ metaobject.linked_in.value }}">LinkedIn</a></li>
+            <li><a href="{{ metaobject.github.value }}">Github</a></li>
+            <li><a href="{{ metaobject.you_tube.value }}">YouTube</a></li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="profile-right"></div>
+    <div class="profile-right">
+      <div class="profile-right--bio">
+        <h2>About</h2>
+        {{ metaobject.description | metafield_tag | truncate: 300 }}
+      </div>
+      <h3>Services</h3>
+      <ul>
+        {% for service in metaobject.services.value %}
+          <li>{{ service }}</li>
+        {% endfor %}
+      </ul>
+      <h4>Portfolio References</h4>
+        {{ metaobject.portfolio_sites | metafield_tag }}
+      <h4>Shopify Services and Experience</h4>
+        {{ metaobject.additional_services | metafield_tag }}
+      <h3>Skills and Technologies</h3>
+      <ul>
+        {% for technology in metaobject.technologies.value %}
+          <li>{{ technology }}</li>
+        {% endfor %}
+      </ul>
+     
+    </div>
   </div>
 </section>
 <style>
-
+#profile-page .profile-container {
+  display: block;
+}
+#profile-page .profile-left h1,
+#profile-page .profile-left h2,
+#profile-page .profile-left h3,
+#profile-page .profile-left--working_hours {
+  margin: 0.5rem 0 0;
+}
+#profile-page .profile-left--image {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+}
+#profile-page .profile-left--image img {
+  border-radius: 50%;
+  border: 3px solid white;
+}
+#profile-page a:visited {
+  color: #FB8A5E;
+}
+@media screen and (min-width: 768px) {
+  #profile-page .profile-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 1rem;
+  }
+  #profile-page .profile-left {
+    grid-column: span 5;
+  }
+  #profile-page .profile-right {
+    grid-column: span 7;
+  }
+  #profile-page .profile-left--container {
+    position: sticky;
+    top: 1rem;
+  }
+}
 </style>
 
 {% schema %}
@@ -37,9 +98,6 @@
         "name": "Member profile",
         "settings": {}
       }
-    ],
-    "enabled_on": {
-      "templates": ["metaobject"]
-    }
+    ]
   }
 {% endschema %}
