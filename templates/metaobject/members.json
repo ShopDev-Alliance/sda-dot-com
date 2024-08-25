@@ -9,6 +9,11 @@
 */
 {
   "sections": {
+    "custom_member_LMX7FK": {
+      "type": "custom-member",
+      "settings": {
+      }
+    },
     "image_with_text_YgzxHU": {
       "type": "image-with-text",
       "blocks": {
@@ -57,6 +62,7 @@
     }
   },
   "order": [
+    "custom_member_LMX7FK",
     "image_with_text_YgzxHU"
   ]
 }
