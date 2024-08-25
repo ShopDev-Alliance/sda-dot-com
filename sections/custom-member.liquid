@@ -2,7 +2,9 @@
   <div class="profile-container">
     <div class="profile-left">
       <div class="profile-left--container">
-        <div class="profile-left--image"></div>
+        <div class="profile-left--image">
+          {{ metaobject.profile_photo.value | image_url: width: 300 | image_tag: widths: '200, 300, 400', sizes: '(max-width: 400px) 360px' }}
+        </div>
         <div class="profile-left--info">
           <h2 class="profile-left--name">Name</h2>
           <p class="profile-left--role">Role</p>
