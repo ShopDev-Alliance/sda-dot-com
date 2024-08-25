@@ -1,0 +1,43 @@
+<section id="profile-page" class="page-width">
+  <div class="profile-container">
+    <div class="profile-left">
+      <div class="profile-left--container">
+        <div class="profile-left--image"></div>
+        <div class="profile-left--info">
+          <h2 class="profile-left--name">Name</h2>
+          <p class="profile-left--role">Role</p>
+          <p class="profile-left--tag">Tagline</p>
+        </div>
+        <div class="profile-left--socials">
+          <ul>
+            <li>website</li>
+            <li>twitter</li>
+            <li>linkedin</li>
+            <li>github</li>
+            <li>youtube</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="profile-right"></div>
+  </div>
+</section>
+<style>
+
+</style>
+
+{% schema %}
+  {
+    "name": "Member Profile",
+    "settings": [],
+    "presets": [
+      {
+        "name": "Member profile",
+        "settings": {}
+      }
+    ],
+    "enabled_on": {
+      "templates": ["metaobject"]
+    }
+  }
+{% endschema %}
