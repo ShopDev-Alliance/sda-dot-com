@@ -1,0 +1,184 @@
+<section id="profile-page" class="page-width">
+  <div class="profile-container">
+    <div class="profile-left">
+      <div class="profile-left--container">
+        {% unless metaobject.profile_photo == blank %}
+          <div class="profile-left--image">
+            {{ metaobject.profile_photo.value | image_url: width: 350 | image_tag: widths: '350, 500, 650', sizes: '(max-width: 650px) 350px' }}
+          </div>
+        {% endunless %}
+        <div class="profile-left--info">
+          <h1 class="profile-left--name">{{ metaobject.name.value }}</h1>
+          <h2 class="profile-left--role h3">{{ metaobject.role.value }}</h2>
+          {% unless metaobject.tagline == blank %}
+            <p class="profile-left--tag">{{ metaobject.tagline.value }}</p>
+          {% endunless %}
+          {% unless metaobject.working_hours == blank %}
+            <h3 class="h4">Working hours availability:</h3> 
+            <p class="profile-left--working_hours">{{ metaobject.working_hours.value }}</p>
+          {% endunless %}
+        </div>
+        <div class="profile-left--socials">
+          <ul class="list-unstyled">
+            {% unless metaobject.website == blank %}
+              <li class="list-social__item">
+                <a class="link list-social__link" href="{{ metaobject.website.value }}">{% render 'icon-website' %}
+                  <span class="visually-hidden">Website</span>
+                </a>
+              </li>
+            {% endunless %}
+            {% unless metaobject.twitter == blank %}
+              <li class="list-social__item">
+                <a class="link list-social__link" href="{{ metaobject.twitter.value }}">{% render 'icon-twitter' %}
+                  <span class="visually-hidden">Twitter</span>
+                </a>
+              </li>
+            {% endunless %}
+            {% unless metaobject.linked_in == blank %}
+              <li class="list-social__item">
+                <a class="link list-social__link" href="{{ metaobject.linked_in.value }}">{% render 'icon-linkedin' %}
+                  <span class="visually-hidden">LinkedIn</span>
+                </a>
+              </li>
+            {% endunless %}
+            {% unless metaobject.github == blank %}
+              <li class="list-social__item">
+                <a class="link list-social__link" href="{{ metaobject.github.value }}">{% render 'icon-github' %}
+                  <span class="visually-hidden">Github</span>
+                </a>
+              </li>
+            {% endunless %}
+            {% unless metaobject.you_tube == blank %}
+              <li class="list-social__item">
+                <a class="link list-social__link" href="{{ metaobject.you_tube.value }}">{% render 'icon-youtube' %}
+                  <span class="visually-hidden">YouTube</span>
+                </a>
+              </li>
+            {% endunless %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="profile-right">
+      <div class="profile-right--bio">
+        <h2>About</h2>
+        {{ metaobject.description | metafield_tag }}
+      </div>
+      <h3>Services</h3>
+      <ul>
+        {% unless metaobject.services == blank %}
+          {% for service in metaobject.services.value %}
+            <li>{{ service }}</li>
+          {% endfor %}
+        {% endunless %}
+      </ul>
+      {% unless metaobject.technologies == blank %}
+        <h3>Skills and Technologies</h3>
+        <ul>
+          {% for technology in metaobject.technologies.value %}
+            <li>{{ technology }}</li>
+          {% endfor %}
+        </ul>
+      {% endunless %}
+      {% unless metaobject.additional_services == blank %}
+        <h4>Shopify Services and Experience</h4>
+        {{ metaobject.additional_services | metafield_tag }}
+      {% endunless %}
+      {% unless metaobject.portfolio_sites == blank %}
+        <h4>Portfolio References</h4>
+        {{ metaobject.portfolio_sites | metafield_tag }}
+      {% endunless %}
+      {% if metaobject.reviews != blank %}
+        <div class="profile-left--reviews">
+            <h3>Reviews</h3>
+            {% for review in metaobject.reviews.value %}
+              <div class="review">
+                {{ review.review_content | metafield_tag }}
+                <p class="reviewer-link"><a href="{{review.link.value }}" target="_blank">{{ review.reviewer.value }}</a></p>
+              </div>
+            {% endfor %}
+        </div>
+      {% endif %}
+      {% unless metaobject.other_links == blank %}
+        <h3>Other Projects</h3>
+        {{ metaobject.other_links | metafield_tag }}
+      {% endunless %}
+    </div>
+  </div>
+</section>
+<style>
+#profile-page .profile-container {
+  display: block;
+}
+#profile-page .profile-left h1,
+#profile-page .profile-left h2,
+#profile-page .profile-left h3,
+#profile-page .profile-left--working_hours {
+  margin: 0.5rem 0 0;
+}
+#profile-page .profile-left--socials ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+#profile-page .profile-left--image {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+}
+#profile-page .profile-left--image img {
+  border-radius: 50%;
+  border: 3px solid white;
+}
+#profile-page .profile-left--socials li:first-of-type a.list-social__link {
+  padding: 1.1rem 1.1rem 1.1rem 0;
+}
+#profile-page a,
+#profile-page a svg {
+  color: white;
+}
+#profile-page svg.icon-linkedin,
+#profile-page svg.icon-github{
+  fill: white;
+}
+#profile-page a:visited {
+  color: #FB8A5E;
+}
+#profile-page .profile-left--reviews p:not(.reviewer-link) {
+  font-style: italic;
+}
+#profile-page .profile-left--reviews .reviewer-link {
+  text-align: right;
+}
+@media screen and (min-width: 768px) {
+  #profile-page .profile-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 1rem;
+  }
+  #profile-page .profile-left {
+    grid-column: span 5;
+  }
+  #profile-page .profile-right {
+    grid-column: span 7;
+  }
+  #profile-page .profile-left--container {
+    position: sticky;
+    top: 1rem;
+  }
+}
+</style>
+
+{% schema %}
+  {
+    "name": "Member Profile",
+    "settings": [],
+    "presets": [
+      {
+        "name": "Member profile",
+        "settings": {}
+      }
+    ]
+  }
+{% endschema %}
