@@ -72,14 +72,6 @@
           {% endfor %}
         {% endunless %}
       </ul>
-      {% unless metaobject.portfolio_sites == blank %}
-        <h4>Portfolio References</h4>
-        {{ metaobject.portfolio_sites | metafield_tag }}
-      {% endunless %}
-      {% unless metaobject.additional_services == blank %}
-        <h4>Shopify Services and Experience</h4>
-        {{ metaobject.additional_services | metafield_tag }}
-      {% endunless %}
       {% unless metaobject.technologies == blank %}
         <h3>Skills and Technologies</h3>
         <ul>
@@ -88,10 +80,29 @@
           {% endfor %}
         </ul>
       {% endunless %}
+      {% unless metaobject.additional_services == blank %}
+        <h4>Shopify Services and Experience</h4>
+        {{ metaobject.additional_services | metafield_tag }}
+      {% endunless %}
+      {% unless metaobject.portfolio_sites == blank %}
+        <h4>Portfolio References</h4>
+        {{ metaobject.portfolio_sites | metafield_tag }}
+      {% endunless %}
+      {% if metaobject.reviews != blank %}
+        <div class="profile-left--reviews">
+            <h3>Reviews</h3>
+            {% for review in metaobject.reviews.value %}
+              <div class="review">
+                {{ review.review_content | metafield_tag }}
+                <p class="reviewer-link"><a href="{{review.link.value }}" target="_blank">{{ review.reviewer.value }}</a></p>
+              </div>
+            {% endfor %}
+        </div>
+      {% endif %}
       {% unless metaobject.other_links == blank %}
         <h3>Other Projects</h3>
         {{ metaobject.other_links | metafield_tag }}
-      {% endunless %}  
+      {% endunless %}
     </div>
   </div>
 </section>
@@ -133,6 +144,12 @@
 }
 #profile-page a:visited {
   color: #FB8A5E;
+}
+#profile-page .profile-left--reviews p:not(.reviewer-link) {
+  font-style: italic;
+}
+#profile-page .profile-left--reviews .reviewer-link {
+  text-align: right;
 }
 @media screen and (min-width: 768px) {
   #profile-page .profile-container {
