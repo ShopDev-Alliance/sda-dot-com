@@ -9,7 +9,6 @@
         {% endunless %}
         <div class="profile-left--info">
           <h1 class="profile-left--name">{{ metaobject.name.value }}</h1>
-          <h2 class="profile-left--role h3">{{ metaobject.role.value }}</h2>
           {% unless metaobject.tagline == blank %}
             <p class="profile-left--tag">{{ metaobject.tagline.value }}</p>
           {% endunless %}
@@ -112,15 +111,19 @@
 }
 #profile-page .profile-left h1,
 #profile-page .profile-left h2,
-#profile-page .profile-left h3,
-#profile-page .profile-left--working_hours {
+#profile-page .profile-left--working_hours,
+#profile-page .profile-left--tag {
   margin: 0.5rem 0 0;
+}
+#profile-page .profile-left h3 {
+  margin: 2rem 0 0;
 }
 #profile-page .profile-left--socials ul {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
+  margin-top: 1rem;
 }
 #profile-page .profile-left--image {
   display: flex;
