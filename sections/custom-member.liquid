@@ -2,23 +2,39 @@
   <div class="profile-container">
     <div class="profile-left">
       <div class="profile-left--container">
-        <div class="profile-left--image">
-          {{ metaobject.profile_photo.value | image_url: width: 350 | image_tag: widths: '350, 500, 650', sizes: '(max-width: 650px) 350px' }}
-        </div>
+        {% unless metaobject.profile_photo == blank %}
+          <div class="profile-left--image">
+            {{ metaobject.profile_photo.value | image_url: width: 350 | image_tag: widths: '350, 500, 650', sizes: '(max-width: 650px) 350px' }}
+          </div>
+        {% endunless %}
         <div class="profile-left--info">
           <h1 class="profile-left--name">{{ metaobject.name.value }}</h1>
           <h2 class="profile-left--role h3">{{ metaobject.role.value }}</h2>
-          <p class="profile-left--tag">{{ metaobject.tagline.value }}</p>
-          <h3 class="h4">Working hours availability:</h3> 
-          <p class="profile-left--working_hours">{{ metaobject.working_hours.value }}</p>
+          {% unless metaobject.tagline == blank %}
+            <p class="profile-left--tag">{{ metaobject.tagline.value }}</p>
+          {% endunless %}
+          {% unless metaobject.working_hours == blank %}
+            <h3 class="h4">Working hours availability:</h3> 
+            <p class="profile-left--working_hours">{{ metaobject.working_hours.value }}</p>
+          {% endunless %}
         </div>
         <div class="profile-left--socials">
           <ul>
-            <li><a href="{{ metaobject.website.value }}">Website</a></li>
-            <li><a href="{{ metaobject.twitter.value }}">Twitter</a></li>
-            <li><a href="{{ metaobject.linked_in.value }}">LinkedIn</a></li>
-            <li><a href="{{ metaobject.github.value }}">Github</a></li>
-            <li><a href="{{ metaobject.you_tube.value }}">YouTube</a></li>
+            {% unless metaobject.website == blank %}
+              <li><a href="{{ metaobject.website.value }}">Website</a></li>
+            {% endunless %}
+            {% unless metaobject.twitter == blank %}
+              <li><a href="{{ metaobject.twitter.value }}">Twitter</a></li>
+            {% endunless %}
+            {% unless metaobject.linked_in == blank %}
+              <li><a href="{{ metaobject.linked_in.value }}">LinkedIn</a></li>
+            {% endunless %}
+            {% unless metaobject.github == blank %}
+              <li><a href="{{ metaobject.github.value }}">Github</a></li>
+            {% endunless %}
+            {% unless metaobject.you_tube == blank %}
+              <li><a href="{{ metaobject.you_tube.value }}">YouTube</a></li>
+            {% endunless %}
           </ul>
         </div>
       </div>
@@ -26,25 +42,32 @@
     <div class="profile-right">
       <div class="profile-right--bio">
         <h2>About</h2>
-        {{ metaobject.description | metafield_tag | truncate: 300 }}
+        {{ metaobject.description | metafield_tag }}
       </div>
       <h3>Services</h3>
       <ul>
-        {% for service in metaobject.services.value %}
-          <li>{{ service }}</li>
-        {% endfor %}
+        {% unless metaobject.services == blank %}
+          {% for service in metaobject.services.value %}
+            <li>{{ service }}</li>
+          {% endfor %}
+        {% endunless %}
       </ul>
-      <h4>Portfolio References</h4>
+      {% unless metaobject.portfolio_sites == blank %}
+        <h4>Portfolio References</h4>
         {{ metaobject.portfolio_sites | metafield_tag }}
-      <h4>Shopify Services and Experience</h4>
+      {% endunless %}
+      {% unless metaobject.additional_services == blank %}
+        <h4>Shopify Services and Experience</h4>
         {{ metaobject.additional_services | metafield_tag }}
-      <h3>Skills and Technologies</h3>
-      <ul>
-        {% for technology in metaobject.technologies.value %}
-          <li>{{ technology }}</li>
-        {% endfor %}
-      </ul>
-     
+      {% endunless %}
+      {% unless metaobject.technologies == blank %}
+        <h3>Skills and Technologies</h3>
+        <ul>
+          {% for technology in metaobject.technologies.value %}
+            <li>{{ technology }}</li>
+          {% endfor %}
+        </ul>
+      {% endunless %}  
     </div>
   </div>
 </section>
@@ -66,6 +89,9 @@
 #profile-page .profile-left--image img {
   border-radius: 50%;
   border: 3px solid white;
+}
+#profile-page a {
+  color: white;
 }
 #profile-page a:visited {
   color: #FB8A5E;
