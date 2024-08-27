@@ -59,11 +59,23 @@
       </div>
     </div>
     <div class="profile-right">
-      <div class="profile-right--bio">
+      {% liquid
+        capture metaobject_description
+          echo metaobject.description | metafield_tag | strip_html
+        endcapture
+        assign long_description = false
+        if metaobject_description.size > 500
+          assign long_description = true
+        endif
+      %}
+      <div class="profile-right--bio{% if long_description %} long-description description--hidden{% endif %}">
         <h2>About</h2>
         {{ metaobject.description | metafield_tag }}
       </div>
+      <button class="js-show-more">Read more</button>
       <h3>Services</h3>
+        <p class="h4">{{ metaobject.primary_service.value }}</p>
+      <p>Other Services</p>
       <ul>
         {% unless metaobject.services == blank %}
           {% for service in metaobject.services.value %}
@@ -93,7 +105,11 @@
             {% for review in metaobject.reviews.value %}
               <div class="review">
                 {{ review.review_content | metafield_tag }}
-                <p class="reviewer-link"><a href="{{review.link.value }}" target="_blank">{{ review.reviewer.value }}</a></p>
+                <p class="reviewer-link">
+                  {% unless review.link == blank %}<a href="{{review.link.value }}" target="_blank">{% endunless %}
+                    {{ review.reviewer.value }}
+                  {% unless review.link == blank %}</a>{% endunless %}
+                </p>
               </div>
             {% endfor %}
         </div>
@@ -108,6 +124,7 @@
 <style>
 #profile-page .profile-container {
   display: block;
+  margin-bottom: 5rem;
 }
 #profile-page .profile-left h1,
 #profile-page .profile-left h2,
@@ -117,6 +134,9 @@
 }
 #profile-page .profile-left h3 {
   margin: 2rem 0 0;
+}
+#profile-page p.h4 {
+  color: rgba(var(--color-foreground), 0.75);
 }
 #profile-page .profile-left--socials ul {
   display: flex;
@@ -145,6 +165,41 @@
 #profile-page svg.icon-github{
   fill: white;
 }
+.description--hidden {
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(to bottom, white, transparent);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: all 0.3s ease-in;
+}
+.description--visible {
+  height: auto;
+  overflow: auto;
+  transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
+}
+.description--visible + button.js-show-more {
+  background: white;
+  color: rgb(var(--color-background));
+}
+button.js-show-more {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  background: none;
+  color: white;
+  font-family: var(--font-body-family);
+  font-size: 16px;
+  border: 1px solid white;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+}
+button.js-show-more:hover {
+  scale: 1.1;
+  transition: scale 0.3s ease-in;
+}
 #profile-page a:visited {
   color: #FB8A5E;
 }
@@ -153,6 +208,7 @@
 }
 #profile-page .profile-left--reviews .reviewer-link {
   text-align: right;
+  font-weight: bold;
 }
 @media screen and (min-width: 768px) {
   #profile-page .profile-container {
@@ -172,6 +228,41 @@
   }
 }
 </style>
+<script>
+  const Utils = {
+    addClass: function(element, theClass) {
+      element.classList.add(theClass);
+    },
+    removeClass: function(element, theClass) {
+      element.classList.remove(theClass);
+    },
+    showMore: function(element, excerpt) {
+      element.addEventListener("click", event => {
+        const linkText = event.target.textContent.toLowerCase();
+        event.preventDefault();
+        if (linkText == "read more") {
+          element.textContent = "Show less";
+          this.removeClass(excerpt, "description--hidden");
+          this.addClass(excerpt, "description--visible");
+        } else {
+          element.textContent = "Read more";
+          this.removeClass(excerpt, "description--visible");
+          this.addClass(excerpt, "description--hidden");
+        }
+      });
+    } 
+  };
+  const ExcerptWidget = {
+    showMore: function(showMoreButtonTarget, excerptTarget) {
+     const showMoreButton = document.querySelector(showMoreButtonTarget);
+     console.log(showMoreButton);
+     const longDescription = showMoreButton.previousElementSibling;
+     console.log(longDescription);
+     Utils.showMore(showMoreButton, longDescription);
+    }
+  };
+  ExcerptWidget.showMore('.js-show-more', '.long-description');
+</script>
 
 {% schema %}
   {
