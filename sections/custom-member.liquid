@@ -63,12 +63,15 @@
         capture metaobject_description
           echo metaobject.description | metafield_tag | strip_html
         endcapture
-        assign long_description = false
+        assign description_classes = 'profile-right--bio'
         if metaobject_description.size > 500
-          assign long_description = true
+          assign description_classes = description_classes | append: ' long-description description--hidden'
+        endif
+        if metaobject.description == blank
+          assign description_classes = description_classes | append: ' description--empty'
         endif
       %}
-      <div class="profile-right--bio{% if long_description %} long-description description--hidden{% endif %}">
+      <div class="{{ description_classes }}">
         <h2>About</h2>
         {{ metaobject.description | metafield_tag }}
       </div>
@@ -200,6 +203,10 @@ button.js-show-more:hover {
   scale: 1.1;
   transition: scale 0.3s ease-in;
 }
+.description--empty + button.js-show-more,
+.profile-right--bio:not(.long-description) + button.js-show-more {
+  display: none;
+}
 #profile-page a:visited {
   color: #FB8A5E;
 }
@@ -255,9 +262,8 @@ button.js-show-more:hover {
   const ExcerptWidget = {
     showMore: function(showMoreButtonTarget, excerptTarget) {
      const showMoreButton = document.querySelector(showMoreButtonTarget);
-     console.log(showMoreButton);
+     if (!showMoreButton) return;
      const longDescription = showMoreButton.previousElementSibling;
-     console.log(longDescription);
      Utils.showMore(showMoreButton, longDescription);
     }
   };
