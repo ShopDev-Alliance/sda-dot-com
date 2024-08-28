@@ -103,7 +103,7 @@
         {{ metaobject.portfolio_sites | metafield_tag }}
       {% endunless %}
       {% if metaobject.reviews != blank %}
-        <div class="profile-left--reviews">
+        <div class="profile-right--reviews">
             <h3>Reviews</h3>
             {% for review in metaobject.reviews.value %}
               <div class="review">
@@ -121,6 +121,16 @@
         <h3>Other Projects</h3>
         {{ metaobject.other_links | metafield_tag }}
       {% endunless %}
+      {% if metaobject.industry_experience != blank %}
+        <div class="profile-right--industries">
+          <h3>Industry Experience</h3>
+          <ul>
+            {% for industry in metaobject.industry_experience.value %}
+              <li>{{ industry }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
     </div>
   </div>
 </section>
@@ -210,10 +220,10 @@ button.js-show-more:hover {
 #profile-page a:visited {
   color: var(--sda-orange);
 }
-#profile-page .profile-left--reviews p:not(.reviewer-link) {
+#profile-page .profile-right--reviews p:not(.reviewer-link) {
   font-style: italic;
 }
-#profile-page .profile-left--reviews .reviewer-link {
+#profile-page .profile-right--reviews .reviewer-link {
   text-align: right;
   font-weight: bold;
 }
