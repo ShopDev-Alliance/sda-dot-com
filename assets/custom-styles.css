@@ -6,6 +6,9 @@ header.header.header--middle-center {
   display: flex;
   justify-content: center;
 }
+header.header--middle-center .header__heading-logo-wrapper {
+  margin-bottom: 1rem;
+}
 @media screen and (min-width: 780px) {
   header.header--middle-center h1 a.header__heading-link {
     display: inline-flex;
