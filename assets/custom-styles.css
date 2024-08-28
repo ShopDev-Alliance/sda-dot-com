@@ -2,6 +2,22 @@
 .text-center {
   text-align: center;
 }
+header.header.header--middle-center {
+  display: flex;
+  justify-content: center;
+}
+@media screen and (min-width: 780px) {
+  header.header--middle-center h1 a.header__heading-link {
+    display: inline-flex;
+    align-items: center;
+  }
+  header.header--middle-center .header__heading-logo-wrapper {
+    width: unset;
+  }
+  header.header--middle-center span.h3 {
+    margin-left: 1rem;
+  }
+}
 
 /* page-members section */
 body.for-hire .members-row--member:not(.open-for-hire) {
