@@ -7,7 +7,7 @@
       {% paginate shop.metaobjects.members.values by 100 %}
         {% assign member_type = shop.metaobjects.members.values | where: "role", section.settings.member_role %}
         {%- for metaobject in member_type -%}
-          <a class="members-row--member" href="{{ metaobject.system.url }}">
+          <a class="members-row--member{% if metaobject.open_to_work %} open-for-hire{% endif %}" href="{{ metaobject.system.url }}">
             {% if section.settings.hide_image != true and metaobject.profile_photo != null %}
               <div class="members-row--member-image">
                 {{ metaobject.profile_photo.value | image_url: width: 300 | image_tag: widths: '200, 300, 400', sizes: '(max-width: 400px) 360px' }}

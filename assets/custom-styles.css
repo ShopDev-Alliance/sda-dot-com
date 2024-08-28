@@ -4,6 +4,9 @@
 }
 
 /* page-members section */
+body.for-hire .members-row--member:not(.open-for-hire) {
+  display: none;
+}
 .members-row--container {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));

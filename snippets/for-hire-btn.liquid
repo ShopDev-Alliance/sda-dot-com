@@ -1,0 +1,85 @@
+<div id="ofw-container">
+  <span class="inner-btn-container">
+    <button id="openForWork" class="button button--primary">Open for work</button>
+    <span class="dot-notification">
+      <span class="dot-notification--animate"></span>
+      <span class="dot-notification--bubble"></span>
+    </span>
+  </span>
+</div>
+
+<script>
+  document.getElementById('openForWork').addEventListener('click', function() {
+    document.body.classList.toggle('for-hire');
+    if (document.body.classList.contains('for-hire')) {
+      document.getElementById('openForWork').textContent = 'Reset to all members';
+    } else {
+      document.getElementById('openForWork').textContent = 'Open for work';
+    }
+  });
+</script>
+
+<style>
+  #ofw-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+  #openForWork {
+    background-color: #f8f8f8;
+    border: 1px solid rgb(var(--color-background));
+    color: #333;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 10px 20px;
+    transition: background-color 0.3s, color 0.3s;
+    --buttons-border-offset: 0px;
+    font-family: var(--font-heading-family);
+  }
+  #openForWork:after {
+    box-shadow: none;
+  }
+  #openForWork:hover {
+    background-color: #333;
+    color: #f8f8f8;
+    transform: unset;
+  }
+  .inner-btn-container {
+    position: relative;
+    display: inline-flex;
+  }
+  .dot-notification {
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: -0.25rem;
+    margin-right: -0.25rem;
+  }
+  .dot-notification--animate {
+    opacity: 0.75;
+    background-color: var(--sda-orange);
+    border-radius: 50%;
+    animation: tw-ping 2s cubic-bezier(0,0,.2,1) infinite;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+  .dot-notification--bubble {
+    background-color: var(--sda-orange);;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    display: inline-flex;
+    position: relative;
+  }
+  @keyframes tw-ping {
+    75%, 100% {
+      transform: scale(3);
+      opacity: 0;
+    }
+  }
+
+</style>

@@ -216,6 +216,8 @@
         --variant-pills-shadow-horizontal-offset: {{ settings.variant_pills_shadow_horizontal_offset }}px;
         --variant-pills-shadow-vertical-offset: {{ settings.variant_pills_shadow_vertical_offset }}px;
         --variant-pills-shadow-blur-radius: {{ settings.variant_pills_shadow_blur }}px;
+
+        --sda-orange: #FB8A5E;
       }
 
       *,
@@ -357,5 +359,10 @@
     {%- if settings.predictive_search_enabled -%}
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+    {% if template.suffix == 'members' %}
+      {% render 'for-hire-btn' %}
+    {% endif %}
+
   </body>
 </html>
