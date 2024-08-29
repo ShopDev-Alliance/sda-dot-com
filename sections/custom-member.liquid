@@ -58,7 +58,7 @@
         </div>
         {% if metaobject.website != null %}
           <div class="profile-left--cta">
-            <a class="button button--secondary" href="{{ metaobject.website.value }}?utm_source=shopdev-alliance-profile">Contact</a>
+            <a class="button button--primary" href="{{ metaobject.website.value }}?utm_source=shopdev-alliance-profile">Contact</a>
           </div>
         {% endif %}
       </div>
@@ -180,7 +180,9 @@
   width: 80%;
   display: flex;
   margin: 1.5rem auto 0;
-  color: white;
+  color: rgb(var(--color-background));
+  font-family: var(--font-heading-family);
+  font-size: 2rem;
 }
 #profile-page a,
 #profile-page a svg {
