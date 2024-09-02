@@ -13,7 +13,7 @@
             <p class="profile-left--tag">{{ metaobject.tagline.value }}</p>
           {% endunless %}
           {% unless metaobject.working_hours == blank %}
-            <h3 class="h4">Working hours availability:</h3> 
+            <h3 class="h4">Working hours availability:</h3>
             <p class="profile-left--working_hours">{{ metaobject.working_hours.value }}</p>
           {% endunless %}
         </div>
@@ -75,7 +75,7 @@
         <h2>About</h2>
         {{ metaobject.description | metafield_tag }}
       </div>
-      <button class="js-show-more">Read more</button>
+      <button class="button button--primary js-show-more">Read more</button>
       <h3>Services</h3>
         <p class="h4">{{ metaobject.primary_service.value }}</p>
       <p>Other Services</p>
@@ -183,26 +183,6 @@
   overflow: auto;
   transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
 }
-.description--visible + button.js-show-more {
-  background: white;
-  color: rgb(var(--color-background));
-}
-button.js-show-more {
-  display: flex;
-  justify-content: center;
-  margin: 0 auto;
-  background: none;
-  color: white;
-  font-family: var(--font-body-family);
-  font-size: 16px;
-  border: 1px solid white;
-  padding: 0.75rem 1.5rem;
-  cursor: pointer;
-}
-button.js-show-more:hover {
-  scale: 1.1;
-  transition: scale 0.3s ease-in;
-}
 .description--empty + button.js-show-more,
 .profile-right--bio:not(.long-description) + button.js-show-more {
   display: none;
@@ -257,7 +237,7 @@ button.js-show-more:hover {
           this.addClass(excerpt, "description--hidden");
         }
       });
-    } 
+    }
   };
   const ExcerptWidget = {
     showMore: function(showMoreButtonTarget, excerptTarget) {
