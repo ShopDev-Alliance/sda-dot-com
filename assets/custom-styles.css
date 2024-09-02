@@ -18,9 +18,6 @@ header.header--middle-center .header__heading-logo-wrapper {
     width: unset;
     margin-bottom: 0;
   }
-  header.header--middle-center span.h3 {
-    margin-left: 1rem;
-  }
 }
 
 /* page-members section */
