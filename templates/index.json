@@ -519,7 +519,7 @@
         "image_width": "full",
         "circle_border": true,
         "image_ratio": "square",
-        "columns_desktop": 5,
+        "columns_desktop": 4,
         "column_alignment": "center",
         "background_style": "none",
         "button_label": "",
