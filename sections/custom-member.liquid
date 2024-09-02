@@ -12,6 +12,9 @@
           {% unless metaobject.tagline == blank %}
             <p class="profile-left--tag">{{ metaobject.tagline.value }}</p>
           {% endunless %}
+          {% unless metaobject.open_to_work == blank %}
+            {% render 'badge-dot', text: 'Open to work' %}
+          {% endunless %}
           {% unless metaobject.working_hours == blank %}
             <h3 class="h4">Working hours availability:</h3>
             <p class="profile-left--working_hours">{{ metaobject.working_hours.value }}</p>
