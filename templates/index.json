@@ -46,7 +46,8 @@
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
-        "color_scheme": "scheme-1",
+        "border_is_visible": false,
+        "color_scheme": "scheme-3",
         "full_width": true,
         "padding_top": 44,
         "padding_bottom": 44
@@ -124,6 +125,7 @@
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
+        "border_is_visible": false,
         "color_scheme": "scheme-1",
         "full_width": true,
         "padding_top": 48,
@@ -166,6 +168,7 @@
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
+        "border_is_visible": false,
         "color_scheme": "scheme-1",
         "full_width": true,
         "padding_top": 40,
@@ -208,6 +211,7 @@
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
+        "border_is_visible": false,
         "color_scheme": "scheme-1",
         "full_width": true,
         "padding_top": 40,
@@ -657,6 +661,7 @@
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
+        "border_is_visible": false,
         "color_scheme": "scheme-1",
         "full_width": true,
         "padding_top": 40,
@@ -723,6 +728,7 @@
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
+        "border_is_visible": false,
         "color_scheme": "scheme-1",
         "full_width": true,
         "padding_top": 12,
@@ -765,6 +771,7 @@
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
+        "border_is_visible": false,
         "color_scheme": "scheme-3",
         "full_width": true,
         "padding_top": 40,
