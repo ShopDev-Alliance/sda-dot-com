@@ -56,6 +56,11 @@
             {% endunless %}
           </ul>
         </div>
+        {% if metaobject.website != null %}
+          <div class="profile-left--cta">
+            <a class="button button--primary" href="{{ metaobject.website.value }}?utm_source=shopdev-alliance-profile">Contact</a>
+          </div>
+        {% endif %}
       </div>
     </div>
     <div class="profile-right">
@@ -76,9 +81,19 @@
         {{ metaobject.description | metafield_tag }}
       </div>
       <button class="button button--primary js-show-more">Read more</button>
+      {% unless metaobject.languages == blank %}
+        <h3 class="h4">Language Fluency</h3> 
+        <ul>
+          {% unless metaobject.languages == blank %}
+            {% for language in metaobject.languages.value %}
+              <li>{{ language }}</li>
+            {% endfor %}
+          {% endunless %}
+        </ul>
+      {% endunless %}
       <h3>Services</h3>
-        <p class="h4">{{ metaobject.primary_service.value }}</p>
-      <p>Other Services</p>
+        <p class="h4">Primary service: <span class="h4">{{ metaobject.primary_service.value }}</span></p>
+      <h4 class="subtle-header">Other Services</h4>
       <ul>
         {% unless metaobject.services == blank %}
           {% for service in metaobject.services.value %}
@@ -86,6 +101,11 @@
           {% endfor %}
         {% endunless %}
       </ul>
+      {% unless metaobject.additional_services == blank %}
+        <h4>Shopify Services and Experience</h4>
+        {{ metaobject.additional_services | metafield_tag }}
+      {% endunless %}
+
       {% unless metaobject.technologies == blank %}
         <h3>Skills and Technologies</h3>
         <ul>
@@ -94,16 +114,18 @@
           {% endfor %}
         </ul>
       {% endunless %}
-      {% unless metaobject.additional_services == blank %}
-        <h4>Shopify Services and Experience</h4>
-        {{ metaobject.additional_services | metafield_tag }}
+      {% unless metaobject.skills_and_technologies_additional_notes == blank %}
+        <h4>Skills and Technologies Notes</h4>
+        {{ metaobject.skills_and_technologies_additional_notes | metafield_tag }}
       {% endunless %}
+      
+      
       {% unless metaobject.portfolio_sites == blank %}
-        <h4>Portfolio References</h4>
+        <h3>Portfolio References</h3>
         {{ metaobject.portfolio_sites | metafield_tag }}
       {% endunless %}
       {% if metaobject.reviews != blank %}
-        <div class="profile-left--reviews">
+        <div class="profile-right--reviews">
             <h3>Reviews</h3>
             {% for review in metaobject.reviews.value %}
               <div class="review">
@@ -121,6 +143,16 @@
         <h3>Other Projects</h3>
         {{ metaobject.other_links | metafield_tag }}
       {% endunless %}
+      {% if metaobject.industry_experience != blank %}
+        <div class="profile-right--industries">
+          <h3>Industry Experience</h3>
+          <ul>
+            {% for industry in metaobject.industry_experience.value %}
+              <li>{{ industry }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
     </div>
   </div>
 </section>
@@ -138,7 +170,8 @@
 #profile-page .profile-left h3 {
   margin: 2rem 0 0;
 }
-#profile-page p.h4 {
+#profile-page p.h4,
+#profile-page .subtle-header {
   color: rgba(var(--color-foreground), 0.75);
 }
 #profile-page .profile-left--socials ul {
@@ -159,6 +192,15 @@
 }
 #profile-page .profile-left--socials li:first-of-type a.list-social__link {
   padding: 1.1rem 1.1rem 1.1rem 0;
+}
+#profile-page .profile-left--cta a,
+#profile-page .profile-left--cta a:visited {
+  width: 80%;
+  display: flex;
+  margin: 1.5rem auto 0;
+  color: rgb(var(--color-background));
+  font-family: var(--font-heading-family);
+  font-size: 2rem;
 }
 #profile-page a,
 #profile-page a svg {
@@ -190,10 +232,10 @@
 #profile-page a:visited {
   color: var(--sda-orange);
 }
-#profile-page .profile-left--reviews p:not(.reviewer-link) {
+#profile-page .profile-right--reviews p:not(.reviewer-link) {
   font-style: italic;
 }
-#profile-page .profile-left--reviews .reviewer-link {
+#profile-page .profile-right--reviews .reviewer-link {
   text-align: right;
   font-weight: bold;
 }
