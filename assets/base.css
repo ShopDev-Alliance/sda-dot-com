@@ -2938,6 +2938,10 @@ details-disclosure > details {
   position: relative;
 }
 
+.content-container--no-border {
+  border: none;
+}
+
 .content-container:after {
   content: '';
   position: absolute;
