@@ -80,9 +80,9 @@
         <h2>About</h2>
         {{ metaobject.description | metafield_tag }}
       </div>
-      <button class="button button--primary js-show-more">Read more</button>
+      <button class="js-show-more button button--secondary">Read more</button>
       {% unless metaobject.languages == blank %}
-        <h3 class="h4">Language Fluency</h3> 
+        <h3 class="h4">Language Fluency</h3>
         <ul>
           {% unless metaobject.languages == blank %}
             {% for language in metaobject.languages.value %}
@@ -118,8 +118,8 @@
         <h4>Skills and Technologies Notes</h4>
         {{ metaobject.skills_and_technologies_additional_notes | metafield_tag }}
       {% endunless %}
-      
-      
+
+
       {% unless metaobject.portfolio_sites == blank %}
         <h3>Portfolio References</h3>
         {{ metaobject.portfolio_sites | metafield_tag }}
@@ -167,6 +167,12 @@
 #profile-page .profile-left--tag {
   margin: 0.5rem 0 0;
 }
+
+#profile-page .profile-left--info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 #profile-page .profile-left h3 {
   margin: 2rem 0 0;
 }
@@ -195,9 +201,7 @@
 }
 #profile-page .profile-left--cta a,
 #profile-page .profile-left--cta a:visited {
-  width: 80%;
-  display: flex;
-  margin: 1.5rem auto 0;
+  display: inline-flex;
   color: rgb(var(--color-background));
   font-family: var(--font-heading-family);
   font-size: 2rem;
@@ -254,6 +258,9 @@
   #profile-page .profile-left--container {
     position: sticky;
     top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 }
 </style>
