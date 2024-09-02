@@ -103,3 +103,36 @@ body.for-hire .members-row--member:not(.open-for-hire) {
     width: 150px;
   }
 }
+/* avatar stack - in rich text blocks */
+.avatar-stack {
+  display: flex;
+  justify-content: center;
+  isolation: isolate;
+  overflow: hidden;
+  margin: 2rem auto;
+}
+.avatar-stack >*+* {
+  margin-left: -3rem;
+}
+.avatar-stack__avatar {
+  border-radius: 100%;
+  height: 60px;
+  width: 60px;
+  overflow: hidden;
+  border: 6px solid rgba(var(--color-foreground), 1);
+}
+
+.avatar-stack__avatar img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.avatar-stack__avatar--number {
+  z-index: 100;
+  color: rgba(var(--color-button-text), 1);
+  background: rgba(var(--color-background), 1);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
