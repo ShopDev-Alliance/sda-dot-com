@@ -81,9 +81,19 @@
         {{ metaobject.description | metafield_tag }}
       </div>
       <button class="js-show-more">Read more</button>
+      {% unless metaobject.languages == blank %}
+        <h3 class="h4">Language Fluency</h3> 
+        <ul>
+          {% unless metaobject.languages == blank %}
+            {% for language in metaobject.languages.value %}
+              <li>{{ language }}</li>
+            {% endfor %}
+          {% endunless %}
+        </ul>
+      {% endunless %}
       <h3>Services</h3>
-        <p class="h4">{{ metaobject.primary_service.value }}</p>
-      <p>Other Services</p>
+        <p class="h4">Primary service: <span class="h4">{{ metaobject.primary_service.value }}</span></p>
+      <h4 class="subtle-header">Other Services</h4>
       <ul>
         {% unless metaobject.services == blank %}
           {% for service in metaobject.services.value %}
@@ -91,6 +101,11 @@
           {% endfor %}
         {% endunless %}
       </ul>
+      {% unless metaobject.additional_services == blank %}
+        <h4>Shopify Services and Experience</h4>
+        {{ metaobject.additional_services | metafield_tag }}
+      {% endunless %}
+
       {% unless metaobject.technologies == blank %}
         <h3>Skills and Technologies</h3>
         <ul>
@@ -99,12 +114,14 @@
           {% endfor %}
         </ul>
       {% endunless %}
-      {% unless metaobject.additional_services == blank %}
-        <h4>Shopify Services and Experience</h4>
-        {{ metaobject.additional_services | metafield_tag }}
+      {% unless metaobject.skills_and_technologies_additional_notes == blank %}
+        <h4>Skills and Technologies Notes</h4>
+        {{ metaobject.skills_and_technologies_additional_notes | metafield_tag }}
       {% endunless %}
+      
+      
       {% unless metaobject.portfolio_sites == blank %}
-        <h4>Portfolio References</h4>
+        <h3>Portfolio References</h3>
         {{ metaobject.portfolio_sites | metafield_tag }}
       {% endunless %}
       {% if metaobject.reviews != blank %}
@@ -153,7 +170,8 @@
 #profile-page .profile-left h3 {
   margin: 2rem 0 0;
 }
-#profile-page p.h4 {
+#profile-page p.h4,
+#profile-page .subtle-header {
   color: rgba(var(--color-foreground), 0.75);
 }
 #profile-page .profile-left--socials ul {
