@@ -2959,6 +2959,7 @@ details-disclosure > details {
   left: 0;
   right: 0;
   border-radius: 0;
+  display: none;
 }
 
 @media screen and (max-width: 749px) {
