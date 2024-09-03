@@ -3,29 +3,36 @@
     <h2 class="members-row--label">
       {{ section.settings.member_role | capitalize }}
     </h2>
-    <div class="members-row--members" data-member-type="{{ section.settings.member_role }}">
+    <ul class="members-row--members list-unstyled" data-member-type="{{ section.settings.member_role }}">
       {% paginate shop.metaobjects.members.values by 100 %}
         {% assign member_type = shop.metaobjects.members.values | where: 'role', section.settings.member_role %}
         {%- for metaobject in member_type -%}
 
-          {% if metaobject.role != 'Member' %}
-            {% render 'card-member',
-              link: metaobject.system.url,
-              open_to_work: metaobject.open_to_work,
-              hide_image: section.settings.hide_image,
-              profile_photo: metaobject.profile_photo,
-              name: metaobject.name.value,
-              profile_photo: metaobject.profile_photo.value,
-              profile: metaobject.profile
-            %}
-          {% else %}
-            <h5>
-              {{ metaobject.name.value }}
-            </h5>
-          {% endif %}
+          <li class="members-row--member {% if metaobject.open_to_work %} open-for-hire{% endif %}">
+            {% if metaobject.role != 'Member' %}
+              {% render 'card-member',
+                link: metaobject.system.url,
+                hide_image: section.settings.hide_image,
+                profile_photo: metaobject.profile_photo,
+                name: metaobject.name.value,
+                profile_photo: metaobject.profile_photo.value,
+                profile: metaobject.profile
+              %}
+            {% else %}
+              {% if metaobject.profile %}
+                <a class="members-row__member-link h5" href="{{metaobject.system.url}}">
+                  {{ metaobject.name.value }}
+                </a>
+              {% else  %}
+                <h5 class="members-row__member h5">
+                  {{ metaobject.name.value }}
+                </h5>
+              {% endif %}
+            {% endif %}
+          </li>
         {%- endfor -%}
       {% endpaginate %}
-    </div>
+    </ul>
   </div>
 </section>
 

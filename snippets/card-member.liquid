@@ -5,7 +5,7 @@
   endif
 %}
 
-<{{ show_profile }} class="member-card{% if open_to_work %} open-for-hire{% endif %}"{% if profile %} href="{{ link }}"{% endif %}>
+<{{ show_profile }} class="member-card"{% if profile %} href="{{ link }}"{% endif %}>
   {% if hide_image != true and profile_photo != null %}
     <div class="member-card__image-wrapper">
       {{ profile_photo | image_url: width: 300 | image_tag: widths: '200, 300, 400', sizes: '(max-width: 400px) 360px' }}
