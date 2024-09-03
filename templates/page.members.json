@@ -34,7 +34,7 @@
       "type": "page-members",
       "settings": {
         "member_role": "Member",
-        "hide_image": false
+        "hide_image": true
       }
     }
   },
