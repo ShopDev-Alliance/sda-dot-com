@@ -1,0 +1,82 @@
+{% liquid
+  assign show_profile = 'div'
+  if profile
+    assign show_profile = 'a'
+  endif
+%}
+
+<{{ show_profile }} class="member-card{% if open_to_work %} open-for-hire{% endif %}"{% if profile %} href="{{ link }}"{% endif %}>
+  {% if hide_image != true and profile_photo != null %}
+    <div class="member-card__image-wrapper">
+      {{ profile_photo | image_url: width: 300 | image_tag: widths: '200, 300, 400', sizes: '(max-width: 400px) 360px' }}
+    </div>
+  {% endif %}
+  <h3 class="member-card__name h5">
+    {{ name }}
+  </h3>
+  {% if show_profile == 'a' %}
+  <span class="member-card__cta link">
+    View Profile
+  </span>
+  {% endif %}
+</{{ show_profile }}>
+
+<style>
+.member-card {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 200px;
+  text-align: center;
+  text-decoration: none;
+  align-items: center;
+  border-radius: var(--text-boxes-radius);
+  border: var(--text-boxes-border-width) solid rgba(var(--color-foreground), var(--text-boxes-border-opacity));
+  width: calc(33% - 0.5rem);
+}
+
+a.member-card:hover .member-card__cta, a.member-card:hover .member-card__name {
+  color: var(--sda-orange);
+  transition: color 0.25s ease-in;
+}
+.member-card__image-wrapper {
+  border: 4px solid rgba(var(--color-foreground), 1);
+  border-radius: 50%;
+  max-width: 125px;
+  max-height: 125px;
+  overflow: hidden;
+}
+a.member-card:hover .member-card__image-wrapper {
+  border-color: var(--sda-orange);
+  transition: border-color 0.25s ease-in;
+}
+.member-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.25s ease-in;
+}
+a.member-card:hover img {
+  scale: 1.1;
+}
+.member-card h3 {
+  margin: 0;
+}
+.member-cards[data-member-type="Member"] .member-card h3 {
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin: 0;
+}
+.member-card__cta {
+  display: inline-flex;
+  flex-grow: 1;
+  align-items: flex-end;
+  font-size: 1.1rem;
+}
+@media screen and (max-width: 749px) {
+  .member-card {
+    width: calc(50% - 0.5rem);
+  }
+}
+</style>

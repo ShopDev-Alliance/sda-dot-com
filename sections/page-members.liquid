@@ -5,24 +5,24 @@
     </h2>
     <div class="members-row--members" data-member-type="{{ section.settings.member_role }}">
       {% paginate shop.metaobjects.members.values by 100 %}
-        {% assign member_type = shop.metaobjects.members.values | where: "role", section.settings.member_role %}
+        {% assign member_type = shop.metaobjects.members.values | where: 'role', section.settings.member_role %}
         {%- for metaobject in member_type -%}
-          {% liquid
-            assign show_profile = 'div'
-            if metaobject.profile
-              assign show_profile = 'a'
-            endif
-          %}
-            <{{ show_profile }} class="members-row--member{% if metaobject.open_to_work %} open-for-hire{% endif %}"{% if metaobject.profile %} href="{{ metaobject.system.url }}"{% endif %}>
-              {% if section.settings.hide_image != true and metaobject.profile_photo != null %}
-                <div class="members-row--member-image">
-                  {{ metaobject.profile_photo.value | image_url: width: 300 | image_tag: widths: '200, 300, 400', sizes: '(max-width: 400px) 360px' }}
-                </div>
-              {% endif %}
-              <h3>
-                {{ metaobject.name.value }}
-              </h3>
-            </{{ show_profile }}>
+
+          {% if metaobject.role != 'Member' %}
+            {% render 'card-member',
+              link: metaobject.system.url,
+              open_to_work: metaobject.open_to_work,
+              hide_image: section.settings.hide_image,
+              profile_photo: metaobject.profile_photo,
+              name: metaobject.name.value,
+              profile_photo: metaobject.profile_photo.value,
+              profile: metaobject.profile
+            %}
+          {% else %}
+            <h5>
+              {{ metaobject.name.value }}
+            </h5>
+          {% endif %}
         {%- endfor -%}
       {% endpaginate %}
     </div>
@@ -30,39 +30,39 @@
 </section>
 
 {% schema %}
-  {
-    "name": "Members",
-    "settings": [
-      {
-        "type": "select",
-        "id": "member_role",
-        "label": "Member Role",
-        "options": [
-          {
-            "value": "Founder",
-            "label": "Founder"
-          },
-          {
-            "value": "Founding Member",
-            "label": "Founding Member"
-          },
-          {
-            "value": "Member",
-            "label": "Member"
-          }
-        ]
-      },
-      {
-        "type": "checkbox",
-        "id": "hide_image",
-        "label": "Hide Image"
-      }
-    ],
-    "presets": [
-      {
-        "name": "Members",
-        "settings": {}
-      }
-    ]
-  }
+{
+  "name": "Members",
+  "settings": [
+    {
+      "type": "select",
+      "id": "member_role",
+      "label": "Member Role",
+      "options": [
+        {
+          "value": "Founder",
+          "label": "Founder"
+        },
+        {
+          "value": "Founding Member",
+          "label": "Founding Member"
+        },
+        {
+          "value": "Member",
+          "label": "Member"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_image",
+      "label": "Hide Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Members",
+      "settings": {}
+    }
+  ]
+}
 {% endschema %}
