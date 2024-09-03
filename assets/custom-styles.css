@@ -114,6 +114,11 @@ a.member-card:hover img {
     width: calc(50% - 0.5rem);
   }
 }
+@media screen and (min-width: 750px) {
+  .member-card__cta {
+    display: none;
+  }
+}
 /* END - MEMBER PAGE SECTION */
 
 /* avatar stack - in rich text blocks */
