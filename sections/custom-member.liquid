@@ -12,8 +12,11 @@
           {% unless metaobject.tagline == blank %}
             <p class="profile-left--tag">{{ metaobject.tagline.value }}</p>
           {% endunless %}
+          {% unless metaobject.open_to_work == blank %}
+            {% render 'badge-dot', text: 'Open to work' %}
+          {% endunless %}
           {% unless metaobject.working_hours == blank %}
-            <h3 class="h4">Working hours availability:</h3> 
+            <h3 class="h4">Working hours availability:</h3>
             <p class="profile-left--working_hours">{{ metaobject.working_hours.value }}</p>
           {% endunless %}
         </div>
@@ -80,9 +83,9 @@
         <h2>About</h2>
         {{ metaobject.description | metafield_tag }}
       </div>
-      <button class="js-show-more">Read more</button>
+      <button class="js-show-more button button--secondary">Read more</button>
       {% unless metaobject.languages == blank %}
-        <h3 class="h4">Language Fluency</h3> 
+        <h3 class="h4">Language Fluency</h3>
         <ul>
           {% unless metaobject.languages == blank %}
             {% for language in metaobject.languages.value %}
@@ -118,8 +121,8 @@
         <h4>Skills and Technologies Notes</h4>
         {{ metaobject.skills_and_technologies_additional_notes | metafield_tag }}
       {% endunless %}
-      
-      
+
+
       {% unless metaobject.portfolio_sites == blank %}
         <h3>Portfolio References</h3>
         {{ metaobject.portfolio_sites | metafield_tag }}
@@ -167,6 +170,12 @@
 #profile-page .profile-left--tag {
   margin: 0.5rem 0 0;
 }
+
+#profile-page .profile-left--info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 #profile-page .profile-left h3 {
   margin: 2rem 0 0;
 }
@@ -188,16 +197,14 @@
 }
 #profile-page .profile-left--image img {
   border-radius: 50%;
-  border: 3px solid white;
+  border: 3px solid var(--sda-orange);
 }
 #profile-page .profile-left--socials li:first-of-type a.list-social__link {
   padding: 1.1rem 1.1rem 1.1rem 0;
 }
 #profile-page .profile-left--cta a,
 #profile-page .profile-left--cta a:visited {
-  width: 80%;
-  display: flex;
-  margin: 1.5rem auto 0;
+  display: inline-flex;
   color: rgb(var(--color-background));
   font-family: var(--font-heading-family);
   font-size: 2rem;
@@ -224,26 +231,6 @@
   height: auto;
   overflow: auto;
   transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
-}
-.description--visible + button.js-show-more {
-  background: white;
-  color: rgb(var(--color-background));
-}
-button.js-show-more {
-  display: flex;
-  justify-content: center;
-  margin: 0 auto;
-  background: none;
-  color: white;
-  font-family: var(--font-body-family);
-  font-size: 16px;
-  border: 1px solid white;
-  padding: 0.75rem 1.5rem;
-  cursor: pointer;
-}
-button.js-show-more:hover {
-  scale: 1.1;
-  transition: scale 0.3s ease-in;
 }
 .description--empty + button.js-show-more,
 .profile-right--bio:not(.long-description) + button.js-show-more {
@@ -274,6 +261,9 @@ button.js-show-more:hover {
   #profile-page .profile-left--container {
     position: sticky;
     top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 }
 </style>
@@ -299,7 +289,7 @@ button.js-show-more:hover {
           this.addClass(excerpt, "description--hidden");
         }
       });
-    } 
+    }
   };
   const ExcerptWidget = {
     showMore: function(showMoreButtonTarget, excerptTarget) {

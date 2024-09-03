@@ -15,7 +15,7 @@
 {%- endstyle -%}
 
 <div class="isolate{% unless section.settings.full_width %} page-width{% endunless %}">
-  <div class="rich-text content-container color-{{ section.settings.color_scheme }} gradient{% if section.settings.full_width %} rich-text--full-width content-container--full-width{% endif %} section-{{ section.id }}-padding">
+  <div class="rich-text content-container{% if section.settings.border_is_visible == false %} content-container--no-border {% endif %} color-{{ section.settings.color_scheme }} gradient{% if section.settings.full_width %} rich-text--full-width content-container--full-width{% endif %} section-{{ section.id }}-padding">
     <div class="rich-text__wrapper rich-text__wrapper--{{ section.settings.desktop_content_position }}{% if section.settings.full_width %} page-width{% endif %}">
       <div class="rich-text__blocks {{ section.settings.content_alignment }}">
         {%- for block in section.blocks -%}
@@ -87,10 +87,40 @@
                   </a>
                 {%- endif -%}
               </div>
+          {% when 'avatar-stack' %}
+            <ul
+              class="list-unstyled avatar-stack {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+              {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: 5;"
+            {% endif %}>
+              {% assign member_count_showing = 12 %}
+              {% paginate shop.metaobjects.members.values by 50 %}
+                {% assign founding_members = shop.metaobjects.members.values | where: "role", "Founding Member"  %}
+                {% for member in founding_members limit: member_count_showing %}
+                  {%- if member.profile_photo != blank -%}
+                    <li class="avatar-stack__avatar" style="z-index: {{ forloop.index }}">
+                      {{
+                        member.profile_photo.value
+                        | image_url: width: 80
+                        | image_tag:
+                          class: ''
+                      }}
+                    </li>
+                  {% endif %}
+                {% endfor %}
+                <li class="avatar-stack__avatar avatar-stack__avatar--number">
+                  <span>
+                    +{{ shop.metaobjects.members.values.count |  minus: member_count_showing }}
+                  </span>
+                </li>
+                {% endpaginate %}
+            </ul>
           {%- endcase -%}
         {%- endfor -%}
       </div>
     </div>
+
   </div>
 </div>
 
@@ -143,6 +173,12 @@
       ],
       "default": "center",
       "label": "t:sections.rich-text.settings.content_alignment.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "border_is_visible",
+      "default": false,
+      "label": "Turn container border on"
     },
     {
       "type": "color_scheme",
@@ -284,6 +320,11 @@
           "label": "t:sections.rich-text.blocks.text.settings.text.label"
         }
       ]
+    },
+    {
+      "type": "avatar-stack",
+      "name": "Avatar Stack",
+      "limit": 1
     },
     {
       "type": "button",

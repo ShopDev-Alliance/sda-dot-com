@@ -1,0 +1,55 @@
+<div class="badge-dot">
+  <span class="dot-notification">
+    <span class="dot-notification--animate"></span>
+    <span class="dot-notification--bubble"></span>
+  </span>
+  <p class="">{{ text }}</p>
+</div>
+
+<style>
+  .badge-dot {
+    position: relative;
+    display: inline-flex;
+    align-self: start;
+    gap: 1rem;
+    border: 1px solid var(--sda-orange);
+    border-radius: 30px;
+    padding: 0.75rem 1.5rem 0.75rem 2rem;
+  }
+  .badge-dot p {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  .dot-notification {
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    position: relative;
+    top: 50%;
+    transform: translateY(50%);
+  }
+  .dot-notification--animate {
+    opacity: 0.75;
+    background-color: var(--sda-orange);
+    border-radius: 50%;
+    animation: tw-ping 2s cubic-bezier(0,0,.2,1) infinite;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+  .dot-notification--bubble {
+    background-color: var(--sda-orange);;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    display: inline-flex;
+    position: relative;
+  }
+  @keyframes tw-ping {
+    75%, 100% {
+      transform: scale(3);
+      opacity: 0;
+    }
+  }
+</style>

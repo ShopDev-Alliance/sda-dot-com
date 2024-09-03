@@ -2419,7 +2419,9 @@ input[type='checkbox'] {
 }
 
 .header__heading-link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
   padding: 0.75rem;
   text-decoration: none;
   word-break: break-word;
@@ -2440,7 +2442,6 @@ input[type='checkbox'] {
 }
 
 .header__heading-logo-wrapper {
-  width: 100%;
   display: inline-block;
   transition: width 0.3s cubic-bezier(0.52, 0, 0.61, 0.99);
 }
@@ -2938,6 +2939,10 @@ details-disclosure > details {
   position: relative;
 }
 
+.content-container--no-border {
+  border: none;
+}
+
 .content-container:after {
   content: '';
   position: absolute;
@@ -2955,6 +2960,7 @@ details-disclosure > details {
   left: 0;
   right: 0;
   border-radius: 0;
+  display: none;
 }
 
 @media screen and (max-width: 749px) {
