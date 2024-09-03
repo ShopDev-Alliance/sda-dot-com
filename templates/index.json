@@ -37,7 +37,7 @@
             "button_style_secondary_2": false
           }
         },
-        "avatar_stack_7tBfXP": {
+        "avatar_stack_F6PnmG": {
           "type": "avatar-stack",
           "settings": {
           }
@@ -47,7 +47,7 @@
         "heading_zFbR9U",
         "text_QdzPai",
         "button_Pm48am",
-        "avatar_stack_7tBfXP"
+        "avatar_stack_F6PnmG"
       ],
       "settings": {
         "desktop_content_position": "center",
@@ -55,8 +55,8 @@
         "border_is_visible": false,
         "color_scheme": "scheme-3",
         "full_width": true,
-        "padding_top": 44,
-        "padding_bottom": 44
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     },
     "image_banner": {
@@ -110,20 +110,32 @@
           "settings": {
             "text": ""
           }
+        },
+        "button_8ULaUy": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
         }
       },
       "block_order": [
         "heading_4qBFBN",
-        "text_qriGQU"
+        "text_qriGQU",
+        "button_8ULaUy"
       ],
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
         "border_is_visible": false,
-        "color_scheme": "scheme-1",
+        "color_scheme": "",
         "full_width": true,
-        "padding_top": 48,
-        "padding_bottom": 48
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     },
     "rich_text_g6GfTU": {
@@ -141,17 +153,29 @@
           "settings": {
             "text": "<p>Just like you we are freelancers, freelancers battling scope creep, crazy expectations, and an evolving web development world - Running a freelance business is a lot. That's why we started this community.<\/p>"
           }
+        },
+        "button_KezFLm": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
         }
       },
       "block_order": [
         "heading_NDVKaW",
-        "text_NJVPXR"
+        "text_NJVPXR",
+        "button_KezFLm"
       ],
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
         "border_is_visible": false,
-        "color_scheme": "scheme-1",
+        "color_scheme": "",
         "full_width": true,
         "padding_top": 40,
         "padding_bottom": 52
@@ -172,17 +196,29 @@
           "settings": {
             "text": "<p>A paid and private community founded by two freelance Shopify developers who have been in your shoes.<\/p>"
           }
+        },
+        "button_CQUUqx": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
         }
       },
       "block_order": [
         "heading_9UCrWx",
-        "text_DNTj8U"
+        "text_DNTj8U",
+        "button_CQUUqx"
       ],
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
         "border_is_visible": false,
-        "color_scheme": "scheme-1",
+        "color_scheme": "",
         "full_width": true,
         "padding_top": 40,
         "padding_bottom": 52
@@ -475,7 +511,7 @@
         "image_ratio": "square",
         "columns_desktop": 2,
         "column_alignment": "left",
-        "background_style": "none",
+        "background_style": "primary",
         "button_label": "",
         "button_link": "",
         "color_scheme": "scheme-1",
@@ -493,7 +529,7 @@
         "image_width": "full",
         "circle_border": true,
         "image_ratio": "square",
-        "columns_desktop": 4,
+        "columns_desktop": 5,
         "column_alignment": "center",
         "background_style": "none",
         "button_label": "",
@@ -632,7 +668,7 @@
         "desktop_content_position": "center",
         "content_alignment": "center",
         "border_is_visible": false,
-        "color_scheme": "scheme-1",
+        "color_scheme": "",
         "full_width": true,
         "padding_top": 40,
         "padding_bottom": 0
@@ -672,14 +708,14 @@
         "image_ratio": "adapt",
         "columns_desktop": 2,
         "column_alignment": "left",
-        "background_style": "none",
+        "background_style": "primary",
         "button_label": "",
         "button_link": "",
-        "color_scheme": "scheme-1",
+        "color_scheme": "",
         "columns_mobile": "1",
         "swipe_on_mobile": false,
         "padding_top": 36,
-        "padding_bottom": 12
+        "padding_bottom": 0
       }
     },
     "rich_text_gCV36H": {
@@ -699,9 +735,9 @@
         "desktop_content_position": "center",
         "content_alignment": "center",
         "border_is_visible": false,
-        "color_scheme": "scheme-1",
+        "color_scheme": "",
         "full_width": true,
-        "padding_top": 12,
+        "padding_top": 0,
         "padding_bottom": 52
       }
     },
