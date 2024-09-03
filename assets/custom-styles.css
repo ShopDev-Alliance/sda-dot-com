@@ -128,6 +128,11 @@ a.member-card:hover img {
   font-size: 1.1rem;
 }
 
+@media screen and (max-width: 749px) {
+  .members-row--member {
+    width: calc(50% - 0.5rem);
+  }
+}
 @media screen and (min-width: 750px) {
   .member-card__cta {
     display: none;
