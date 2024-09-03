@@ -76,7 +76,7 @@ a.member-card:hover .member-card__name {
   overflow: hidden;
 }
 
-a.member-card:hover .member-card__image-wrapper {
+a.member-card:hover {
   border-color: var(--sda-orange);
   transition: border-color 0.25s ease-in;
 }
