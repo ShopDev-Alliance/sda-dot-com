@@ -1,0 +1,22 @@
+{% liquid
+  assign show_profile = 'div'
+  if profile
+    assign show_profile = 'a'
+  endif
+%}
+
+<{{ show_profile }} class="member-card"{% if profile %} href="{{ link }}"{% endif %}>
+  {% if hide_image != true and profile_photo != null %}
+    <div class="member-card__image-wrapper">
+      {{ profile_photo | image_url: width: 300 | image_tag: widths: '200, 300, 400', sizes: '(max-width: 400px) 360px' }}
+    </div>
+  {% endif %}
+  <h3 class="member-card__name h5">
+    {{ name }}
+  </h3>
+  {% if show_profile == 'a' %}
+  <span class="member-card__cta link">
+    View Profile
+  </span>
+  {% endif %}
+</{{ show_profile }}>
