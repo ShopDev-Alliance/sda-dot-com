@@ -1,309 +1,318 @@
-{% assign contact_url = metaobject.alternative_contact | default: metaobject.website %}
+{% liquid
+  assign show_profile = metaobject.profile.value | default: false
+  assign contact_url = metaobject.alternative_contact | default: metaobject.website 
+%}
 
-<section id="profile-page" class="page-width">
-  <div class="profile-container">
-    <div class="profile-left">
-      <div class="profile-left--container">
-        {% unless metaobject.profile_photo == blank %}
-          <div class="profile-left--image">
-            {{ metaobject.profile_photo.value | image_url: width: 350 | image_tag: widths: '350, 500, 650', sizes: '(max-width: 650px) 350px' }}
+{% if show_profile %}
+  <section id="profile-page" class="page-width">
+    <div class="profile-container">
+      <div class="profile-left">
+        <div class="profile-left--container">
+          {% unless metaobject.profile_photo == blank %}
+            <div class="profile-left--image">
+              {{ metaobject.profile_photo.value | image_url: width: 350 | image_tag: widths: '350, 500, 650', sizes: '(max-width: 650px) 350px' }}
+            </div>
+          {% endunless %}
+          <div class="profile-left--info">
+            <h1 class="profile-left--name">{{ metaobject.name.value }}</h1>
+            {% unless metaobject.tagline == blank %}
+              <p class="profile-left--tag">{{ metaobject.tagline.value }}</p>
+            {% endunless %}
+            {% unless metaobject.open_to_work == blank %}
+              {% render 'badge-dot', text: 'Open to work' %}
+            {% endunless %}
+            {% unless metaobject.working_hours == blank %}
+              <h3 class="h4">Working hours availability:</h3>
+              <p class="profile-left--working_hours">{{ metaobject.working_hours.value }}</p>
+            {% endunless %}
           </div>
-        {% endunless %}
-        <div class="profile-left--info">
-          <h1 class="profile-left--name">{{ metaobject.name.value }}</h1>
-          {% unless metaobject.tagline == blank %}
-            <p class="profile-left--tag">{{ metaobject.tagline.value }}</p>
-          {% endunless %}
-          {% unless metaobject.open_to_work == blank %}
-            {% render 'badge-dot', text: 'Open to work' %}
-          {% endunless %}
-          {% unless metaobject.working_hours == blank %}
-            <h3 class="h4">Working hours availability:</h3>
-            <p class="profile-left--working_hours">{{ metaobject.working_hours.value }}</p>
-          {% endunless %}
+          <div class="profile-left--socials">
+            <ul class="list-unstyled">
+              {% unless metaobject.website == blank %}
+                <li class="list-social__item">
+                  <a class="link list-social__link" href="{{ metaobject.website.value }}">{% render 'icon-website' %}
+                    <span class="visually-hidden">Website</span>
+                  </a>
+                </li>
+              {% endunless %}
+              {% unless metaobject.twitter == blank %}
+                <li class="list-social__item">
+                  <a class="link list-social__link" href="{{ metaobject.twitter.value }}">{% render 'icon-twitter' %}
+                    <span class="visually-hidden">Twitter</span>
+                  </a>
+                </li>
+              {% endunless %}
+              {% unless metaobject.linked_in == blank %}
+                <li class="list-social__item">
+                  <a class="link list-social__link" href="{{ metaobject.linked_in.value }}">{% render 'icon-linkedin' %}
+                    <span class="visually-hidden">LinkedIn</span>
+                  </a>
+                </li>
+              {% endunless %}
+              {% unless metaobject.github == blank %}
+                <li class="list-social__item">
+                  <a class="link list-social__link" href="{{ metaobject.github.value }}">{% render 'icon-github' %}
+                    <span class="visually-hidden">Github</span>
+                  </a>
+                </li>
+              {% endunless %}
+              {% unless metaobject.you_tube == blank %}
+                <li class="list-social__item">
+                  <a class="link list-social__link" href="{{ metaobject.you_tube.value }}">{% render 'icon-youtube' %}
+                    <span class="visually-hidden">YouTube</span>
+                  </a>
+                </li>
+              {% endunless %}
+            </ul>
+          </div>
+          {% if contact_url != null %}
+            <div class="profile-left--cta">
+              <a class="button button--primary" href="{{ contact_url.value }}?utm_source=shopdev-alliance-profile">Contact</a>
+            </div>
+          {% endif %}
         </div>
-        <div class="profile-left--socials">
-          <ul class="list-unstyled">
-            {% unless metaobject.website == blank %}
-              <li class="list-social__item">
-                <a class="link list-social__link" href="{{ metaobject.website.value }}">{% render 'icon-website' %}
-                  <span class="visually-hidden">Website</span>
-                </a>
-              </li>
-            {% endunless %}
-            {% unless metaobject.twitter == blank %}
-              <li class="list-social__item">
-                <a class="link list-social__link" href="{{ metaobject.twitter.value }}">{% render 'icon-twitter' %}
-                  <span class="visually-hidden">Twitter</span>
-                </a>
-              </li>
-            {% endunless %}
-            {% unless metaobject.linked_in == blank %}
-              <li class="list-social__item">
-                <a class="link list-social__link" href="{{ metaobject.linked_in.value }}">{% render 'icon-linkedin' %}
-                  <span class="visually-hidden">LinkedIn</span>
-                </a>
-              </li>
-            {% endunless %}
-            {% unless metaobject.github == blank %}
-              <li class="list-social__item">
-                <a class="link list-social__link" href="{{ metaobject.github.value }}">{% render 'icon-github' %}
-                  <span class="visually-hidden">Github</span>
-                </a>
-              </li>
-            {% endunless %}
-            {% unless metaobject.you_tube == blank %}
-              <li class="list-social__item">
-                <a class="link list-social__link" href="{{ metaobject.you_tube.value }}">{% render 'icon-youtube' %}
-                  <span class="visually-hidden">YouTube</span>
-                </a>
-              </li>
+      </div>
+      <div class="profile-right">
+        {% liquid
+          capture metaobject_description
+            echo metaobject.description | metafield_tag | strip_html
+          endcapture
+          assign description_classes = 'profile-right--bio'
+          if metaobject_description.size > 500
+            assign description_classes = description_classes | append: ' long-description description--hidden'
+          endif
+          if metaobject.description == blank
+            assign description_classes = description_classes | append: ' description--empty'
+          endif
+        %}
+        <div class="{{ description_classes }}">
+          <h2>About</h2>
+          {{ metaobject.description | metafield_tag }}
+        </div>
+        <button class="js-show-more button button--secondary">Read more</button>
+        {% unless metaobject.languages == blank %}
+          <h3 class="h4">Language Fluency</h3>
+          <ul>
+            {% unless metaobject.languages == blank %}
+              {% for language in metaobject.languages.value %}
+                <li>{{ language }}</li>
+              {% endfor %}
             {% endunless %}
           </ul>
-        </div>
-        {% if contact_url != null %}
-          <div class="profile-left--cta">
-            <a class="button button--primary" href="{{ contact_url.value }}?utm_source=shopdev-alliance-profile">Contact</a>
+        {% endunless %}
+        <h3>Services</h3>
+          <p class="h4">Primary service: <span class="h4">{{ metaobject.primary_service.value }}</span></p>
+        <h4 class="subtle-header">Other Services</h4>
+        <ul>
+          {% unless metaobject.services == blank %}
+            {% for service in metaobject.services.value %}
+              <li>{{ service }}</li>
+            {% endfor %}
+          {% endunless %}
+        </ul>
+        {% unless metaobject.additional_services == blank %}
+          <h4>Shopify Services and Experience</h4>
+          {{ metaobject.additional_services | metafield_tag }}
+        {% endunless %}
+
+        {% unless metaobject.technologies == blank %}
+          <h3>Skills and Technologies</h3>
+          <ul>
+            {% for technology in metaobject.technologies.value %}
+              <li>{{ technology }}</li>
+            {% endfor %}
+          </ul>
+        {% endunless %}
+        {% unless metaobject.skills_and_technologies_additional_notes == blank %}
+          <h4>Skills and Technologies Notes</h4>
+          {{ metaobject.skills_and_technologies_additional_notes | metafield_tag }}
+        {% endunless %}
+
+
+        {% unless metaobject.portfolio_sites == blank %}
+          <h3>Portfolio References</h3>
+          {{ metaobject.portfolio_sites | metafield_tag }}
+        {% endunless %}
+        {% if metaobject.reviews != blank %}
+          <div class="profile-right--reviews">
+              <h3>Reviews</h3>
+              {% for review in metaobject.reviews.value %}
+                <div class="review">
+                  {{ review.review_content | metafield_tag }}
+                  <p class="reviewer-link">
+                    {% unless review.link == blank %}<a href="{{review.link.value }}" target="_blank">{% endunless %}
+                      {{ review.reviewer.value }}
+                    {% unless review.link == blank %}</a>{% endunless %}
+                  </p>
+                </div>
+              {% endfor %}
+          </div>
+        {% endif %}
+        {% unless metaobject.other_links == blank %}
+          <h3>Other Projects</h3>
+          {{ metaobject.other_links | metafield_tag }}
+        {% endunless %}
+        {% if metaobject.industry_experience != blank %}
+          <div class="profile-right--industries">
+            <h3>Industry Experience</h3>
+            <ul>
+              {% for industry in metaobject.industry_experience.value %}
+                <li>{{ industry }}</li>
+              {% endfor %}
+            </ul>
           </div>
         {% endif %}
       </div>
     </div>
-    <div class="profile-right">
-      {% liquid
-        capture metaobject_description
-          echo metaobject.description | metafield_tag | strip_html
-        endcapture
-        assign description_classes = 'profile-right--bio'
-        if metaobject_description.size > 500
-          assign description_classes = description_classes | append: ' long-description description--hidden'
-        endif
-        if metaobject.description == blank
-          assign description_classes = description_classes | append: ' description--empty'
-        endif
-      %}
-      <div class="{{ description_classes }}">
-        <h2>About</h2>
-        {{ metaobject.description | metafield_tag }}
-      </div>
-      <button class="js-show-more button button--secondary">Read more</button>
-      {% unless metaobject.languages == blank %}
-        <h3 class="h4">Language Fluency</h3>
-        <ul>
-          {% unless metaobject.languages == blank %}
-            {% for language in metaobject.languages.value %}
-              <li>{{ language }}</li>
-            {% endfor %}
-          {% endunless %}
-        </ul>
-      {% endunless %}
-      <h3>Services</h3>
-        <p class="h4">Primary service: <span class="h4">{{ metaobject.primary_service.value }}</span></p>
-      <h4 class="subtle-header">Other Services</h4>
-      <ul>
-        {% unless metaobject.services == blank %}
-          {% for service in metaobject.services.value %}
-            <li>{{ service }}</li>
-          {% endfor %}
-        {% endunless %}
-      </ul>
-      {% unless metaobject.additional_services == blank %}
-        <h4>Shopify Services and Experience</h4>
-        {{ metaobject.additional_services | metafield_tag }}
-      {% endunless %}
-
-      {% unless metaobject.technologies == blank %}
-        <h3>Skills and Technologies</h3>
-        <ul>
-          {% for technology in metaobject.technologies.value %}
-            <li>{{ technology }}</li>
-          {% endfor %}
-        </ul>
-      {% endunless %}
-      {% unless metaobject.skills_and_technologies_additional_notes == blank %}
-        <h4>Skills and Technologies Notes</h4>
-        {{ metaobject.skills_and_technologies_additional_notes | metafield_tag }}
-      {% endunless %}
-
-
-      {% unless metaobject.portfolio_sites == blank %}
-        <h3>Portfolio References</h3>
-        {{ metaobject.portfolio_sites | metafield_tag }}
-      {% endunless %}
-      {% if metaobject.reviews != blank %}
-        <div class="profile-right--reviews">
-            <h3>Reviews</h3>
-            {% for review in metaobject.reviews.value %}
-              <div class="review">
-                {{ review.review_content | metafield_tag }}
-                <p class="reviewer-link">
-                  {% unless review.link == blank %}<a href="{{review.link.value }}" target="_blank">{% endunless %}
-                    {{ review.reviewer.value }}
-                  {% unless review.link == blank %}</a>{% endunless %}
-                </p>
-              </div>
-            {% endfor %}
-        </div>
-      {% endif %}
-      {% unless metaobject.other_links == blank %}
-        <h3>Other Projects</h3>
-        {{ metaobject.other_links | metafield_tag }}
-      {% endunless %}
-      {% if metaobject.industry_experience != blank %}
-        <div class="profile-right--industries">
-          <h3>Industry Experience</h3>
-          <ul>
-            {% for industry in metaobject.industry_experience.value %}
-              <li>{{ industry }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
-    </div>
-  </div>
-</section>
-<style>
-#profile-page .profile-container {
-  display: block;
-  margin-bottom: 5rem;
-}
-#profile-page .profile-left h1,
-#profile-page .profile-left h2,
-#profile-page .profile-left--working_hours,
-#profile-page .profile-left--tag {
-  margin: 0.5rem 0 0;
-}
-
-#profile-page .profile-left--info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-#profile-page .profile-left h3 {
-  margin: 2rem 0 0;
-}
-#profile-page p.h4,
-#profile-page .subtle-header {
-  color: rgba(var(--color-foreground), 0.75);
-}
-#profile-page .profile-left--socials ul {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: center;
-  margin-top: 1rem;
-}
-#profile-page .profile-left--image {
-  display: flex;
-  justify-content: center;
-  margin-top: 4rem;
-}
-#profile-page .profile-left--image img {
-  border-radius: 50%;
-  border: 3px solid var(--sda-orange);
-}
-#profile-page .profile-left--socials li:first-of-type a.list-social__link {
-  padding: 1.1rem 1.1rem 1.1rem 0;
-}
-#profile-page .profile-left--cta a,
-#profile-page .profile-left--cta a:visited {
-  display: inline-flex;
-  color: rgb(var(--color-background));
-  font-family: var(--font-heading-family);
-  font-size: 2rem;
-}
-#profile-page a,
-#profile-page a svg {
-  color: white;
-}
-#profile-page svg.icon-linkedin,
-#profile-page svg.icon-github{
-  fill: white;
-}
-.description--hidden {
-  height: 400px;
-  overflow: hidden;
-  position: relative;
-  background: linear-gradient(to bottom, white, transparent);
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  transition: all 0.3s ease-in;
-}
-.description--visible {
-  height: auto;
-  overflow: auto;
-  transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
-}
-.description--empty + button.js-show-more,
-.profile-right--bio:not(.long-description) + button.js-show-more {
-  display: none;
-}
-#profile-page a:visited {
-  color: var(--sda-orange);
-}
-#profile-page .profile-right--reviews p:not(.reviewer-link) {
-  font-style: italic;
-}
-#profile-page .profile-right--reviews .reviewer-link {
-  text-align: right;
-  font-weight: bold;
-}
-@media screen and (min-width: 768px) {
+  </section>
+  <style>
   #profile-page .profile-container {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-gap: 1rem;
+    display: block;
+    margin-bottom: 5rem;
   }
-  #profile-page .profile-left {
-    grid-column: span 5;
+  #profile-page .profile-left h1,
+  #profile-page .profile-left h2,
+  #profile-page .profile-left--working_hours,
+  #profile-page .profile-left--tag {
+    margin: 0.5rem 0 0;
   }
-  #profile-page .profile-right {
-    grid-column: span 7;
-  }
-  #profile-page .profile-left--container {
-    position: sticky;
-    top: 1rem;
+
+  #profile-page .profile-left--info {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
   }
-}
-</style>
-<script>
-  const Utils = {
-    addClass: function(element, theClass) {
-      element.classList.add(theClass);
-    },
-    removeClass: function(element, theClass) {
-      element.classList.remove(theClass);
-    },
-    showMore: function(element, excerpt) {
-      element.addEventListener("click", event => {
-        const linkText = event.target.textContent.toLowerCase();
-        event.preventDefault();
-        if (linkText == "read more") {
-          element.textContent = "Show less";
-          this.removeClass(excerpt, "description--hidden");
-          this.addClass(excerpt, "description--visible");
-        } else {
-          element.textContent = "Read more";
-          this.removeClass(excerpt, "description--visible");
-          this.addClass(excerpt, "description--hidden");
-        }
-      });
+  #profile-page .profile-left h3 {
+    margin: 2rem 0 0;
+  }
+  #profile-page p.h4,
+  #profile-page .subtle-header {
+    color: rgba(var(--color-foreground), 0.75);
+  }
+  #profile-page .profile-left--socials ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  #profile-page .profile-left--image {
+    display: flex;
+    justify-content: center;
+    margin-top: 4rem;
+  }
+  #profile-page .profile-left--image img {
+    border-radius: 50%;
+    border: 3px solid var(--sda-orange);
+  }
+  #profile-page .profile-left--socials li:first-of-type a.list-social__link {
+    padding: 1.1rem 1.1rem 1.1rem 0;
+  }
+  #profile-page .profile-left--cta a,
+  #profile-page .profile-left--cta a:visited {
+    display: inline-flex;
+    color: rgb(var(--color-background));
+    font-family: var(--font-heading-family);
+    font-size: 2rem;
+  }
+  #profile-page a,
+  #profile-page a svg {
+    color: white;
+  }
+  #profile-page svg.icon-linkedin,
+  #profile-page svg.icon-github{
+    fill: white;
+  }
+  .description--hidden {
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(to bottom, white, transparent);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    transition: all 0.3s ease-in;
+  }
+  .description--visible {
+    height: auto;
+    overflow: auto;
+    transition: all 0.5s cubic-bezier(0.4, 0, 1, 1);
+  }
+  .description--empty + button.js-show-more,
+  .profile-right--bio:not(.long-description) + button.js-show-more {
+    display: none;
+  }
+  #profile-page a:visited {
+    color: var(--sda-orange);
+  }
+  #profile-page .profile-right--reviews p:not(.reviewer-link) {
+    font-style: italic;
+  }
+  #profile-page .profile-right--reviews .reviewer-link {
+    text-align: right;
+    font-weight: bold;
+  }
+  @media screen and (min-width: 768px) {
+    #profile-page .profile-container {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-gap: 1rem;
     }
-  };
-  const ExcerptWidget = {
-    showMore: function(showMoreButtonTarget, excerptTarget) {
-     const showMoreButton = document.querySelector(showMoreButtonTarget);
-     if (!showMoreButton) return;
-     const longDescription = showMoreButton.previousElementSibling;
-     Utils.showMore(showMoreButton, longDescription);
+    #profile-page .profile-left {
+      grid-column: span 5;
     }
-  };
-  ExcerptWidget.showMore('.js-show-more', '.long-description');
-</script>
+    #profile-page .profile-right {
+      grid-column: span 7;
+    }
+    #profile-page .profile-left--container {
+      position: sticky;
+      top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+  </style>
+  <script>
+    const Utils = {
+      addClass: function(element, theClass) {
+        element.classList.add(theClass);
+      },
+      removeClass: function(element, theClass) {
+        element.classList.remove(theClass);
+      },
+      showMore: function(element, excerpt) {
+        element.addEventListener("click", event => {
+          const linkText = event.target.textContent.toLowerCase();
+          event.preventDefault();
+          if (linkText == "read more") {
+            element.textContent = "Show less";
+            this.removeClass(excerpt, "description--hidden");
+            this.addClass(excerpt, "description--visible");
+          } else {
+            element.textContent = "Read more";
+            this.removeClass(excerpt, "description--visible");
+            this.addClass(excerpt, "description--hidden");
+          }
+        });
+      }
+    };
+    const ExcerptWidget = {
+      showMore: function(showMoreButtonTarget, excerptTarget) {
+      const showMoreButton = document.querySelector(showMoreButtonTarget);
+      if (!showMoreButton) return;
+      const longDescription = showMoreButton.previousElementSibling;
+      Utils.showMore(showMoreButton, longDescription);
+      }
+    };
+    ExcerptWidget.showMore('.js-show-more', '.long-description');
+  </script>
 
+{% else %}
+  <section>
+    <h1 style="text-align: center;">Profile not found</h1>
+  </section>
+{% endif %}
 {% schema %}
   {
     "name": "Member Profile",
