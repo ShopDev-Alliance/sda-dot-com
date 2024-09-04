@@ -1,3 +1,10 @@
+{% liquid
+  assign contact_url = metaobject.website
+  if metaobject.alternative_contact != null
+    assign contact_url = metaobject.alternative_contact
+  endif
+%}
+
 <section id="profile-page" class="page-width">
   <div class="profile-container">
     <div class="profile-left">
@@ -59,9 +66,9 @@
             {% endunless %}
           </ul>
         </div>
-        {% if metaobject.website != null %}
+        {% if contact_url != null %}
           <div class="profile-left--cta">
-            <a class="button button--primary" href="{{ metaobject.website.value }}?utm_source=shopdev-alliance-profile">Contact</a>
+            <a class="button button--primary" href="{{ contact_url.value }}?utm_source=shopdev-alliance-profile">Contact</a>
           </div>
         {% endif %}
       </div>
