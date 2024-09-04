@@ -1,9 +1,4 @@
-{% liquid
-  assign contact_url = metaobject.website
-  if metaobject.alternative_contact != null
-    assign contact_url = metaobject.alternative_contact
-  endif
-%}
+{% assign contact_url = metaobject.alternative_contact | default: metaobject.website %}
 
 <section id="profile-page" class="page-width">
   <div class="profile-container">
