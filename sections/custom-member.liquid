@@ -102,9 +102,9 @@
         {% endunless %}
         <h3>Services</h3>
           <p class="h4">Primary service: <span class="h4">{{ metaobject.primary_service.value }}</span></p>
-        <h4 class="subtle-header">Other Services</h4>
         <ul>
           {% unless metaobject.services == blank %}
+            <h4 class="subtle-header">Other Services</h4>
             {% for service in metaobject.services.value %}
               <li>{{ service }}</li>
             {% endfor %}
