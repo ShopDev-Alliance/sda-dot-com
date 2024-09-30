@@ -15,14 +15,14 @@
         "heading_zFbR9U": {
           "type": "heading",
           "settings": {
-            "heading": "<strong>WELCOME TO THE ALLIANCE<\/strong>",
+            "heading": "<strong>WELCOME TO THE ALLIANCE</strong>",
             "heading_size": "h0"
           }
         },
         "text_QdzPai": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>A curated community of freelance Shopify developers.<\/strong><\/p>"
+            "text": "<p><strong>A curated community of freelance Shopify developers.</strong></p>"
           }
         },
         "button_Pm48am": {
@@ -30,7 +30,7 @@
           "disabled": true,
           "settings": {
             "button_label": "Apply to the waitlist",
-            "button_link": "shopify:\/\/pages\/waitlist",
+            "button_link": "shopify://pages/waitlist",
             "button_style_secondary": false,
             "button_label_2": "",
             "button_link_2": "",
@@ -65,14 +65,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "<strong>WELCOME TO THE ALLIANCE<\/strong>",
+            "heading": "<strong>WELCOME TO THE ALLIANCE</strong>",
             "heading_size": "h0"
           }
         },
         "text_izC46V": {
           "type": "text",
           "settings": {
-            "text": "<strong>A curated community of freelance Shopify developers.<\/strong>",
+            "text": "<strong>A curated community of freelance Shopify developers.</strong>",
             "text_style": "subtitle"
           }
         }
@@ -151,7 +151,7 @@
         "text_NJVPXR": {
           "type": "text",
           "settings": {
-            "text": "<p>Just like you we are freelancers, freelancers battling scope creep, crazy expectations, and an evolving web development world - Running a freelance business is a lot. That's why we started this community.<\/p>"
+            "text": "<p>Just like you we are freelancers, freelancers battling scope creep, crazy expectations, and an evolving web development world - Running a freelance business is a lot. That's why we started this community.</p>"
           }
         },
         "button_KezFLm": {
@@ -194,7 +194,7 @@
         "text_DNTj8U": {
           "type": "text",
           "settings": {
-            "text": "<p>A paid and private community founded by two freelance Shopify developers who have been in your shoes.<\/p>"
+            "text": "<p>A paid and private community founded by two freelance Shopify developers who have been in your shoes.</p>"
           }
         },
         "button_CQUUqx": {
@@ -232,7 +232,7 @@
           "settings": {
             "caption": "Caption",
             "heading": "",
-            "text": "<p>Pro Slack membership so we can maintain a searchable history of great content, not just the last 90 days.<\/p>",
+            "text": "<p>Pro Slack membership so we can maintain a searchable history of great content, not just the last 90 days.</p>",
             "button_label": "Button label",
             "button_link": ""
           }
@@ -242,7 +242,7 @@
           "settings": {
             "caption": "Caption",
             "heading": "",
-            "text": "<p>High-quality engagement from other successful full time Freelance Shopify Developers.<\/p>",
+            "text": "<p>High-quality engagement from other successful full time Freelance Shopify Developers.</p>",
             "button_label": "Button label",
             "button_link": ""
           }
@@ -252,7 +252,7 @@
           "settings": {
             "caption": "Caption",
             "heading": "Row",
-            "text": "<p>Moderators who enforce a code of conduct.<\/p>",
+            "text": "<p>Moderators who enforce a code of conduct.</p>",
             "button_label": "Button label",
             "button_link": ""
           }
@@ -262,7 +262,7 @@
           "settings": {
             "caption": "Caption",
             "heading": "Row",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
             "button_label": "Button label",
             "button_link": ""
           }
@@ -298,7 +298,7 @@
           "type": "column",
           "settings": {
             "title": "",
-            "text": "<p>A community full of members who can directly relate to you<\/p>",
+            "text": "<p>A community full of members who can directly relate to you</p>",
             "link_label": "",
             "link": ""
           }
@@ -307,7 +307,7 @@
           "type": "column",
           "settings": {
             "title": "",
-            "text": "<p>Pro Slack membership so we can maintain a searchable history of great content, not just the last 90 days<\/p>",
+            "text": "<p>Pro Slack membership so we can maintain a searchable history of great content, not just the last 90 days</p>",
             "link_label": "",
             "link": ""
           }
@@ -316,7 +316,7 @@
           "type": "column",
           "settings": {
             "title": "",
-            "text": "<p>High-quality engagement from other successful full time Freelance Shopify Developers<\/p>",
+            "text": "<p>High-quality engagement from other successful full time Freelance Shopify Developers</p>",
             "link_label": "",
             "link": ""
           }
@@ -325,7 +325,7 @@
           "type": "column",
           "settings": {
             "title": "",
-            "text": "<p>Leads on Shopify projects and jobs<\/p>",
+            "text": "<p>Leads on Shopify projects and jobs</p>",
             "link_label": "",
             "link": ""
           }
@@ -334,7 +334,7 @@
           "type": "column",
           "settings": {
             "title": "",
-            "text": "<p>Access to a growing library of resources<\/p>",
+            "text": "<p>Access to a growing library of resources</p>",
             "link_label": "",
             "link": ""
           }
@@ -343,7 +343,7 @@
           "type": "column",
           "settings": {
             "title": "",
-            "text": "<p>Stay updated on Shopify product and code releases<\/p>",
+            "text": "<p>Stay updated on Shopify product and code releases</p>",
             "link_label": "",
             "link": ""
           }
@@ -352,7 +352,7 @@
           "type": "column",
           "settings": {
             "title": "",
-            "text": "<p>Ask for help on coding problems or client puzzles<\/p>",
+            "text": "<p>Ask for help on coding problems or client puzzles</p>",
             "link_label": "",
             "link": ""
           }
@@ -361,7 +361,7 @@
           "type": "column",
           "settings": {
             "title": "",
-            "text": "<p>Moderators who enforce a code of conduct - no shilling allowed<\/p>",
+            "text": "<p>Moderators who enforce a code of conduct - no shilling allowed</p>",
             "link_label": "",
             "link": ""
           }
@@ -419,7 +419,7 @@
         "text_UVVEtF": {
           "type": "text",
           "settings": {
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
             "text_style": "body"
           }
         },
@@ -459,21 +459,21 @@
         "column_97bPXL": {
           "type": "column",
           "settings": {
-            "image": "shopify:\/\/shop_images\/twitter-austriker27.jpg",
+            "image": "shopify://shop_images/twitter-austriker27.jpg",
             "title": "David A. Lindahl",
-            "text": "<p>One part Freelance Shopify Developer, one part Shopify merchant, and one part girl dad. Shaken not stirred. SDA Cofounder.<\/p>",
+            "text": "<p>One part Freelance Shopify Developer, one part Shopify merchant, and one part girl dad. Shaken not stirred. SDA Cofounder.</p>",
             "link_label": "@austriker27",
-            "link": "https:\/\/twitter.com\/austriker27"
+            "link": "https://twitter.com/austriker27"
           }
         },
         "column_GbYL7h": {
           "type": "column",
           "settings": {
-            "image": "shopify:\/\/shop_images\/twitter-taylor.jpg",
+            "image": "shopify://shop_images/twitter-taylor.jpg",
             "title": "Taylor Page",
-            "text": "<p>Former social worker turned freelance web dev + Shopify Expert. Co-host the <a href=\"https:\/\/liquidweekly.com\/podcast\" target=\"_blank\" title=\"https:\/\/liquidweekly.com\/podcast\">Liquid Weekly Podcast<\/a>. SDA Cofounder.<\/p>",
+            "text": "<p>Former social worker turned freelance web dev + Shopify Expert. Co-host the <a href=\"https://liquidweekly.com/podcast\" target=\"_blank\" title=\"https://liquidweekly.com/podcast\">Liquid Weekly Podcast</a>. SDA Cofounder.</p>",
             "link_label": "@TRPage_dev",
-            "link": "https:\/\/twitter.com\/TRPage_dev"
+            "link": "https://twitter.com/TRPage_dev"
           }
         },
         "column_kgzUjj": {
@@ -481,9 +481,9 @@
           "disabled": true,
           "settings": {
             "title": "Your Name Here",
-            "text": "<p>You could be a founding member of this amazing community! <\/p>",
+            "text": "<p>You could be a founding member of this amazing community! </p>",
             "link_label": "Join the waitlist",
-            "link": "shopify:\/\/pages\/waitlist"
+            "link": "shopify://pages/waitlist"
           }
         },
         "column_eJ9VN6": {
@@ -491,7 +491,7 @@
           "disabled": true,
           "settings": {
             "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
             "link_label": "",
             "link": ""
           }
@@ -541,6 +541,34 @@
         "padding_bottom": 36
       }
     },
+    "rich_text_A6TGQG": {
+      "type": "rich-text",
+      "blocks": {
+        "button_QXAkpp": {
+          "type": "button",
+          "settings": {
+            "button_label": "See All Members",
+            "button_link": "shopify://pages/code-of-conduct",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "button_QXAkpp"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "border_is_visible": false,
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 20,
+        "padding_bottom": 52
+      }
+    },
     "image_banner_mVqgi4": {
       "type": "image-banner",
       "blocks": {
@@ -562,7 +590,7 @@
           "type": "buttons",
           "settings": {
             "button_label_1": "Apply to the waitlist",
-            "button_link_1": "shopify:\/\/pages\/waitlist",
+            "button_link_1": "shopify://pages/waitlist",
             "button_style_secondary_1": true,
             "button_label_2": "",
             "button_link_2": "",
@@ -656,7 +684,7 @@
         "text_cFKhtU": {
           "type": "text",
           "settings": {
-            "text": "<p>Your paid membership includes a Slack Pro account, access to a moderated Slack with an enforced <a href=\"\/pages\/code-of-conduct\" title=\"Code of Conduct\">Code of Conduct<\/a>, and much more.<\/p>"
+            "text": "<p>Your paid membership includes a Slack Pro account, access to a moderated Slack with an enforced <a href=\"/pages/code-of-conduct\" title=\"Code of Conduct\">Code of Conduct</a>, and much more.</p>"
           }
         }
       },
@@ -681,7 +709,7 @@
           "type": "column",
           "settings": {
             "title": "Monthly Membership",
-            "text": "<p>$30<\/p>",
+            "text": "<p>$30</p>",
             "link_label": "",
             "link": ""
           }
@@ -690,7 +718,7 @@
           "type": "column",
           "settings": {
             "title": "Annual Membership",
-            "text": "<p>$300<\/p>",
+            "text": "<p>$300</p>",
             "link_label": "",
             "link": ""
           }
@@ -724,7 +752,7 @@
         "text_qEqjLT": {
           "type": "text",
           "settings": {
-            "text": "<p><em>Our commitment to pricing. As a member of the ShopDev Alliance your membership cost stays the same while your membership is active. <\/em><\/p>"
+            "text": "<p><em>Our commitment to pricing. As a member of the ShopDev Alliance your membership cost stays the same while your membership is active. </em></p>"
           }
         }
       },
@@ -754,14 +782,14 @@
         "text_WAN6QR": {
           "type": "text",
           "settings": {
-            "text": "<p>We are building the most worthwhile community for Shopify Freelance Developers.<\/p>"
+            "text": "<p>We are building the most worthwhile community for Shopify Freelance Developers.</p>"
           }
         },
         "button_NCiXXT": {
           "type": "button",
           "settings": {
             "button_label": "Apply to the waitlist",
-            "button_link": "shopify:\/\/pages\/waitlist",
+            "button_link": "shopify://pages/waitlist",
             "button_style_secondary": false,
             "button_label_2": "",
             "button_link_2": "",
@@ -796,6 +824,7 @@
     "image_with_text_gHBR8B",
     "multicolumn_WJJTA9",
     "members_metaobjects_TRHyJk",
+    "rich_text_A6TGQG",
     "image_banner_mVqgi4",
     "slideshow_cnQD3K",
     "rich_text_ddVDah",
