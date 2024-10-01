@@ -462,8 +462,8 @@
             "image": "shopify://shop_images/twitter-austriker27.jpg",
             "title": "David A. Lindahl",
             "text": "<p>One part Freelance Shopify Developer, one part Shopify merchant, and one part girl dad. Shaken not stirred. SDA Cofounder.</p>",
-            "link_label": "@austriker27",
-            "link": "https://twitter.com/austriker27"
+            "link_label": "SDA Profile",
+            "link": "shopify://metaobjects/members/david-lindahl"
           }
         },
         "column_GbYL7h": {
@@ -472,8 +472,8 @@
             "image": "shopify://shop_images/twitter-taylor.jpg",
             "title": "Taylor Page",
             "text": "<p>Former social worker turned freelance web dev + Shopify Expert. Co-host the <a href=\"https://liquidweekly.com/podcast\" target=\"_blank\" title=\"https://liquidweekly.com/podcast\">Liquid Weekly Podcast</a>. SDA Cofounder.</p>",
-            "link_label": "@TRPage_dev",
-            "link": "https://twitter.com/TRPage_dev"
+            "link_label": "SDA Profile",
+            "link": "shopify://metaobjects/members/taylor-page"
           }
         },
         "column_kgzUjj": {
