@@ -14,16 +14,16 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
-        "announcement-bar-0": {
+        "announcement_FjCdKt": {
           "type": "announcement",
           "settings": {
-            "text": "Apply to the waitlist",
-            "link": "shopify:\/\/pages\/waitlist"
+            "text": "Apply to join",
+            "link": "shopify://pages/waitlist"
           }
         }
       },
       "block_order": [
-        "announcement-bar-0"
+        "announcement_FjCdKt"
       ],
       "settings": {
         "color_scheme": "scheme-1",
