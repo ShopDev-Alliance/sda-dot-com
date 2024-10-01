@@ -1,9 +1,72 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "sections": {
     "main": {
       "type": "main-page",
       "settings": {
         "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "multicolumn_VYwTfc": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_K7ACXf": {
+          "type": "column",
+          "settings": {
+            "title": "Need help with a project?",
+            "text": "<p>Submit a request for a quote to put your job in front of over 70 experienced Shopify developers.</p>",
+            "link_label": "Get support",
+            "link": "shopify://pages/get-a-quote"
+          }
+        },
+        "column_3jt8Ny": {
+          "type": "column",
+          "settings": {
+            "title": "Looking for a member?",
+            "text": "<p>Want to learn more about the amazing developers in our community?</p>",
+            "link_label": "See all members",
+            "link": "shopify://pages/members"
+          }
+        },
+        "column_dWK9CF": {
+          "type": "column",
+          "settings": {
+            "title": "All other questions",
+            "text": "<p>Submit your query below and we'll get back to you as soon as we can.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_K7ACXf",
+        "column_3jt8Ny",
+        "column_dWK9CF"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "circle_border": false,
+        "image_ratio": "adapt",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 0,
         "padding_bottom": 36
       }
     },
@@ -20,6 +83,7 @@
   },
   "order": [
     "main",
+    "multicolumn_VYwTfc",
     "form"
   ]
 }
