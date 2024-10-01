@@ -788,7 +788,7 @@
         "button_NCiXXT": {
           "type": "button",
           "settings": {
-            "button_label": "Apply to the waitlist",
+            "button_label": "Apply to join",
             "button_link": "shopify://pages/waitlist",
             "button_style_secondary": false,
             "button_label_2": "",
