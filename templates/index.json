@@ -548,7 +548,7 @@
           "type": "button",
           "settings": {
             "button_label": "See All Members",
-            "button_link": "shopify://pages/code-of-conduct",
+            "button_link": "shopify://pages/members",
             "button_style_secondary": false,
             "button_label_2": "",
             "button_link_2": "",
