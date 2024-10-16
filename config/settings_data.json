@@ -1,12 +1,12 @@
 /*
-* ------------------------------------------------------------
-* IMPORTANT: The contents of this file are auto-generated.
-*
-* This file may be updated by the Shopify admin theme editor
-* or related systems. Please exercise caution as any changes
-* made to this file may be overwritten.
-* ------------------------------------------------------------
-*/
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "logo": "shopify://shop_images/sda_logomark_color.svg",
@@ -119,6 +119,7 @@
     "social_pinterest_link": "",
     "social_tumblr_link": "",
     "social_vimeo_link": "",
+    "social_github_link": "https://github.com/ShopDev-Alliance",
     "predictive_search_enabled": false,
     "predictive_search_show_vendor": false,
     "predictive_search_show_price": false,

@@ -17,6 +17,11 @@ header.header.header--middle-center {
   }
 }
 
+/* # Footer  */
+footer svg.icon-github {
+  fill: white;
+}
+
 /* START - MEMBER PAGE SECTION */
 body.for-hire .members-row--member:not(.open-for-hire) {
   display: none;

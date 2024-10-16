@@ -251,6 +251,14 @@
                   </a>
                 </li>
               {%- endif -%}
+              {%- if settings.social_github_link != blank -%}
+                <li class="list-social__item">
+                  <a href="{{ settings.social_github_link }}" class="list-social__link link">
+                    {%- render 'icon-github' -%}
+                    <span class="visually-hidden">Github</span>
+                  </a>
+                </li>
+              {%- endif -%}
             </ul>
           </div>
         </div>
