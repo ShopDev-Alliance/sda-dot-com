@@ -84,10 +84,54 @@
         "heading_font": "serif",
         "main_font": "sans-serif"
       }
+    },
+    "discounts_and_more": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_j3jaKQ": {
+          "type": "heading",
+          "settings": {
+            "heading": "LET THE REBELLION BEGIN",
+            "heading_size": "h1"
+          }
+        },
+        "text_WAN6QR": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We are building the most worthwhile community for Shopify Freelance Developers.</p>"
+          }
+        },
+        "button_NCiXXT": {
+          "type": "button",
+          "settings": {
+            "button_label": "Apply to join",
+            "button_link": "shopify://pages/waitlist",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_j3jaKQ",
+        "text_WAN6QR",
+        "button_NCiXXT"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "border_is_visible": false,
+        "color_scheme": "scheme-3",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
     "main",
-    "design_pack_logo_list_n4fQbn"
+    "design_pack_logo_list_n4fQbn",
+    "discounts_and_more"
   ]
 }
