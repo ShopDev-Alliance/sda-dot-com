@@ -20,10 +20,19 @@
 <meta property="og:description" content="{{ og_description | escape }}">
 
 {%- if page_image -%}
+  {% liquid 
+    assign page_image_width = page_image.width
+    assign page_image_height = page_image.height
+    if metaobject.profile_photo != null 
+      assign page_image = metaobject.profile_photo
+      assign page_image_width = metaobject.profile_photo.value.width
+      assign page_image_height = metaobject.profile_photo.height.width
+    endif
+  %}
   <meta property="og:image" content="http:{{ page_image | image_url }}">
   <meta property="og:image:secure_url" content="https:{{ page_image | image_url }}">
-  <meta property="og:image:width" content="{{ page_image.width }}">
-  <meta property="og:image:height" content="{{ page_image.height }}">
+  <meta property="og:image:width" content="{{ page_image_width }}">
+  <meta property="og:image:height" content="{{ page_image_height }}">
 {%- endif -%}
 
 {%- if request.page_type == 'product' -%}
