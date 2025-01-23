@@ -7,8 +7,14 @@
   data-url="{{ product.url }}"
   {% if section.settings.image_zoom == 'hover' %}
     data-zoom-on-hover
-  {% endif %}
+  {% endif %}  
+
+ 
 >
+
+  <h1>
+    {{ product.title }}
+  </h1>
   {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
   {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
