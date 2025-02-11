@@ -211,7 +211,7 @@
     {%- if section.settings.title != blank -%}
       <h2 class="dsgn-pck__heading">{{ section.settings.title }}</h2>
     {%- endif -%}
-    <div class="dsgn-pck__logos dsgn-pck__flex dsgn-pck__flex--{{ section.settings.per_row }}-per-row">
+    <div class="page-width dsgn-pck__logos dsgn-pck__flex dsgn-pck__flex--{{ section.settings.per_row }}-per-row">
       {%- for block in section.blocks -%}
         <style>
           .dsgn-pck__block-{{ block.id }} img {
