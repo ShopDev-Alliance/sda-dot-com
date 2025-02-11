@@ -126,6 +126,17 @@
             "link": "{{ metaobjects.member_benefits[\"rubik-variant-images\"].link.value }}",
             "external_link": true
           }
+        },
+        "logo_Nccrdz": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].logo.value }}",
+            "scale": 1,
+            "title": "<p>{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].page_description | metafield_tag }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].link.value }}",
+            "external_link": true
+          }
         }
       },
       "block_order": [
@@ -135,7 +146,8 @@
         "logo_QV8hPN",
         "logo_UpDjrT",
         "logo_QQx7fp",
-        "logo_qWUUqc"
+        "logo_qWUUqc",
+        "logo_Nccrdz"
       ],
       "settings": {
         "title": "",
