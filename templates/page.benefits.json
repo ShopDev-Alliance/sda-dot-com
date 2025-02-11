@@ -15,9 +15,153 @@
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "rich_text_x63Xxp": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_36EqWQ": {
+          "type": "heading",
+          "settings": {
+            "heading": "Shopify Apps",
+            "heading_size": "h1"
+          }
+        },
+        "text_QEkp9a": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Exclusive discounts, extended free trials, affiliate programs, and more.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_36EqWQ",
+        "text_QEkp9a"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "border_is_visible": false,
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "design_pack_marquee_gallery_PndbhF": {
+      "type": "design_pack_-_marquee_-_gallery",
+      "blocks": {
+        "image_MHbbJW": {
+          "type": "image",
+          "source": "{{ metaobjects.member_benefits.yakk }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits.yakk.logo.value }}",
+            "link": "{{ metaobjects.member_benefits.yakk.link.value }}",
+            "external_link": true
+          }
+        },
+        "image_PV4L7t": {
+          "type": "image",
+          "source": "{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].logo.value }}",
+            "link": "{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].link.value }}",
+            "external_link": true
+          }
+        },
+        "image_8VQaWf": {
+          "type": "image",
+          "disabled": true,
+          "source": "{{ metaobjects.member_benefits[\"izi-gift\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"izi-gift\"].logo.value }}",
+            "link": "{{ metaobjects.member_benefits[\"izi-gift\"].link.value }}",
+            "external_link": true
+          }
+        },
+        "image_yz4erq": {
+          "type": "image",
+          "source": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].logo.value }}",
+            "link": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].link.value }}",
+            "external_link": true
+          }
+        },
+        "image_wbfCit": {
+          "type": "image",
+          "source": "{{ metaobjects.member_benefits[\"rubik-variant-images\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"rubik-variant-images\"].logo.value }}",
+            "link": "{{ metaobjects.member_benefits[\"rubik-variant-images\"].link.value }}",
+            "external_link": true
+          }
+        },
+        "image_LTDyzf": {
+          "type": "image",
+          "source": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].logo.value }}",
+            "link": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].link.value }}",
+            "external_link": true
+          }
+        },
+        "image_qPY8er": {
+          "type": "image",
+          "source": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].logo.value }}",
+            "link": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].link.value }}",
+            "external_link": true
+          }
+        },
+        "image_dqm4aR": {
+          "type": "image",
+          "disabled": true,
+          "source": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].logo.value }}",
+            "link": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].link.value }}",
+            "external_link": true
+          }
+        }
+      },
+      "block_order": [
+        "image_MHbbJW",
+        "image_PV4L7t",
+        "image_8VQaWf",
+        "image_yz4erq",
+        "image_wbfCit",
+        "image_LTDyzf",
+        "image_qPY8er",
+        "image_dqm4aR"
+      ],
+      "settings": {
+        "speed": 0.2,
+        "reverse_scrolling": false,
+        "scrolling_pause": true,
+        "show_arrows": false,
+        "grid_item_width": 18,
+        "gap": 10,
+        "image_crop": "1:1",
+        "mobile_grid_item_width": 38,
+        "border_radius": 0,
+        "border_color": "rgba(0,0,0,0)",
+        "border_width": 0,
+        "background_color": "rgba(0,0,0,0)",
+        "fade_edges": false,
+        "base_width": 100,
+        "max_width": "",
+        "inner_padding": 10,
+        "outer_margin": 0,
+        "custom_css": "",
+        "mobile_custom_css": "",
+        "anchor_id": ""
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "rich_text_x63Xxp",
+    "design_pack_marquee_gallery_PndbhF"
   ]
 }
