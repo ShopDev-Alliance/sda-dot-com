@@ -85,11 +85,13 @@
         },
         "logo_QV8hPN": {
           "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"] }}",
           "settings": {
+            "image": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].logo.value }}",
             "scale": 1,
-            "title": "",
-            "link": "",
-            "external_link": false
+            "title": "<p>{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].page_description | metafield_tag }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].link.value }}",
+            "external_link": true
           }
         }
       },
