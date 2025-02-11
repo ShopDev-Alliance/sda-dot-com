@@ -215,6 +215,47 @@
         "padding_bottom": 52
       }
     },
+    "design_pack_logo_list_LVkk3x": {
+      "type": "design_pack_-_logo_list",
+      "blocks": {
+        "logo_8a48Hg": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"how-to-build-shopify-apps\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"how-to-build-shopify-apps\"].logo.value }}",
+            "scale": 1,
+            "title": "<p>{{ metaobjects.member_benefits[\"how-to-build-shopify-apps\"].page_description | metafield_tag }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"how-to-build-shopify-apps\"].link.value }}",
+            "external_link": true
+          }
+        }
+      },
+      "block_order": [
+        "logo_8a48Hg"
+      ],
+      "settings": {
+        "title": "",
+        "per_row": 4,
+        "logo_size": 100,
+        "text_size": 100,
+        "heading_color": "#000000",
+        "text_color": "#000000",
+        "background_color": "",
+        "color_filter": "none",
+        "animation": "none",
+        "mobile_per_row": 2,
+        "base_width": 75,
+        "max_width": "",
+        "inner_padding": 0,
+        "outer_margin": 0,
+        "custom_css": "",
+        "mobile_custom_css": "",
+        "anchor_id": "",
+        "override_theme_font": false,
+        "heading_font": "serif",
+        "main_font": "sans-serif"
+      }
+    },
     "rich_text_nYwmVG": {
       "type": "rich-text",
       "blocks": {
@@ -252,6 +293,7 @@
     "rich_text_x63Xxp",
     "design_pack_logo_list_UXgcWw",
     "rich_text_a9Vp8L",
+    "design_pack_logo_list_LVkk3x",
     "rich_text_nYwmVG"
   ]
 }
