@@ -194,6 +194,10 @@
   #DP--{{ section_id }} .dsgn-pck__sizer {
     width: 100%;
   }
+
+  #DP--{{ section_id }} .dsgn-pck__logos {
+    justify-content: flex-start;
+  }
   {%- if section.settings.mobile_custom_css != blank -%}
     {%- assign mobile_custom_declarations = section.settings.mobile_custom_css | split: '}' -%}
     {%- for declaration in mobile_custom_declarations -%}
