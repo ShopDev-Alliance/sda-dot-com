@@ -207,10 +207,15 @@
 #DP--{{ section_id }} img {
   border-radius: var(--text-boxes-radius);
 }
+#DP--{{ section_id }}.page-width {
+  margin: 0 auto;
+}
+
+
 </style>
 
 {%- comment -%} HTML {%- endcomment -%}
-<section id="DP--{{ section_id }}" class="DP--{{ section_id }} dsgn-pck__logo-list dsgn-pck__section" {%- if section.settings.animation != 'none' -%}data-animated-section{%- endif -%}>
+<section id="DP--{{ section_id }}" class="DP--{{ section_id }} dsgn-pck__logo-list dsgn-pck__section page-width" {%- if section.settings.animation != 'none' -%}data-animated-section{%- endif -%}>
   {%- if section.settings.anchor_id != blank -%}
     <div id="{{ section.settings.anchor_id | remove: '#' | handleize }}" class="dsgn-pck__anchor-id" style="height: 0; overflow: hidden;"></div>
   {%- endif -%}
