@@ -104,6 +104,17 @@
             "link": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].link.value }}",
             "external_link": true
           }
+        },
+        "logo_QQx7fp": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"stoq-preorders-back-in-stock-alerts\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"stoq-preorders-back-in-stock-alerts\"].logo.value }}",
+            "scale": 1,
+            "title": "<p>{{ metaobjects.member_benefits[\"stoq-preorders-back-in-stock-alerts\"].page_description | metafield_tag }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"stoq-preorders-back-in-stock-alerts\"].link.value }}",
+            "external_link": true
+          }
         }
       },
       "block_order": [
@@ -111,7 +122,8 @@
         "logo_wCwiPe",
         "logo_D8fnUC",
         "logo_QV8hPN",
-        "logo_UpDjrT"
+        "logo_UpDjrT",
+        "logo_QQx7fp"
       ],
       "settings": {
         "title": "",
