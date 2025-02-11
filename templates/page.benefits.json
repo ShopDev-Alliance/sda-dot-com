@@ -115,6 +115,17 @@
             "link": "{{ metaobjects.member_benefits[\"stoq-preorders-back-in-stock-alerts\"].link.value }}",
             "external_link": true
           }
+        },
+        "logo_qWUUqc": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"rubik-variant-images\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"rubik-variant-images\"].logo.value }}",
+            "scale": 1,
+            "title": "<p>{{ metaobjects.member_benefits[\"rubik-variant-images\"].page_description | metafield_tag }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"rubik-variant-images\"].link.value }}",
+            "external_link": true
+          }
         }
       },
       "block_order": [
@@ -123,7 +134,8 @@
         "logo_D8fnUC",
         "logo_QV8hPN",
         "logo_UpDjrT",
-        "logo_QQx7fp"
+        "logo_QQx7fp",
+        "logo_qWUUqc"
       ],
       "settings": {
         "title": "",
