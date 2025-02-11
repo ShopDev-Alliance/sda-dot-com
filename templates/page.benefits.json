@@ -47,115 +47,75 @@
         "padding_bottom": 52
       }
     },
-    "design_pack_marquee_gallery_PndbhF": {
-      "type": "design_pack_-_marquee_-_gallery",
+    "design_pack_logo_list_UXgcWw": {
+      "type": "design_pack_-_logo_list",
       "blocks": {
-        "image_MHbbJW": {
-          "type": "image",
+        "logo_r7cVjP": {
+          "type": "logo",
           "source": "{{ metaobjects.member_benefits.yakk }}",
           "settings": {
             "image": "{{ metaobjects.member_benefits.yakk.logo.value }}",
+            "scale": 1,
+            "title": "<p>{{ metaobjects.member_benefits.yakk.page_description | metafield_tag }}</p>",
             "link": "{{ metaobjects.member_benefits.yakk.link.value }}",
-            "external_link": true
+            "external_link": false
           }
         },
-        "image_PV4L7t": {
-          "type": "image",
-          "source": "{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"] }}",
+        "logo_wCwiPe": {
+          "type": "logo",
           "settings": {
-            "image": "{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].logo.value }}",
-            "link": "{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].link.value }}",
-            "external_link": true
+            "scale": 1,
+            "title": "",
+            "link": "",
+            "external_link": false
           }
         },
-        "image_8VQaWf": {
-          "type": "image",
-          "disabled": true,
-          "source": "{{ metaobjects.member_benefits[\"izi-gift\"] }}",
+        "logo_D8fnUC": {
+          "type": "logo",
           "settings": {
-            "image": "{{ metaobjects.member_benefits[\"izi-gift\"].logo.value }}",
-            "link": "{{ metaobjects.member_benefits[\"izi-gift\"].link.value }}",
-            "external_link": true
+            "scale": 1,
+            "title": "",
+            "link": "",
+            "external_link": false
           }
         },
-        "image_yz4erq": {
-          "type": "image",
-          "source": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"] }}",
+        "logo_QV8hPN": {
+          "type": "logo",
           "settings": {
-            "image": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].logo.value }}",
-            "link": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].link.value }}",
-            "external_link": true
-          }
-        },
-        "image_wbfCit": {
-          "type": "image",
-          "source": "{{ metaobjects.member_benefits[\"rubik-variant-images\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"rubik-variant-images\"].logo.value }}",
-            "link": "{{ metaobjects.member_benefits[\"rubik-variant-images\"].link.value }}",
-            "external_link": true
-          }
-        },
-        "image_LTDyzf": {
-          "type": "image",
-          "source": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].logo.value }}",
-            "link": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].link.value }}",
-            "external_link": true
-          }
-        },
-        "image_qPY8er": {
-          "type": "image",
-          "source": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].logo.value }}",
-            "link": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].link.value }}",
-            "external_link": true
-          }
-        },
-        "image_dqm4aR": {
-          "type": "image",
-          "disabled": true,
-          "source": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].logo.value }}",
-            "link": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].link.value }}",
-            "external_link": true
+            "scale": 1,
+            "title": "",
+            "link": "",
+            "external_link": false
           }
         }
       },
       "block_order": [
-        "image_MHbbJW",
-        "image_PV4L7t",
-        "image_8VQaWf",
-        "image_yz4erq",
-        "image_wbfCit",
-        "image_LTDyzf",
-        "image_qPY8er",
-        "image_dqm4aR"
+        "logo_r7cVjP",
+        "logo_wCwiPe",
+        "logo_D8fnUC",
+        "logo_QV8hPN"
       ],
       "settings": {
-        "speed": 0.2,
-        "reverse_scrolling": false,
-        "scrolling_pause": true,
-        "show_arrows": false,
-        "grid_item_width": 18,
-        "gap": 10,
-        "image_crop": "1:1",
-        "mobile_grid_item_width": 38,
-        "border_radius": 0,
-        "border_color": "rgba(0,0,0,0)",
-        "border_width": 0,
-        "background_color": "rgba(0,0,0,0)",
-        "fade_edges": false,
-        "base_width": 100,
+        "title": "",
+        "per_row": 4,
+        "logo_size": 50,
+        "text_size": 100,
+        "heading_color": "#000000",
+        "text_color": "#000000",
+        "background_color": "",
+        "color_filter": "none",
+        "animation": "none",
+        "mobile_per_row": 2,
+        "base_width": 75,
         "max_width": "",
-        "inner_padding": 10,
+        "inner_padding": 0,
         "outer_margin": 0,
         "custom_css": "",
         "mobile_custom_css": "",
-        "anchor_id": ""
+        "anchor_id": "",
+        "override_theme_font": false,
+        "heading_font": "serif",
+        "main_font": "sans-serif"
       }
     },
     "rich_text_a9Vp8L": {
@@ -164,14 +124,14 @@
         "heading_rU6dNm": {
           "type": "heading",
           "settings": {
-            "heading": "Saas",
+            "heading": "Courses and Educational Content",
             "heading_size": "h1"
           }
         },
         "text_bdq36D": {
           "type": "text",
           "settings": {
-            "text": "<p>Exclusive deals on software-as-a-service to help you better support merchants</p>"
+            "text": "<p>Free access to educational content created within the community and discounts to courses to help you better serve merchants</p>"
           }
         }
       },
@@ -188,12 +148,44 @@
         "padding_top": 40,
         "padding_bottom": 52
       }
+    },
+    "rich_text_nYwmVG": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_EwaYHq": {
+          "type": "heading",
+          "settings": {
+            "heading": "Saas",
+            "heading_size": "h1"
+          }
+        },
+        "text_gyn7F8": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Exclusive deals on software-as-a-service to help you better support merchants</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_EwaYHq",
+        "text_gyn7F8"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "border_is_visible": false,
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
     "main",
     "rich_text_x63Xxp",
-    "design_pack_marquee_gallery_PndbhF",
-    "rich_text_a9Vp8L"
+    "design_pack_logo_list_UXgcWw",
+    "rich_text_a9Vp8L",
+    "rich_text_nYwmVG"
   ]
 }
