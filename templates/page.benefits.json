@@ -56,7 +56,7 @@
           "settings": {
             "image": "{{ metaobjects.member_benefits.yakk.logo.value }}",
             "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits.yakk.page_description | metafield_tag }}</p>",
+            "title": "<p>{{ metaobjects.member_benefits.yakk.name.value }}</p>",
             "link": "{{ metaobjects.member_benefits.yakk.link.value }}",
             "external_link": true
           }
@@ -67,7 +67,7 @@
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].logo.value }}",
             "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].page_description | metafield_tag }}</p>",
+            "title": "<p>{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].link.value }}",
             "external_link": true
           }
@@ -78,7 +78,7 @@
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"izi-gift\"].logo.value }}",
             "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"izi-gift\"].page_description | metafield_tag }}</p>",
+            "title": "<p>{{ metaobjects.member_benefits[\"izi-gift\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"izi-gift\"].link.value }}",
             "external_link": true
           }
@@ -89,7 +89,7 @@
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].logo.value }}",
             "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].page_description | metafield_tag }}</p>",
+            "title": "<p>{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].link.value }}",
             "external_link": true
           }
@@ -100,7 +100,7 @@
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].logo.value }}",
             "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].page_description | metafield_tag }}</p>",
+            "title": "<p>{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].link.value }}",
             "external_link": true
           }
@@ -111,7 +111,7 @@
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"stoq-preorders-back-in-stock-alerts\"].logo.value }}",
             "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"stoq-preorders-back-in-stock-alerts\"].page_description | metafield_tag }}</p>",
+            "title": "<p>{{ metaobjects.member_benefits[\"stoq-preorders-back-in-stock-alerts\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"stoq-preorders-back-in-stock-alerts\"].link.value }}",
             "external_link": true
           }
@@ -122,7 +122,7 @@
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"rubik-variant-images\"].logo.value }}",
             "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"rubik-variant-images\"].page_description | metafield_tag }}</p>",
+            "title": "<p>{{ metaobjects.member_benefits[\"rubik-variant-images\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"rubik-variant-images\"].link.value }}",
             "external_link": true
           }
@@ -133,7 +133,7 @@
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].logo.value }}",
             "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].page_description | metafield_tag }}</p>",
+            "title": "<p>{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].link.value }}",
             "external_link": true
           }
@@ -144,7 +144,7 @@
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].logo.value }}",
             "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].page_description | metafield_tag }}</p>",
+            "title": "<p>{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].link.value }}",
             "external_link": true
           }
@@ -165,9 +165,9 @@
         "title": "",
         "per_row": 4,
         "logo_size": 100,
-        "text_size": 100,
+        "text_size": 85,
         "heading_color": "#000000",
-        "text_color": "#000000",
+        "text_color": "#f7f9fc",
         "background_color": "",
         "color_filter": "none",
         "animation": "none",
@@ -224,7 +224,7 @@
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"how-to-build-shopify-apps\"].logo.value }}",
             "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"how-to-build-shopify-apps\"].page_description | metafield_tag }}</p>",
+            "title": "<p>{{ metaobjects.member_benefits[\"how-to-build-shopify-apps\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"how-to-build-shopify-apps\"].link.value }}",
             "external_link": true
           }
@@ -237,9 +237,9 @@
         "title": "",
         "per_row": 4,
         "logo_size": 100,
-        "text_size": 100,
+        "text_size": 85,
         "heading_color": "#000000",
-        "text_color": "#000000",
+        "text_color": "#f7f9fc",
         "background_color": "",
         "color_filter": "none",
         "animation": "none",
@@ -296,7 +296,7 @@
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"rankbase-io\"].logo.value }}",
             "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"rankbase-io\"].page_description | metafield_tag }}</p>",
+            "title": "<p>{{ metaobjects.member_benefits[\"rankbase-io\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"rankbase-io\"].link.value }}",
             "external_link": true
           }
@@ -309,9 +309,9 @@
         "title": "",
         "per_row": 4,
         "logo_size": 100,
-        "text_size": 100,
+        "text_size": 85,
         "heading_color": "#000000",
-        "text_color": "#000000",
+        "text_color": "#f7f9fc",
         "background_color": "",
         "color_filter": "none",
         "animation": "none",
