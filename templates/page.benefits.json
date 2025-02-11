@@ -93,13 +93,25 @@
             "link": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].link.value }}",
             "external_link": true
           }
+        },
+        "logo_UpDjrT": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].logo.value }}",
+            "scale": 1,
+            "title": "<p>{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].page_description | metafield_tag }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].link.value }}",
+            "external_link": true
+          }
         }
       },
       "block_order": [
         "logo_r7cVjP",
         "logo_wCwiPe",
         "logo_D8fnUC",
-        "logo_QV8hPN"
+        "logo_QV8hPN",
+        "logo_UpDjrT"
       ],
       "settings": {
         "title": "",
