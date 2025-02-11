@@ -286,6 +286,47 @@
         "padding_top": 40,
         "padding_bottom": 52
       }
+    },
+    "design_pack_logo_list_4E7mxt": {
+      "type": "design_pack_-_logo_list",
+      "blocks": {
+        "logo_TqThLC": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"rankbase-io\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"rankbase-io\"].logo.value }}",
+            "scale": 1,
+            "title": "<p>{{ metaobjects.member_benefits[\"rankbase-io\"].page_description | metafield_tag }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"rankbase-io\"].link.value }}",
+            "external_link": true
+          }
+        }
+      },
+      "block_order": [
+        "logo_TqThLC"
+      ],
+      "settings": {
+        "title": "",
+        "per_row": 4,
+        "logo_size": 100,
+        "text_size": 100,
+        "heading_color": "#000000",
+        "text_color": "#000000",
+        "background_color": "",
+        "color_filter": "none",
+        "animation": "none",
+        "mobile_per_row": 2,
+        "base_width": 75,
+        "max_width": "",
+        "inner_padding": 0,
+        "outer_margin": 0,
+        "custom_css": "",
+        "mobile_custom_css": "",
+        "anchor_id": "",
+        "override_theme_font": false,
+        "heading_font": "serif",
+        "main_font": "sans-serif"
+      }
     }
   },
   "order": [
@@ -294,6 +335,7 @@
     "design_pack_logo_list_UXgcWw",
     "rich_text_a9Vp8L",
     "design_pack_logo_list_LVkk3x",
-    "rich_text_nYwmVG"
+    "rich_text_nYwmVG",
+    "design_pack_logo_list_4E7mxt"
   ]
 }
