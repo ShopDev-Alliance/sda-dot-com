@@ -137,6 +137,17 @@
             "link": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].link.value }}",
             "external_link": true
           }
+        },
+        "logo_qKJaY4": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].logo.value }}",
+            "scale": 1,
+            "title": "<p>{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].page_description | metafield_tag }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].link.value }}",
+            "external_link": true
+          }
         }
       },
       "block_order": [
@@ -147,7 +158,8 @@
         "logo_UpDjrT",
         "logo_QQx7fp",
         "logo_qWUUqc",
-        "logo_Nccrdz"
+        "logo_Nccrdz",
+        "logo_qKJaY4"
       ],
       "settings": {
         "title": "",
