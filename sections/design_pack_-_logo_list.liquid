@@ -191,6 +191,9 @@
     padding-top: {{ section.settings.inner_padding | divided_by: 2 }}px;
     padding-bottom: {{ section.settings.inner_padding | divided_by: 2 }}px;
   }
+  #DP--{{ section_id }} .dsgn-pck__sizer {
+    width: 100%;
+  }
   {%- if section.settings.mobile_custom_css != blank -%}
     {%- assign mobile_custom_declarations = section.settings.mobile_custom_css | split: '}' -%}
     {%- for declaration in mobile_custom_declarations -%}
@@ -199,6 +202,10 @@
       {%- endif -%}
     {%- endfor -%}
   {%- endif -%}
+}
+
+#DP--{{ section_id }} img {
+  border-radius: var(--text-boxes-radius);
 }
 </style>
 
