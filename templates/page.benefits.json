@@ -58,16 +58,18 @@
             "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits.yakk.page_description | metafield_tag }}</p>",
             "link": "{{ metaobjects.member_benefits.yakk.link.value }}",
-            "external_link": false
+            "external_link": true
           }
         },
         "logo_wCwiPe": {
           "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"] }}",
           "settings": {
+            "image": "{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].logo.value }}",
             "scale": 1,
-            "title": "",
-            "link": "",
-            "external_link": false
+            "title": "<p>{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].page_description | metafield_tag }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].link.value }}",
+            "external_link": true
           }
         },
         "logo_D8fnUC": {
@@ -98,7 +100,7 @@
       "settings": {
         "title": "",
         "per_row": 4,
-        "logo_size": 50,
+        "logo_size": 100,
         "text_size": 100,
         "heading_color": "#000000",
         "text_color": "#000000",
