@@ -74,11 +74,13 @@
         },
         "logo_D8fnUC": {
           "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"izi-gift\"] }}",
           "settings": {
+            "image": "{{ metaobjects.member_benefits[\"izi-gift\"].logo.value }}",
             "scale": 1,
-            "title": "",
-            "link": "",
-            "external_link": false
+            "title": "<p>{{ metaobjects.member_benefits[\"izi-gift\"].page_description | metafield_tag }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"izi-gift\"].link.value }}",
+            "external_link": true
           }
         },
         "logo_QV8hPN": {
