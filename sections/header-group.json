@@ -13,18 +13,6 @@
   "sections": {
     "announcement-bar": {
       "type": "announcement-bar",
-      "blocks": {
-        "announcement_FjCdKt": {
-          "type": "announcement",
-          "settings": {
-            "text": "Apply to join",
-            "link": "shopify://pages/waitlist"
-          }
-        }
-      },
-      "block_order": [
-        "announcement_FjCdKt"
-      ],
       "settings": {
         "color_scheme": "scheme-1",
         "show_line_separator": true,
