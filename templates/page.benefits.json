@@ -297,7 +297,7 @@
             "image": "{{ metaobjects.member_benefits[\"rankbase-io\"].logo.value }}",
             "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"rankbase-io\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"rankbase-io\"].link.value }}",
+            "link": "{{ metaobjects.member_benefits[\"rankbase-io\"].system.url }}",
             "external_link": true
           }
         }
