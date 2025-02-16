@@ -58,9 +58,38 @@
         "padding_top": 40,
         "padding_bottom": 52
       }
+    },
+    "rich_text_PgHKzP": {
+      "type": "rich-text",
+      "blocks": {
+        "button_B6pEUW": {
+          "type": "button",
+          "settings": {
+            "button_label": "Back to Benefits",
+            "button_link": "shopify://pages/benefits",
+            "button_style_secondary": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "button_B6pEUW"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "border_is_visible": false,
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
-    "rich_text_fMhBKp"
+    "rich_text_fMhBKp",
+    "rich_text_PgHKzP"
   ]
 }
