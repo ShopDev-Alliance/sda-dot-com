@@ -8,6 +8,53 @@
  * ------------------------------------------------------------
  */
 {
-  "sections": {},
-  "order": []
+  "sections": {
+    "rich_text_fMhBKp": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_xGJ3By": {
+          "type": "heading",
+          "source": "{{ metaobject }}",
+          "settings": {
+            "heading": "{{ metaobject.name.value }}",
+            "heading_size": "h1"
+          }
+        },
+        "text_wwMHXr": {
+          "type": "text",
+          "settings": {
+            "text": "<p>{{ metaobject.page_description | metafield_tag }}</p>"
+          }
+        },
+        "button_7LerRE": {
+          "type": "button",
+          "settings": {
+            "button_label": "Learn More",
+            "button_link": "{{ metaobject.link.value }}",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_xGJ3By",
+        "text_wwMHXr",
+        "button_7LerRE"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "border_is_visible": false,
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "rich_text_fMhBKp"
+  ]
 }
