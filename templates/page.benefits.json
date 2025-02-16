@@ -58,7 +58,7 @@
             "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits.yakk.name.value }}</p>",
             "link": "{{ metaobjects.member_benefits.yakk.system.url }}",
-            "external_link": true
+            "external_link": false
           }
         },
         "logo_wCwiPe": {
@@ -69,7 +69,7 @@
             "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].system.url }}",
-            "external_link": true
+            "external_link": false
           }
         },
         "logo_D8fnUC": {
@@ -80,7 +80,7 @@
             "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"izi-gift\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"izi-gift\"].system.url }}",
-            "external_link": true
+            "external_link": false
           }
         },
         "logo_QV8hPN": {
@@ -91,7 +91,7 @@
             "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].system.url }}",
-            "external_link": true
+            "external_link": false
           }
         },
         "logo_UpDjrT": {
@@ -102,7 +102,7 @@
             "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].system.url }}",
-            "external_link": true
+            "external_link": false
           }
         },
         "logo_QQx7fp": {
@@ -113,7 +113,7 @@
             "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"stoq-preorders-back-in-stock-alerts\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"stoq-preorders-back-in-stock-alerts\"].system.url }}",
-            "external_link": true
+            "external_link": false
           }
         },
         "logo_qWUUqc": {
@@ -124,7 +124,7 @@
             "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"rubik-variant-images\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"rubik-variant-images\"].system.url }}",
-            "external_link": true
+            "external_link": false
           }
         },
         "logo_Nccrdz": {
@@ -135,7 +135,7 @@
             "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].system.url }}",
-            "external_link": true
+            "external_link": false
           }
         },
         "logo_qKJaY4": {
@@ -146,7 +146,7 @@
             "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].name.value }}</p>",
             "link": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].system.url }}",
-            "external_link": true
+            "external_link": false
           }
         }
       },
