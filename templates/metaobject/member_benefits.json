@@ -30,12 +30,24 @@
           "settings": {
             "text": "<h2>Member Benefit</h2>"
           }
+        },
+        "button_4ctmLr": {
+          "type": "button",
+          "settings": {
+            "button_label": "Learn More",
+            "button_link": "{{ metaobject.link.value }}",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
         }
       },
       "block_order": [
         "text_ACceJb",
         "text_wwMHXr",
-        "text_FDWmhL"
+        "text_FDWmhL",
+        "button_4ctmLr"
       ],
       "settings": {
         "desktop_content_position": "center",
