@@ -17,6 +17,12 @@ header.header.header--middle-center {
   }
 }
 
+/* # Header  */
+.header.header--middle-left .header__inline-menu {
+  grid-area: icons;
+  justify-self: end;
+}
+
 /* # Footer  */
 footer svg.icon-github {
   fill: white;
