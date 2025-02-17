@@ -116,6 +116,20 @@
                 </li>
                 {% endpaginate %}
             </ul>
+          {%- when 'member-benefits' -%}
+            {% if block.settings.benefits != blank %}
+            <div
+              class="rich-text__text rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+              {{ block.shopify_attributes }}
+              {% if settings.animations_reveal_on_scroll %}
+                data-cascade
+                style="--animation-order: {{ forloop.index }};"
+              {% endif %}
+            >
+              <h2>Member Benefits</h2>
+              {{ block.settings.benefits }}
+              </div>
+            {% endif %}
           {%- endcase -%}
         {%- endfor -%}
       </div>
@@ -365,6 +379,18 @@
           "id": "button_style_secondary_2",
           "default": false,
           "label": "t:sections.rich-text.blocks.buttons.settings.button_style_secondary_2.label"
+        }
+      ]
+    },
+    {
+      "type": "member-benefits",
+      "name": "Member Benefits",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "benefits",
+          "label": "Benefits"
         }
       ]
     }

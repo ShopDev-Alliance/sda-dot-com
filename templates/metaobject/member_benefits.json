@@ -1,95 +1,12 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "rich_text_fMhBKp": {
-      "type": "rich-text",
-      "blocks": {
-        "text_ACceJb": {
-          "type": "text",
-          "settings": {
-            "text": "<h1>{{ metaobject.name.value }}</h1>"
-          }
-        },
-        "text_wwMHXr": {
-          "type": "text",
-          "settings": {
-            "text": "<p>{{ metaobject.page_description | metafield_tag }}</p>"
-          }
-        },
-        "text_FDWmhL": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "<h2>Member Benefit</h2>"
-          }
-        },
-        "button_4ctmLr": {
-          "type": "button",
-          "settings": {
-            "button_label": "Learn More",
-            "button_link": "{{ metaobject.link.value }}",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "text_ACceJb",
-        "text_wwMHXr",
-        "text_FDWmhL",
-        "button_4ctmLr"
-      ],
+    "benefits": {
+      "type": "custom-benefits",
       "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "left",
-        "border_is_visible": false,
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
-    "rich_text_PgHKzP": {
-      "type": "rich-text",
-      "blocks": {
-        "button_B6pEUW": {
-          "type": "button",
-          "settings": {
-            "button_label": "Back to Benefits",
-            "button_link": "shopify://pages/benefits",
-            "button_style_secondary": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "button_B6pEUW"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "border_is_visible": false,
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
       }
     }
   },
   "order": [
-    "rich_text_fMhBKp",
-    "rich_text_PgHKzP"
+    "benefits"
   ]
 }

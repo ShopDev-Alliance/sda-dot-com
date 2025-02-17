@@ -291,6 +291,19 @@
         {%- endif -%}
       </div>
     </div>
+
+    {% if section.settings.footer_links != blank %}
+      <ul class="coc-info list-unstyled text-center">
+        {% for link in section.settings.footer_links.links %}
+          <li>
+            <small class="copyright__content">
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </small>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    
     <div class="footer__content-bottom-wrapper page-width{% if section.settings.enable_country_selector == false and section.settings.enable_language_selector == false %} footer__content-bottom-wrapper--center{% endif %}">
       <div class="footer__copyright caption">
         <small class="copyright__content"
@@ -312,33 +325,6 @@
         {%- endif -%}
       </div>
     </div>
-    <ul class="coc-info list-unstyled text-center">
-      <li>
-        <small class="copyright__content">
-          <a href="/pages/code-of-conduct">Code of Conduct</a>
-        </small>
-      </li>
-      <li>
-        <small class="copyright__content">
-          <a href="/pages/report-coc-violation">Report a Violation</a>
-        </small>
-      </li>
-      <li>
-        <small class="copyright__content">
-          <a href="/pages/members">Members</a>
-        </small>
-      </li>
-      <li>
-        <small class="copyright__content">
-          <a href="/pages/get-a-quote">Get Dev Support</a>
-        </small>
-      </li>
-      <li>
-        <small class="copyright__content">
-          <a href="/pages/contact">Contact</a>
-        </small>
-      </li>
-    </ul>
   </div>
 </footer>
 
@@ -575,6 +561,11 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    },
+    {
+      "type": "link_list",
+      "id": "footer_links",
+      "label": "Footer Links"
     }
   ],
   "default": {

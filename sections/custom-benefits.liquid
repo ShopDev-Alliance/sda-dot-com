@@ -1,0 +1,129 @@
+{% liquid
+  assign show_benefits = metaobject.publicly_available | default: false
+  assign visit_url = metaobject.link 
+%}
+
+<section id="profile-page" class="page-width benefits-page">
+  <div class="profile-container">
+    <div class="profile-left">
+      <div class="profile-left--container">
+        {% unless metaobject.logo == blank %}
+          <div class="profile-left--image">
+            {{ metaobject.logo.value | image_url: width: 350 | image_tag: widths: '350, 500, 650', sizes: '(max-width: 650px) 350px' }}
+          </div>
+        {% endunless %}
+        <div class="profile-left--info">
+          <h1 class="profile-left--name">{{ metaobject.name.value }}</h1>
+          {% unless metaobject.type == blank %}
+            <p class="profile-left--tag">{{ metaobject.type.value }}</p>
+          {% endunless %}
+        </div>
+        <div class="profile-left--socials">
+          <ul class="list-unstyled">
+            {% unless visit_url == blank %}
+              <div class="profile-left--cta">
+                <a class="button button--primary" href="{{ visit_url }}">Learn More</a>
+              </div>
+            {% endunless %}
+            {% unless metaobject.twitter == blank %}
+              <li class="list-social__item">
+                <a class="link list-social__link" href="{{ metaobject.twitter.value }}">{% render 'icon-twitter' %}
+                  <span class="visually-hidden">Twitter</span>
+                </a>
+              </li>
+            {% endunless %}
+            {% unless metaobject.linked_in == blank %}
+              <li class="list-social__item">
+                <a class="link list-social__link" href="{{ metaobject.linked_in.value }}">{% render 'icon-linkedin' %}
+                  <span class="visually-hidden">LinkedIn</span>
+                </a>
+              </li>
+            {% endunless %}
+            {% unless metaobject.github == blank %}
+              <li class="list-social__item">
+                <a class="link list-social__link" href="{{ metaobject.github.value }}">{% render 'icon-github' %}
+                  <span class="visually-hidden">Github</span>
+                </a>
+              </li>
+            {% endunless %}
+            {% unless metaobject.you_tube == blank %}
+              <li class="list-social__item">
+                <a class="link list-social__link" href="{{ metaobject.you_tube.value }}">{% render 'icon-youtube' %}
+                  <span class="visually-hidden">YouTube</span>
+                </a>
+              </li>
+            {% endunless %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="profile-right">
+      {% liquid
+        assign description_classes = 'profile-right--bio'
+        if metaobject.page_description == blank
+          assign description_classes = description_classes | append: ' description--empty'
+        endif
+      %}
+      <div class="{{ description_classes }}">
+        <h2>About</h2>
+        {{ metaobject.page_description | metafield_tag }}
+      </div>
+      {% unless metaobject.description == blank %}
+        <h3>Member Benefits</h3>
+        {% if show_benefits %}
+          {{ metaobject.description | metafield_tag }}
+        {% else %}
+          <p>Benefit details only available within ShopDev Alliance Slack.</p>
+        {% endif %}
+      {% endunless %}
+
+
+      {% unless metaobject.portfolio_sites == blank %}
+        <h3>Portfolio References</h3>
+        {{ metaobject.portfolio_sites | metafield_tag }}
+      {% endunless %}
+      {% if metaobject.reviews != blank %}
+        <div class="profile-right--reviews">
+            <h3>Reviews</h3>
+            {% for review in metaobject.reviews.value %}
+              <div class="review">
+                {{ review.review_content | metafield_tag }}
+                <p class="reviewer-link">
+                  {% unless review.link == blank %}<a href="{{review.link.value }}" target="_blank">{% endunless %}
+                    {{ review.reviewer.value }}
+                  {% unless review.link == blank %}</a>{% endunless %}
+                </p>
+              </div>
+            {% endfor %}
+        </div>
+      {% endif %}
+      {% unless metaobject.other_links == blank %}
+        <h3>Other Projects</h3>
+        {{ metaobject.other_links | metafield_tag }}
+      {% endunless %}
+      {% if metaobject.industry_experience != blank %}
+        <div class="profile-right--industries">
+          <h3>Industry Experience</h3>
+          <ul>
+            {% for industry in metaobject.industry_experience.value %}
+              <li>{{ industry }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Member Benefits",
+    "settings": [],
+    "presets": [
+      {
+        "name": "Member Benefits",
+        "settings": {}
+      }
+    ]
+  }
+{% endschema %}
