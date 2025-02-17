@@ -276,6 +276,21 @@ a.member-card:hover img {
   text-align: right;
   font-weight: bold;
 }
+#profile-page.benefits-page .benefits-small-round {
+  border-radius: 50%;
+  max-width: 100px;
+  max-height: 100px;
+  overflow: hidden;
+  border: 1px solid white;
+}
+.member-card-small {
+  border: var(--text-boxes-border-width) solid rgba(var(--color-foreground), var(--text-boxes-border-opacity));
+  padding: 2rem;
+}
+.member-card-small h4,
+.member-card-small p {
+  margin: 0;
+}
 @media screen and (min-width: 768px) {
   #profile-page .profile-container {
     display: grid;
@@ -297,5 +312,10 @@ a.member-card:hover img {
   }
   #profile-page .profile-left--image {
     justify-content: start;
+  }
+  .member-card-small {
+    display: flex;
+    align-items: center;
+    gap: 5rem;
   }
 }

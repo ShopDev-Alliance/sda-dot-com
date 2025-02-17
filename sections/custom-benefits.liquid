@@ -76,41 +76,33 @@
           <p>Benefit details only available within ShopDev Alliance Slack.</p>
         {% endif %}
       {% endunless %}
-
-
-      {% unless metaobject.portfolio_sites == blank %}
-        <h3>Portfolio References</h3>
-        {{ metaobject.portfolio_sites | metafield_tag }}
-      {% endunless %}
-      {% if metaobject.reviews != blank %}
-        <div class="profile-right--reviews">
-            <h3>Reviews</h3>
-            {% for review in metaobject.reviews.value %}
-              <div class="review">
-                {{ review.review_content | metafield_tag }}
-                <p class="reviewer-link">
-                  {% unless review.link == blank %}<a href="{{review.link.value }}" target="_blank">{% endunless %}
-                    {{ review.reviewer.value }}
-                  {% unless review.link == blank %}</a>{% endunless %}
-                </p>
-              </div>
-            {% endfor %}
+      {% unless metaobject.member == blank %}
+        {% liquid
+          assign member_info = metaobject.member.value
+          assign member_url = member_info.system.url
+        %}
+        <h3>From Member</h3>
+        <div class="member-card-small">
+          {% if member_info.profile_photo != blank %}
+            <div class="benefits-small-round">
+              <a href="{{ member_url }}">
+                {{ member_info.profile_photo.value | image_url: width: 200 | image_tag: 
+                  widths: '150, 250, 350',
+                  sizes: 'max-width: 350px) 200px',
+                  class: 'benefits-small-round',
+                  alt: member_info.name.value
+                }}
+              </a>
+            </div>
+          {% endif %}
+          <div>
+            <h4>{{ member_info.name.value }}</h4>
+            {% unless member_info.tagline == blank %}
+              <p>{{ member_info.tagline.value }}</p>
+            {% endunless %}
+          </div>
         </div>
-      {% endif %}
-      {% unless metaobject.other_links == blank %}
-        <h3>Other Projects</h3>
-        {{ metaobject.other_links | metafield_tag }}
       {% endunless %}
-      {% if metaobject.industry_experience != blank %}
-        <div class="profile-right--industries">
-          <h3>Industry Experience</h3>
-          <ul>
-            {% for industry in metaobject.industry_experience.value %}
-              <li>{{ industry }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
     </div>
   </div>
 </section>
