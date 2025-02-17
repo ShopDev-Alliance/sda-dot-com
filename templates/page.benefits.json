@@ -148,6 +148,17 @@
             "link": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].system.url }}",
             "external_link": false
           }
+        },
+        "logo_g79bHV": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"geolocation-orbe\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"geolocation-orbe\"].logo.value }}",
+            "scale": 1,
+            "title": "<p>{{ metaobjects.member_benefits[\"geolocation-orbe\"].name.value }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"geolocation-orbe\"].system.url }}",
+            "external_link": false
+          }
         }
       },
       "block_order": [
@@ -159,7 +170,8 @@
         "logo_QQx7fp",
         "logo_qWUUqc",
         "logo_Nccrdz",
-        "logo_qKJaY4"
+        "logo_qKJaY4",
+        "logo_g79bHV"
       ],
       "settings": {
         "title": "",
