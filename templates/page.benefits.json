@@ -243,6 +243,7 @@
         },
         "logo_ADFUG6": {
           "type": "logo",
+          "disabled": true,
           "source": "{{ metaobjects.member_benefits[\"shopify-java-script-mastery\"] }}",
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"shopify-java-script-mastery\"].logo.value }}",
