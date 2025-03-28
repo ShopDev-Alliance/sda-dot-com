@@ -240,10 +240,22 @@
             "link": "{{ metaobjects.member_benefits[\"how-to-build-shopify-apps\"].system.url }}",
             "external_link": false
           }
+        },
+        "logo_ADFUG6": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"shopify-java-script-mastery\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"shopify-java-script-mastery\"].logo.value }}",
+            "scale": 1,
+            "title": "<p>{{ metaobjects.member_benefits[\"shopify-java-script-mastery\"].name.value }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"shopify-java-script-mastery\"].system.url }}",
+            "external_link": false
+          }
         }
       },
       "block_order": [
-        "logo_8a48Hg"
+        "logo_8a48Hg",
+        "logo_ADFUG6"
       ],
       "settings": {
         "title": "",
