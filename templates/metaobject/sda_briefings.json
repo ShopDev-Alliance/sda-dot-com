@@ -8,6 +8,41 @@
  * ------------------------------------------------------------
  */
 {
-  "sections": {},
-  "order": []
+  "sections": {
+    "rich_text_bngypa": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_t6XWVB": {
+          "type": "heading",
+          "settings": {
+            "heading": "{{ metaobject.name.value }}",
+            "heading_size": "h1"
+          }
+        },
+        "text_JAC8YP": {
+          "type": "text",
+          "settings": {
+            "text": "<p>{{ metaobject.description | metafield_tag }}</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_t6XWVB",
+        "text_JAC8YP"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "border_is_visible": false,
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "rich_text_bngypa"
+  ]
 }
