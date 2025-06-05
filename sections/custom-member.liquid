@@ -30,35 +30,35 @@
             <ul class="list-unstyled">
               {% unless metaobject.website == blank %}
                 <li class="list-social__item">
-                  <a class="link list-social__link" href="{{ metaobject.website.value }}">{% render 'icon-website' %}
+                  <a class="link list-social__link" href="{{ metaobject.website.value }}" target="_blank">{% render 'icon-website' %}
                     <span class="visually-hidden">Website</span>
                   </a>
                 </li>
               {% endunless %}
               {% unless metaobject.twitter == blank %}
                 <li class="list-social__item">
-                  <a class="link list-social__link" href="{{ metaobject.twitter.value }}">{% render 'icon-twitter' %}
+                  <a class="link list-social__link" href="{{ metaobject.twitter.value }}" target="_blank">{% render 'icon-twitter' %}
                     <span class="visually-hidden">Twitter</span>
                   </a>
                 </li>
               {% endunless %}
               {% unless metaobject.linked_in == blank %}
                 <li class="list-social__item">
-                  <a class="link list-social__link" href="{{ metaobject.linked_in.value }}">{% render 'icon-linkedin' %}
+                  <a class="link list-social__link" href="{{ metaobject.linked_in.value }}" target="_blank">{% render 'icon-linkedin' %}
                     <span class="visually-hidden">LinkedIn</span>
                   </a>
                 </li>
               {% endunless %}
               {% unless metaobject.github == blank %}
                 <li class="list-social__item">
-                  <a class="link list-social__link" href="{{ metaobject.github.value }}">{% render 'icon-github' %}
+                  <a class="link list-social__link" href="{{ metaobject.github.value }}" target="_blank">{% render 'icon-github' %}
                     <span class="visually-hidden">Github</span>
                   </a>
                 </li>
               {% endunless %}
               {% unless metaobject.you_tube == blank %}
                 <li class="list-social__item">
-                  <a class="link list-social__link" href="{{ metaobject.you_tube.value }}">{% render 'icon-youtube' %}
+                  <a class="link list-social__link" href="{{ metaobject.you_tube.value }}" target="_blank">{% render 'icon-youtube' %}
                     <span class="visually-hidden">YouTube</span>
                   </a>
                 </li>
