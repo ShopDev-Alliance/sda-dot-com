@@ -683,7 +683,7 @@
         "text_cFKhtU": {
           "type": "text",
           "settings": {
-            "text": "<p>Your paid membership includes a Slack Pro account, access to a moderated Slack with an enforced <a href=\"/pages/code-of-conduct\" title=\"Code of Conduct\">Code of Conduct</a>, <a href=\"/pages/members\" title=\"Members\">member profile</a>, job leads, and much more.</p>"
+            "text": "<p>Your paid membership includes a Slack Pro account, access to a moderated Slack with an enforced <a href=\"/pages/code-of-conduct\" title=\"Code of Conduct\">Code of Conduct</a>, <a href=\"/pages/members\" title=\"Members\">member profile</a>, job leads, and <a href=\"/pages/benefits\" title=\"Benefits\">much more</a>.</p>"
           }
         }
       },
