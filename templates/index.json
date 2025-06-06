@@ -781,25 +781,13 @@
         "text_WAN6QR": {
           "type": "text",
           "settings": {
-            "text": "<p>We are building the most worthwhile community for Shopify Freelance Developers.</p>"
-          }
-        },
-        "button_NCiXXT": {
-          "type": "button",
-          "settings": {
-            "button_label": "Apply to join",
-            "button_link": "shopify://pages/waitlist",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "text": "<p>We are building the most worthwhile community for Shopify Developers.</p>"
           }
         }
       },
       "block_order": [
         "heading_j3jaKQ",
-        "text_WAN6QR",
-        "button_NCiXXT"
+        "text_WAN6QR"
       ],
       "settings": {
         "desktop_content_position": "center",
