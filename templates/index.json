@@ -22,7 +22,7 @@
         "text_QdzPai": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>A curated community of freelance Shopify developers.</strong></p>"
+            "text": "<p><strong>A curated community of Shopify developers.</strong></p>"
           }
         },
         "button_Pm48am": {
@@ -100,32 +100,20 @@
         "heading_4qBFBN": {
           "type": "heading",
           "settings": {
-            "heading": "ShopDev Alliance is a paid Slack community for freelance Shopify developers.",
+            "heading": "ShopDev Alliance, is the paid Slack community for best in class Shopify Developers.",
             "heading_size": "h2"
           }
         },
-        "text_qriGQU": {
+        "text_arTxEp": {
           "type": "text",
           "settings": {
-            "text": ""
-          }
-        },
-        "button_8ULaUy": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "text": "<p>Whenever you are a freelancer, agency employee, app or theme developer, the ShopDev Alliance is the place to work with the best Shopify developers around the world.</p>"
           }
         }
       },
       "block_order": [
         "heading_4qBFBN",
-        "text_qriGQU",
-        "button_8ULaUy"
+        "text_arTxEp"
       ],
       "settings": {
         "desktop_content_position": "center",
@@ -135,159 +123,6 @@
         "full_width": true,
         "padding_top": 40,
         "padding_bottom": 52
-      }
-    },
-    "rich_text_g6GfTU": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_NDVKaW": {
-          "type": "heading",
-          "settings": {
-            "heading": "You may be building solo, but you don't have to do it alone.",
-            "heading_size": "h2"
-          }
-        },
-        "text_NJVPXR": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Just like you we are builders, battling scope creep, crazy expectations, and an evolving web development world.</p><p>Running a business is a lot. That's why we started this community.</p>"
-          }
-        },
-        "button_KezFLm": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_NDVKaW",
-        "text_NJVPXR",
-        "button_KezFLm"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "border_is_visible": false,
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
-    "rich_text_cKHH6T": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_9UCrWx": {
-          "type": "heading",
-          "settings": {
-            "heading": "By Shopify Developers, For Shopify Developers",
-            "heading_size": "h2"
-          }
-        },
-        "text_DNTj8U": {
-          "type": "text",
-          "settings": {
-            "text": "<p>A paid and private community founded by two freelance Shopify developers who have been in your shoes.</p>"
-          }
-        },
-        "button_CQUUqx": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_9UCrWx",
-        "text_DNTj8U",
-        "button_CQUUqx"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "border_is_visible": false,
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
-    "multirow_4fzUye": {
-      "type": "multirow",
-      "blocks": {
-        "row_Exrn6Q": {
-          "type": "row",
-          "settings": {
-            "caption": "Caption",
-            "heading": "",
-            "text": "<p>Pro Slack membership so we can maintain a searchable history of great content, not just the last 90 days.</p>",
-            "button_label": "Button label",
-            "button_link": ""
-          }
-        },
-        "row_HWTjFU": {
-          "type": "row",
-          "settings": {
-            "caption": "Caption",
-            "heading": "",
-            "text": "<p>High-quality engagement from other successful full time Freelance Shopify Developers.</p>",
-            "button_label": "Button label",
-            "button_link": ""
-          }
-        },
-        "row_NffeN3": {
-          "type": "row",
-          "settings": {
-            "caption": "Caption",
-            "heading": "Row",
-            "text": "<p>Moderators who enforce a code of conduct.</p>",
-            "button_label": "Button label",
-            "button_link": ""
-          }
-        },
-        "row_FTbgK6": {
-          "type": "row",
-          "settings": {
-            "caption": "Caption",
-            "heading": "Row",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "button_label": "Button label",
-            "button_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "row_Exrn6Q",
-        "row_HWTjFU",
-        "row_NffeN3",
-        "row_FTbgK6"
-      ],
-      "disabled": true,
-      "settings": {
-        "image_height": "medium",
-        "desktop_image_width": "medium",
-        "heading_size": "h1",
-        "text_style": "body",
-        "button_style": "secondary",
-        "desktop_content_position": "middle",
-        "desktop_content_alignment": "left",
-        "image_layout": "alternate-left",
-        "section_color_scheme": "",
-        "row_color_scheme": "",
-        "mobile_content_alignment": "left",
-        "padding_top": 36,
-        "padding_bottom": 36
       }
     },
     "multicolumn_ACKpiK": {
@@ -403,6 +238,92 @@
         "swipe_on_mobile": true,
         "padding_top": 36,
         "padding_bottom": 36
+      }
+    },
+    "rich_text_g6GfTU": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_NDVKaW": {
+          "type": "heading",
+          "settings": {
+            "heading": "You may be building solo, but you don't have to do it alone.",
+            "heading_size": "h2"
+          }
+        },
+        "text_NJVPXR": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Just like you we are builders, battling scope creep, crazy expectations, and an evolving web development world.</p>"
+          }
+        },
+        "button_KezFLm": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_NDVKaW",
+        "text_NJVPXR",
+        "button_KezFLm"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "border_is_visible": false,
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "rich_text_cKHH6T": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_9UCrWx": {
+          "type": "heading",
+          "settings": {
+            "heading": "By Shopify Developers, For Shopify Developers",
+            "heading_size": "h2"
+          }
+        },
+        "text_DNTj8U": {
+          "type": "text",
+          "settings": {
+            "text": "<p>A paid and private community founded by two freelance Shopify developers who have been in your shoes.</p>"
+          }
+        },
+        "button_CQUUqx": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_9UCrWx",
+        "text_DNTj8U",
+        "button_CQUUqx"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "border_is_visible": false,
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     },
     "image_with_text_gHBR8B": {
@@ -804,12 +725,11 @@
     "rich_text_a9KGWB",
     "image_banner",
     "rich_text_enUFz6",
-    "rich_text_g6GfTU",
-    "rich_text_cKHH6T",
-    "multirow_4fzUye",
     "multicolumn_ACKpiK",
+    "rich_text_cKHH6T",
     "image_with_text_gHBR8B",
     "multicolumn_WJJTA9",
+    "rich_text_g6GfTU",
     "members_metaobjects_TRHyJk",
     "rich_text_A6TGQG",
     "image_banner_mVqgi4",
