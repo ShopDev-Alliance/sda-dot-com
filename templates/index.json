@@ -388,6 +388,49 @@
         "padding_bottom": 52
       }
     },
+    "rich_text_g6GfTU": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_NDVKaW": {
+          "type": "heading",
+          "settings": {
+            "heading": "You may be building solo, but you don't have to do it alone.",
+            "heading_size": "h2"
+          }
+        },
+        "text_NJVPXR": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Just like you we are builders, battling scope creep, crazy expectations, and an evolving web development world.</p>"
+          }
+        },
+        "button_KezFLm": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_NDVKaW",
+        "text_NJVPXR",
+        "button_KezFLm"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "border_is_visible": false,
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "rich_text_ddVDah": {
       "type": "rich-text",
       "blocks": {
@@ -486,49 +529,6 @@
         "padding_bottom": 20
       }
     },
-    "rich_text_g6GfTU": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_NDVKaW": {
-          "type": "heading",
-          "settings": {
-            "heading": "You may be building solo, but you don't have to do it alone.",
-            "heading_size": "h2"
-          }
-        },
-        "text_NJVPXR": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Just like you we are builders, battling scope creep, crazy expectations, and an evolving web development world.</p>"
-          }
-        },
-        "button_KezFLm": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_NDVKaW",
-        "text_NJVPXR",
-        "button_KezFLm"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "border_is_visible": false,
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
     "rich_text_GwcEP3": {
       "type": "rich-text",
       "blocks": {
@@ -570,10 +570,10 @@
     "rich_text_cKHH6T",
     "members_metaobjects_TRHyJk",
     "rich_text_A6TGQG",
+    "rich_text_g6GfTU",
     "rich_text_ddVDah",
     "multicolumn_VU3Ryb",
     "rich_text_gCV36H",
-    "rich_text_g6GfTU",
     "rich_text_GwcEP3"
   ]
 }
