@@ -199,16 +199,6 @@
             "link_label": "",
             "link": ""
           }
-        },
-        "column_x6Dk6X": {
-          "type": "column",
-          "disabled": true,
-          "settings": {
-            "title": "",
-            "text": "",
-            "link_label": "",
-            "link": ""
-          }
         }
       },
       "block_order": [
@@ -219,8 +209,7 @@
         "column_Lk9MGD",
         "column_G9PgKT",
         "column_GAmkVN",
-        "column_hFKENw",
-        "column_x6Dk6X"
+        "column_hFKENw"
       ],
       "settings": {
         "title": "Why Join SDA?",
@@ -281,96 +270,6 @@
         "full_width": true,
         "padding_top": 40,
         "padding_bottom": 52
-      }
-    },
-    "rich_text_cKHH6T": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_9UCrWx": {
-          "type": "heading",
-          "settings": {
-            "heading": "By Shopify Developers, For Shopify Developers",
-            "heading_size": "h2"
-          }
-        },
-        "text_DNTj8U": {
-          "type": "text",
-          "settings": {
-            "text": "<p>A paid and private community founded by two freelance Shopify developers who have been in your shoes.</p>"
-          }
-        },
-        "button_CQUUqx": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_9UCrWx",
-        "text_DNTj8U",
-        "button_CQUUqx"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "border_is_visible": false,
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
-    "image_with_text_gHBR8B": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_7RJbYG": {
-          "type": "heading",
-          "settings": {
-            "heading": "Image with text",
-            "heading_size": "h1"
-          }
-        },
-        "text_UVVEtF": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "text_style": "body"
-          }
-        },
-        "button_9EbbMM": {
-          "type": "button",
-          "settings": {
-            "button_label": "Button label",
-            "button_link": "",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_7RJbYG",
-        "text_UVVEtF",
-        "button_9EbbMM"
-      ],
-      "disabled": true,
-      "settings": {
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "image_first",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "content_layout": "no-overlap",
-        "section_color_scheme": "",
-        "color_scheme": "",
-        "image_behavior": "none",
-        "mobile_content_alignment": "left",
-        "padding_top": 36,
-        "padding_bottom": 36
       }
     },
     "multicolumn_WJJTA9": {
@@ -441,6 +340,49 @@
         "padding_bottom": 36
       }
     },
+    "rich_text_cKHH6T": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_9UCrWx": {
+          "type": "heading",
+          "settings": {
+            "heading": "By Shopify Developers, For Shopify Developers",
+            "heading_size": "h2"
+          }
+        },
+        "text_DNTj8U": {
+          "type": "text",
+          "settings": {
+            "text": "<p>A paid and private community founded by two freelance Shopify developers who have been in your shoes.</p>"
+          }
+        },
+        "button_CQUUqx": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_9UCrWx",
+        "text_DNTj8U",
+        "button_CQUUqx"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "border_is_visible": false,
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "members_metaobjects_TRHyJk": {
       "type": "members-metaobjects",
       "settings": {
@@ -487,108 +429,6 @@
         "full_width": true,
         "padding_top": 20,
         "padding_bottom": 52
-      }
-    },
-    "image_banner_mVqgi4": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_MaQLDK": {
-          "type": "heading",
-          "settings": {
-            "heading": "LET THE REBELLION BEGIN",
-            "heading_size": "h1"
-          }
-        },
-        "text_LYijmz": {
-          "type": "text",
-          "settings": {
-            "text": "We are building the most worthwhile community for Shopify Freelance Developers.",
-            "text_style": "body"
-          }
-        },
-        "buttons_xAiLzK": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Apply to the waitlist",
-            "button_link_1": "shopify://pages/waitlist",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_MaQLDK",
-        "text_LYijmz",
-        "buttons_xAiLzK"
-      ],
-      "disabled": true,
-      "settings": {
-        "image_overlay_opacity": 0,
-        "image_height": "medium",
-        "desktop_content_position": "middle-center",
-        "show_text_box": true,
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "image_behavior": "none",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": true,
-        "show_text_below": true
-      }
-    },
-    "slideshow_cnQD3K": {
-      "type": "slideshow",
-      "blocks": {
-        "slide_kwemU8": {
-          "type": "slide",
-          "settings": {
-            "heading": "\"Honestly this thread alone is probably worth the price of my subscription, as I'm currently thinking about the most promising vectors for achieving stability of inbound leads. Appreciating all the veteran insights.\"",
-            "heading_size": "h2",
-            "subheading": "- SDA Member",
-            "button_label": "",
-            "link": "",
-            "button_style_secondary": false,
-            "box_align": "middle-center",
-            "show_text_box": true,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "scheme-1",
-            "text_alignment_mobile": "center"
-          }
-        },
-        "slide_dEHkKV": {
-          "type": "slide",
-          "settings": {
-            "heading": "this is more valuable than most things I've attended in the past",
-            "heading_size": "h1",
-            "subheading": "- Another SDA member",
-            "button_label": "",
-            "link": "",
-            "button_style_secondary": false,
-            "box_align": "middle-center",
-            "show_text_box": true,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "",
-            "text_alignment_mobile": "center"
-          }
-        }
-      },
-      "block_order": [
-        "slide_kwemU8",
-        "slide_dEHkKV"
-      ],
-      "disabled": true,
-      "settings": {
-        "layout": "full_bleed",
-        "slide_height": "small",
-        "slider_visual": "dots",
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "image_behavior": "none",
-        "show_text_below": false,
-        "accessibility_info": "testimonials from members"
       }
     },
     "rich_text_ddVDah": {
@@ -726,17 +566,14 @@
     "image_banner",
     "rich_text_enUFz6",
     "multicolumn_ACKpiK",
-    "rich_text_cKHH6T",
-    "image_with_text_gHBR8B",
     "multicolumn_WJJTA9",
-    "rich_text_g6GfTU",
+    "rich_text_cKHH6T",
     "members_metaobjects_TRHyJk",
     "rich_text_A6TGQG",
-    "image_banner_mVqgi4",
-    "slideshow_cnQD3K",
     "rich_text_ddVDah",
     "multicolumn_VU3Ryb",
     "rich_text_gCV36H",
+    "rich_text_g6GfTU",
     "rich_text_GwcEP3"
   ]
 }
