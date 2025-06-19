@@ -388,64 +388,6 @@
         "padding_bottom": 52
       }
     },
-    "rich_text_g6GfTU": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_LVKndQ": {
-          "type": "heading",
-          "settings": {
-            "heading": "Who Should Apply?",
-            "heading_size": "h1"
-          }
-        },
-        "text_NJVPXR": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Experienced Shopify Developers. We are a community of experienced developers supporting merchants on Shopify who want to learn and grow together.</p><p>Just like you we are builders, battling scope creep, crazy expectations, and an evolving web development world.</p>"
-          }
-        },
-        "heading_NDVKaW": {
-          "type": "heading",
-          "settings": {
-            "heading": "You may be building solo, but you don't have to do it alone.",
-            "heading_size": "h2"
-          }
-        },
-        "text_RFhmjK": {
-          "type": "text",
-          "settings": {
-            "text": "<p>If you are not a developer, or not looking for a developer-focused community, we highly recommend you check out our friends at <a href=\"https://theoperatorsguild.com/\" target=\"_blank\" title=\"https://theoperatorsguild.com/\">Operators Guild</a>.</p>"
-          }
-        },
-        "button_KezFLm": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_LVKndQ",
-        "text_NJVPXR",
-        "heading_NDVKaW",
-        "text_RFhmjK",
-        "button_KezFLm"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "border_is_visible": false,
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 20
-      }
-    },
     "rich_text_ddVDah": {
       "type": "rich-text",
       "blocks": {
@@ -544,6 +486,79 @@
         "padding_bottom": 40
       }
     },
+    "rich_text_g6GfTU": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_LVKndQ": {
+          "type": "heading",
+          "settings": {
+            "heading": "Who Should Join?",
+            "heading_size": "h2"
+          }
+        },
+        "text_NJVPXR": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Experienced Shopify Developers. We are a community of experienced developers supporting merchants on Shopify who want to learn and grow together.</p><p>Just like you we are builders, battling scope creep, crazy expectations, and an evolving web development world.</p>"
+          }
+        },
+        "heading_zpMPH3": {
+          "type": "heading",
+          "settings": {
+            "heading": "How Do I Join?",
+            "heading_size": "h2"
+          }
+        },
+        "text_y4NqQ4": {
+          "type": "text",
+          "settings": {
+            "text": "<p>At the moment, our open application process has been paused to help ensure our growth is quality focused, not quantity.</p><p>If you're interested in joining, talk to a current <a href=\"/pages/members\" title=\"Members\">member</a> about referring you to the community.</p>"
+          }
+        },
+        "heading_NDVKaW": {
+          "type": "heading",
+          "settings": {
+            "heading": "You may be building solo, but you don't have to do it alone.",
+            "heading_size": "h2"
+          }
+        },
+        "text_RFhmjK": {
+          "type": "text",
+          "settings": {
+            "text": "<p>If you are not a developer, or not looking for a developer-focused community, we highly recommend you check out our friends at <a href=\"https://theoperatorsguild.com/\" target=\"_blank\" title=\"https://theoperatorsguild.com/\">Operators Guild</a>.</p>"
+          }
+        },
+        "button_KezFLm": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_LVKndQ",
+        "text_NJVPXR",
+        "heading_zpMPH3",
+        "text_y4NqQ4",
+        "heading_NDVKaW",
+        "text_RFhmjK",
+        "button_KezFLm"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "border_is_visible": false,
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 20,
+        "padding_bottom": 60
+      }
+    },
     "rich_text_GwcEP3": {
       "type": "rich-text",
       "blocks": {
@@ -585,10 +600,10 @@
     "rich_text_cKHH6T",
     "members_metaobjects_TRHyJk",
     "rich_text_A6TGQG",
-    "rich_text_g6GfTU",
     "rich_text_ddVDah",
     "multicolumn_VU3Ryb",
     "rich_text_gCV36H",
+    "rich_text_g6GfTU",
     "rich_text_GwcEP3"
   ]
 }
