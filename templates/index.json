@@ -391,6 +391,19 @@
     "rich_text_g6GfTU": {
       "type": "rich-text",
       "blocks": {
+        "heading_LVKndQ": {
+          "type": "heading",
+          "settings": {
+            "heading": "Who Should Apply?",
+            "heading_size": "h1"
+          }
+        },
+        "text_NJVPXR": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Experienced Shopify Developers. We are a community of experienced developers supporting merchants on Shopify who want to learn and grow together.</p><p>Just like you we are builders, battling scope creep, crazy expectations, and an evolving web development world.</p>"
+          }
+        },
         "heading_NDVKaW": {
           "type": "heading",
           "settings": {
@@ -398,10 +411,10 @@
             "heading_size": "h2"
           }
         },
-        "text_NJVPXR": {
+        "text_RFhmjK": {
           "type": "text",
           "settings": {
-            "text": "<p>Just like you we are builders, battling scope creep, crazy expectations, and an evolving web development world.</p>"
+            "text": "<p>If you are not a developer, or not looking for a developer-focused community, we highly recommend you check out our friends at <a href=\"https://theoperatorsguild.com/\" target=\"_blank\" title=\"https://theoperatorsguild.com/\">Operators Guild</a>.</p>"
           }
         },
         "button_KezFLm": {
@@ -417,8 +430,10 @@
         }
       },
       "block_order": [
-        "heading_NDVKaW",
+        "heading_LVKndQ",
         "text_NJVPXR",
+        "heading_NDVKaW",
+        "text_RFhmjK",
         "button_KezFLm"
       ],
       "settings": {
