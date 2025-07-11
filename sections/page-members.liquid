@@ -4,7 +4,7 @@
       {{ section.settings.member_role | capitalize }}
     </h2>
     <ul class="members-row--members list-unstyled" data-member-type="{{ section.settings.member_role }}">
-      {% paginate shop.metaobjects.members.values by 100 %}
+      {% paginate shop.metaobjects.members.values by 500 %}
         {% assign member_type = shop.metaobjects.members.values | where: 'role', section.settings.member_role %}
         {%- for metaobject in member_type -%}
 
