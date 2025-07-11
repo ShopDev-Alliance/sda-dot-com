@@ -159,6 +159,15 @@
             "link": "{{ metaobjects.member_benefits[\"geolocation-orbe\"].system.url }}",
             "external_link": false
           }
+        },
+        "logo_tfikTN": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"swym-wishlist-plus\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"swym-wishlist-plus\"].logo.value }}",
+            "title": "<p>{{ metaobjects.member_benefits[\"swym-wishlist-plus\"].name.value }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"swym-wishlist-plus\"].system.url }}"
+          }
         }
       },
       "block_order": [
@@ -171,7 +180,8 @@
         "logo_qWUUqc",
         "logo_Nccrdz",
         "logo_qKJaY4",
-        "logo_g79bHV"
+        "logo_g79bHV",
+        "logo_tfikTN"
       ],
       "settings": {
         "title": "",
