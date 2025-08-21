@@ -475,8 +475,10 @@
           "source": "{{ metaobjects.member_benefits[\"shopinfo-app\"] }}",
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"shopinfo-app\"].logo.value }}",
+            "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"shopinfo-app\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"shopinfo-app\"].link.value }}"
+            "link": "{{ metaobjects.member_benefits[\"shopinfo-app\"].system.url }}",
+            "external_link": false
           }
         }
       },
