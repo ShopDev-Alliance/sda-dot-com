@@ -95,7 +95,7 @@
               style="--animation-order: 5;"
             {% endif %}>
               {% assign member_count_showing = 10 %}
-              {% paginate shop.metaobjects.members.values by 100 %}
+              {% paginate shop.metaobjects.members.values by 250 %}
                 {% assign founding_members = shop.metaobjects.members.values | where: "role", "Founding Member"  %}
                 {% for member in founding_members limit: member_count_showing %}
                   {%- if member.profile_photo != blank -%}

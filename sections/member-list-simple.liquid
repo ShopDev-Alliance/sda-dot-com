@@ -1,0 +1,150 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .member-list-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .member-list-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .member-list-grid .highlighted-member {
+    font-weight: 600;
+    font-size: 1.125em;
+    color: white;
+    text-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.8),
+      0 0 20px rgba(255, 255, 255, 0.6),
+      0 0 30px rgba(255, 255, 255, 0.4),
+      0 0 40px rgba(100, 200, 255, 0.6),
+      0 0 50px rgba(100, 200, 255, 0.4);
+  }
+{%- endstyle -%}
+
+<div class="page-width section-{{ section.id }}-padding">
+  {%- unless section.settings.title == blank -%}
+    <h2 class="{{ section.settings.heading_size }}">
+      {{ section.settings.title }}
+    </h2>
+  {%- endunless -%}
+  
+  <ul class="member-list-grid" id="member-list-{{ section.id }}">
+    {% paginate shop.metaobjects.members.values by 250 %}
+      {%- for member in shop.metaobjects.members.values -%}
+        {%- if member.name != blank -%}
+          <li data-member-handle="{{ member.name.value | handleize }}">{{ member.name.value }}</li>
+        {%- endif -%}
+      {%- endfor -%}
+    {% endpaginate %}
+  </ul>
+</div>
+
+{%- if section.settings.enable_url_highlighting -%}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const memberList = document.getElementById('member-list-{{ section.id }}');
+      const urlParams = new URLSearchParams(window.location.search);
+      const devParam = urlParams.get('dev');
+      
+      if (memberList && devParam) {
+        const memberItem = memberList.querySelector(`[data-member-handle="${devParam}"]`);
+        if (memberItem) {
+          memberItem.classList.add('highlighted-member');
+        }
+      }
+    });
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Member List Simple",
+  "class": "section",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Our Members"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ],
+      "default": "h2",
+      "label": "Heading size"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_url_highlighting",
+      "label": "Enable URL parameter highlighting",
+      "info": "When enabled, use ?dev=handle-name in the URL to highlight a specific member",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Member List Simple"
+    }
+  ]
+}
+{% endschema %}
