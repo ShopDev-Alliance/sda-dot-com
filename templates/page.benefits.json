@@ -298,14 +298,14 @@
         "heading_EwaYHq": {
           "type": "heading",
           "settings": {
-            "heading": "Saas",
+            "heading": "Saas and Developer Tools",
             "heading_size": "h1"
           }
         },
         "text_gyn7F8": {
           "type": "text",
           "settings": {
-            "text": "<p>Exclusive deals on software-as-a-service to help you better support merchants</p>"
+            "text": "<p>Exclusive deals on software-as-a-service, APIs, Databases, and more to help Shopify Developers better support merchants.</p>"
           }
         }
       },
@@ -336,10 +336,22 @@
             "link": "{{ metaobjects.member_benefits[\"rankbase-io\"].system.url }}",
             "external_link": false
           }
+        },
+        "logo_rppC8b": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"shopinfo-app\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"shopinfo-app\"].logo.value }}",
+            "scale": 1,
+            "title": "<p>{{ metaobjects.member_benefits[\"shopinfo-app\"].name.value }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"shopinfo-app\"].system.url }}",
+            "external_link": false
+          }
         }
       },
       "block_order": [
-        "logo_TqThLC"
+        "logo_TqThLC",
+        "logo_rppC8b"
       ],
       "settings": {
         "title": "",
@@ -435,78 +447,6 @@
         "heading_font": "serif",
         "main_font": "sans-serif"
       }
-    },
-    "rich_text_VpKYfF": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_AKbrpc": {
-          "type": "heading",
-          "settings": {
-            "heading": "Developer Tools",
-            "heading_size": "h1"
-          }
-        },
-        "text_C6hGD4": {
-          "type": "text",
-          "settings": {
-            "text": "<p>APIs, Databases, and more to help Shopify Developers better support merchants.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_AKbrpc",
-        "text_C6hGD4"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "left",
-        "border_is_visible": false,
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 0
-      }
-    },
-    "design_pack_logo_list_kHmH6z": {
-      "type": "design_pack_-_logo_list",
-      "blocks": {
-        "logo_U78EA8": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"shopinfo-app\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"shopinfo-app\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"shopinfo-app\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"shopinfo-app\"].system.url }}",
-            "external_link": false
-          }
-        }
-      },
-      "block_order": [
-        "logo_U78EA8"
-      ],
-      "settings": {
-        "title": "",
-        "per_row": 4,
-        "logo_size": 100,
-        "text_size": 85,
-        "heading_color": "#000000",
-        "text_color": "#f7f9fc",
-        "background_color": "",
-        "color_filter": "none",
-        "animation": "none",
-        "mobile_per_row": 2,
-        "base_width": 75,
-        "max_width": "",
-        "inner_padding": 0,
-        "outer_margin": 0,
-        "custom_css": "",
-        "mobile_custom_css": "",
-        "anchor_id": "",
-        "override_theme_font": false,
-        "heading_font": "serif",
-        "main_font": "sans-serif"
-      }
     }
   },
   "order": [
@@ -518,8 +458,6 @@
     "rich_text_nYwmVG",
     "design_pack_logo_list_4E7mxt",
     "rich_text_GD8bnp",
-    "design_pack_logo_list_ePWKNF",
-    "rich_text_VpKYfF",
-    "design_pack_logo_list_kHmH6z"
+    "design_pack_logo_list_ePWKNF"
   ]
 }
