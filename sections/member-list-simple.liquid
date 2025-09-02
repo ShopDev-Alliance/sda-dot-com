@@ -62,7 +62,8 @@
     document.addEventListener('DOMContentLoaded', function() {
       const memberList = document.getElementById('member-list-{{ section.id }}');
       const urlParams = new URLSearchParams(window.location.search);
-      const devParam = urlParams.get('dev');
+      const devParamRaw = urlParams.get('dev');
+      const devParam = devParamRaw ? String(devParamRaw).toLowerCase() : null;
       
       if (memberList && devParam) {
         const memberItem = memberList.querySelector(`[data-member-handle="${devParam}"]`);
