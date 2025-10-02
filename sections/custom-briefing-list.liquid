@@ -129,13 +129,6 @@
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
   <div class="page-width section-{{ section.id }}-padding">
-    {%- unless section.settings.title == blank -%}
-      <div class="title-wrapper-with-link title-wrapper--self-padded-mobile">
-        <h1 class="title inline-richtext {{ section.settings.heading_size }}">
-          {{ section.settings.title }}
-        </h1>
-      </div>
-    {%- endunless -%}
 
     {% comment %} Jump links {% endcomment %}
     {% if years.size > 1 %}
