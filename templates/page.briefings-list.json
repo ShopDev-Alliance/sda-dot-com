@@ -9,10 +9,17 @@
  */
 {
   "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
     "briefing_list": {
       "type": "custom-briefing-list",
       "settings": {}
     }
   },
-  "order": ["briefing_list"]
+  "order": ["main", "briefing_list"]
 }
