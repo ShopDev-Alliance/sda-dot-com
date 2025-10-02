@@ -32,7 +32,7 @@
       ],
       "settings": {
         "logo_position": "middle-left",
-        "menu": "main-menu",
+        "menu": "main-menu-briefings-launch",
         "menu_type_desktop": "dropdown",
         "sticky_header_type": "on-scroll-up",
         "show_line_separator": true,
