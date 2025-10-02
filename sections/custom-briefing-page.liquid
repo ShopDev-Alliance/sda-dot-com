@@ -1,0 +1,357 @@
+{% comment %}
+  SDA Briefing Page Section
+  Displays individual SDA Briefing metaobject content
+  Gated content for members with customer.metafields.custom.sda_member == true
+
+  Metaobject fields expected:
+  - metaobject.name (title)
+  - metaobject.date
+  - metaobject.description (rich text)
+  - metaobject.video_url
+  - metaobject.presenters (metaobject list reference)
+{% endcomment %}
+
+{% liquid
+  comment
+    Check if user is a member
+  endcomment
+  assign is_member = false
+  if customer and customer.metafields.custom.sda_member == true
+    assign is_member = true
+  endif
+
+  comment
+    Process YouTube URL if member has access
+  endcomment
+  assign video_id = ''
+  if is_member and metaobject.video_url
+    assign youtube_url = metaobject.video_url.value
+
+    if youtube_url contains 'watch?v='
+      assign video_id = youtube_url | split: 'watch?v=' | last | split: '&' | first
+    elsif youtube_url contains 'youtu.be/'
+      assign video_id = youtube_url | split: 'youtu.be/' | last | split: '?' | first
+    elsif youtube_url contains 'embed/'
+      assign video_id = youtube_url | split: 'embed/' | last | split: '?' | first
+    else
+      assign video_id = youtube_url
+    endif
+  endif
+
+  comment
+    Process description preview for non-members
+  endcomment
+  assign description_preview = ''
+  if is_member == false and metaobject.description
+    assign description_text = metaobject.description | metafield_text
+    assign description_preview = description_text | strip_html | truncate: 300
+  endif
+
+  comment
+    Process presenters
+  endcomment
+  assign presenters_text = ''
+  if metaobject.presenters
+    if metaobject.presenters.type == 'list.metaobject_reference'
+      assign presenters_count = metaobject.presenters.value.count
+      assign presenters_array = ''
+      for presenter in metaobject.presenters.value
+        if presenters_array == ''
+          assign presenters_array = presenter.name.value
+        else
+          assign presenters_array = presenters_array | append: ', ' | append: presenter.name.value 
+          if forloop.last
+            if presenters_count >= 3
+              assign presenters_array = presenters_array | replace_last: ', ', ', and '
+            elsif presenters_count == 2
+              assign presenters_array = presenters_array | replace: ', ', ' and '
+            endif
+          endif
+        endif
+      endfor
+      assign presenters_text = presenters_array
+    else
+      assign presenters_text = metaobject.presenters.value
+    endif
+  endif
+%}
+
+{{ 'section-rich-text.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .briefing-page {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .briefing-page__header {
+    margin-bottom: 2rem;
+    text-align: {{ section.settings.content_alignment }};
+  }
+
+  .briefing-page__title {
+    margin-bottom: 1rem;
+  }
+
+  .briefing-page__meta {
+    margin-bottom: 1rem;
+    color: rgba(var(--color-foreground), 0.75);
+    justify-content: {{ section.settings.content_alignment }};
+  }
+
+  .briefing-page__date,
+  .briefing-page__presenters {
+    margin: 0;
+  }
+
+  .briefing-page__video {
+    margin: 2rem 0;
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+  }
+
+  .briefing-page__video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .briefing-page__description {
+    line-height: 1.6;
+    margin-top: 2rem;
+  }
+
+  .briefing-page__gate {
+    background-color: rgba(var(--color-foreground), 0.05);
+    padding: 3rem 2rem;
+    text-align: center;
+    border-radius: 8px;
+    margin-top: 2rem;
+  }
+
+  .briefing-page__gate h3 {
+    margin-bottom: 1rem;
+  }
+
+  .briefing-page__gate p {
+    margin-bottom: 1.5rem;
+  }
+
+  .briefing-page__description-preview {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  .briefing-page__description-preview::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, rgba(var(--color-background), 1));
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="briefing-page">
+
+      {% comment %} Header section - always visible {% endcomment %}
+      <div class="briefing-page__header">
+        <h1 class="briefing-page__title {{ section.settings.heading_size }}">
+          {{ metaobject.name.value }}
+        </h1>
+
+        <div class="briefing-page__meta">
+          {% if metaobject.date %}
+            <p class="briefing-page__date">
+              <strong>Date:</strong> {{ metaobject.date.value | date: '%B %d, %Y' }}
+            </p>
+          {% endif %}
+
+          {% if presenters_text != blank %}
+            <p class="briefing-page__presenters">
+              <strong>Presenters:</strong> {{ presenters_text }}
+            </p>
+          {% endif %}
+        </div>
+      </div>
+
+      {% comment %} Gated content logic {% endcomment %}
+      {% if is_member %}
+        {% comment %} Member access - show full content {% endcomment %}
+
+        {% if video_id != blank %}
+          <div class="briefing-page__video">
+            <iframe
+              src="https://www.youtube.com/embed/{{ video_id }}"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              title="{{ metaobject.name.value }}">
+            </iframe>
+          </div>
+        {% endif %}
+
+        {% if metaobject.description %}
+          <div class="briefing-page__description rte">
+            {{ metaobject.description | metafield_tag }}
+          </div>
+        {% endif %}
+
+      {% else %}
+        {% comment %} Not a member - show limited preview {% endcomment %}
+
+        {% if description_preview != blank %}
+          <div class="briefing-page__description-preview">
+            <p>{{ description_preview }}</p>
+          </div>
+        {% endif %}
+
+        <div class="briefing-page__gate">
+          <h3>Member Access Required</h3>
+          {% if customer %}
+            <p>This video content is exclusively available to SDA members.</p>
+            <p>Your account does not currently have member access. If you believe this is an error, please contact us.</p>
+          {% else %}
+            <p>Sign in to your SDA member account to watch this briefing and access the full content.</p>
+            <a href="/account/login?return_url={{ request.path }}" class="button button--primary">Sign In to View</a>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% comment %} Back to list link {% endcomment %}
+      {% if section.settings.show_back_link and section.settings.back_link_url != blank %}
+        <div style="margin-top: 3rem; text-align: {{ section.settings.content_alignment }};">
+          <a href="{{ section.settings.back_link_url }}" class="button button--secondary">
+            {{ section.settings.back_link_text | default: '← Back to Briefings' }}
+          </a>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Briefing Page",
+  "class": "section",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left",
+      "label": "Content alignment"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Back Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_back_link",
+      "label": "Show back to list link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "back_link_text",
+      "label": "Back link text",
+      "default": "← Back to Briefings"
+    },
+    {
+      "type": "url",
+      "id": "back_link_url",
+      "label": "Back link URL",
+      "info": "Link to the briefings list page"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 52
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Briefing Page"
+    }
+  ]
+}
+{% endschema %}

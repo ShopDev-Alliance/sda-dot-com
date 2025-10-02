@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "briefing_list": {
+      "type": "custom-briefing-list",
+      "settings": {}
+    }
+  },
+  "order": ["briefing_list"]
+}
