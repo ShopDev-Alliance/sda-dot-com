@@ -9,6 +9,7 @@
   - metaobject.description (rich text)
   - metaobject.video_url
   - metaobject.presenters (metaobject list reference)
+  - metaobject.transcript (file)
 {% endcomment %}
 
 {% liquid
@@ -44,7 +45,7 @@
   assign description_preview = ''
   if is_member == false and metaobject.description
     assign description_text = metaobject.description | metafield_text
-    assign description_preview = description_text | strip_html | truncate: 300
+    assign description_preview = description_text | strip_html | truncate: 500
   endif
 
   comment
@@ -213,6 +214,14 @@
         {% if metaobject.description %}
           <div class="briefing-page__description rte">
             {{ metaobject.description | metafield_tag }}
+          </div>
+        {% endif %}
+
+        {% if metaobject.transcript %}
+          <div class="briefing-page__transcript" style="margin-top: 2rem;">
+            <a href="{{ metaobject.transcript.value }}" download class="button button--secondary">
+              Download Transcript
+            </a>
           </div>
         {% endif %}
 
