@@ -5,7 +5,7 @@
 {% endcomment %}
 
 {% liquid
-  assign all_briefings = shop.metaobjects.sda_briefings.values
+  assign all_briefings = shop.metaobjects.sda_briefings.values | sort: 'date.value' | reverse
 
   comment
     Collect unique years from briefings
@@ -134,7 +134,7 @@
     {% if years.size > 1 %}
       <div class="jump-links">
         {% for year in years %}
-          <a href="#year-{{ year }}">{{ year }}</a>
+          <a class="button button--primary" href="#year-{{ year }}">{{ year }}</a>
         {% endfor %}
       </div>
     {% endif %}
