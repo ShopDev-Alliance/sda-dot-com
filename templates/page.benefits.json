@@ -205,7 +205,7 @@
         "anchor_id": "",
         "override_theme_font": false,
         "heading_font": "serif",
-        "main_font": "sans-serif"
+        "main_font": "system_ui_n4"
       }
     },
     "rich_text_a9Vp8L": {
@@ -289,7 +289,7 @@
         "anchor_id": "",
         "override_theme_font": false,
         "heading_font": "serif",
-        "main_font": "sans-serif"
+        "main_font": "system_ui_n4"
       }
     },
     "rich_text_nYwmVG": {
@@ -373,7 +373,7 @@
         "anchor_id": "",
         "override_theme_font": false,
         "heading_font": "serif",
-        "main_font": "sans-serif"
+        "main_font": "system_ui_n4"
       }
     },
     "rich_text_GD8bnp": {
@@ -445,7 +445,81 @@
         "anchor_id": "",
         "override_theme_font": false,
         "heading_font": "serif",
-        "main_font": "sans-serif"
+        "main_font": "system_ui_n4"
+      }
+    },
+    "rich_text_ejzQRc": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_c6Qji9": {
+          "type": "heading",
+          "settings": {
+            "heading": "Advertising",
+            "heading_size": "h1"
+          }
+        },
+        "text_TfJkrT": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Discounts and special placement opportunities to promote your app or service.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_c6Qji9",
+        "text_TfJkrT"
+      ],
+      "disabled": true,
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "border_is_visible": false,
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 0
+      }
+    },
+    "design_pack_logo_list_pHxPRc": {
+      "type": "design_pack_-_logo_list",
+      "blocks": {
+        "logo_3FcDTc": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"shop-quest\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"shop-quest\"].logo.value }}",
+            "scale": 1,
+            "title": "<p>{{ metaobjects.member_benefits[\"shop-quest\"].name.value }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"shop-quest\"].system.url }}",
+            "external_link": false
+          }
+        }
+      },
+      "block_order": [
+        "logo_3FcDTc"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "per_row": 4,
+        "logo_size": 100,
+        "text_size": 85,
+        "heading_color": "#000000",
+        "text_color": "#f7f9fc",
+        "background_color": "",
+        "color_filter": "none",
+        "animation": "none",
+        "mobile_per_row": 2,
+        "base_width": 75,
+        "max_width": "",
+        "inner_padding": 0,
+        "outer_margin": 0,
+        "custom_css": "",
+        "mobile_custom_css": "",
+        "anchor_id": "",
+        "override_theme_font": false,
+        "heading_font": "serif",
+        "main_font": "system_ui_n4"
       }
     }
   },
@@ -458,6 +532,8 @@
     "rich_text_nYwmVG",
     "design_pack_logo_list_4E7mxt",
     "rich_text_GD8bnp",
-    "design_pack_logo_list_ePWKNF"
+    "design_pack_logo_list_ePWKNF",
+    "rich_text_ejzQRc",
+    "design_pack_logo_list_pHxPRc"
   ]
 }
