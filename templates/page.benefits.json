@@ -376,37 +376,6 @@
         "main_font": "system_ui_n4"
       }
     },
-    "rich_text_GD8bnp": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_wUpxEE": {
-          "type": "heading",
-          "settings": {
-            "heading": "Events",
-            "heading_size": "h1"
-          }
-        },
-        "text_DqRyKL": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Get special discounts on amazing Shopify Developer events like <a href=\"https://editions.dev/pages/editions-dev\" target=\"_blank\" title=\"https://editions.dev/pages/editions-dev\">Editions.dev</a> and <a href=\"https://heymantle.com/techtonic\" target=\"_blank\" title=\"https://heymantle.com/techtonic\">Techtonic</a>.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_wUpxEE",
-        "text_DqRyKL"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "left",
-        "border_is_visible": false,
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 0
-      }
-    },
     "design_pack_logo_list_ePWKNF": {
       "type": "design_pack_-_logo_list",
       "blocks": {
@@ -487,8 +456,10 @@
           "source": "{{ metaobjects.member_benefits[\"liquid-weekly\"] }}",
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"liquid-weekly\"].logo.value }}",
+            "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"liquid-weekly\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"liquid-weekly\"].link.value }}"
+            "link": "{{ metaobjects.member_benefits[\"liquid-weekly\"].link.value }}",
+            "external_link": false
           }
         }
       },
@@ -517,19 +488,50 @@
         "heading_font": "serif",
         "main_font": "system_ui_n4"
       }
+    },
+    "rich_text_GD8bnp": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_wUpxEE": {
+          "type": "heading",
+          "settings": {
+            "heading": "Events",
+            "heading_size": "h1"
+          }
+        },
+        "text_DqRyKL": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Get special discounts on amazing Shopify Developer events like <a href=\"https://editions.dev/pages/editions-dev\" target=\"_blank\" title=\"https://editions.dev/pages/editions-dev\">Editions.dev</a> and <a href=\"https://heymantle.com/techtonic\" target=\"_blank\" title=\"https://heymantle.com/techtonic\">Techtonic</a>.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_wUpxEE",
+        "text_DqRyKL"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "border_is_visible": false,
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
     "main",
     "rich_text_x63Xxp",
     "design_pack_logo_list_UXgcWw",
-    "rich_text_a9Vp8L",
-    "design_pack_logo_list_LVkk3x",
     "rich_text_nYwmVG",
     "design_pack_logo_list_4E7mxt",
-    "rich_text_GD8bnp",
-    "design_pack_logo_list_ePWKNF",
     "rich_text_ejzQRc",
-    "design_pack_logo_list_pHxPRc"
+    "design_pack_logo_list_pHxPRc",
+    "rich_text_a9Vp8L",
+    "design_pack_logo_list_LVkk3x",
+    "rich_text_GD8bnp",
+    "design_pack_logo_list_ePWKNF"
   ]
 }
