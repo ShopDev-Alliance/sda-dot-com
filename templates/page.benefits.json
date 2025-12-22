@@ -177,7 +177,7 @@
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"].logo.value }}",
             "title": "<p>{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"].link.value }}"
+            "link": "{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"].system.url }}"
           }
         },
         "logo_rzn7dA": {
@@ -186,7 +186,7 @@
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"].logo.value }}",
             "title": "<p>{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"].link.value }}"
+            "link": "{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"].system.url }}"
           }
         },
         "logo_thE6Mw": {
@@ -195,7 +195,7 @@
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"retail-ads-integration\"].logo.value }}",
             "title": "<p>{{ metaobjects.member_benefits[\"retail-ads-integration\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"retail-ads-integration\"].link.value }}"
+            "link": "{{ metaobjects.member_benefits[\"retail-ads-integration\"].system.url }}"
           }
         }
       },
