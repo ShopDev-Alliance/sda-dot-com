@@ -170,6 +170,33 @@
             "link": "{{ metaobjects.member_benefits[\"swym-wishlist-plus\"].system.url }}",
             "external_link": false
           }
+        },
+        "logo_JeyEFr": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"].logo.value }}",
+            "title": "<p>{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"].name.value }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"].link.value }}"
+          }
+        },
+        "logo_rzn7dA": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"].logo.value }}",
+            "title": "<p>{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"].name.value }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"].link.value }}"
+          }
+        },
+        "logo_thE6Mw": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"retail-ads-integration\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"retail-ads-integration\"].logo.value }}",
+            "title": "<p>{{ metaobjects.member_benefits[\"retail-ads-integration\"].name.value }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"retail-ads-integration\"].link.value }}"
+          }
         }
       },
       "block_order": [
@@ -183,7 +210,10 @@
         "logo_Nccrdz",
         "logo_qKJaY4",
         "logo_g79bHV",
-        "logo_tfikTN"
+        "logo_tfikTN",
+        "logo_JeyEFr",
+        "logo_rzn7dA",
+        "logo_thE6Mw"
       ],
       "settings": {
         "title": "",
@@ -237,6 +267,47 @@
         "full_width": true,
         "padding_top": 40,
         "padding_bottom": 0
+      }
+    },
+    "design_pack_logo_list_pHxPRc": {
+      "type": "design_pack_-_logo_list",
+      "blocks": {
+        "logo_3FcDTc": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"liquid-weekly\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"liquid-weekly\"].logo.value }}",
+            "scale": 1,
+            "title": "<p>{{ metaobjects.member_benefits[\"liquid-weekly\"].name.value }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"liquid-weekly\"].link.value }}",
+            "external_link": false
+          }
+        }
+      },
+      "block_order": [
+        "logo_3FcDTc"
+      ],
+      "settings": {
+        "title": "",
+        "per_row": 4,
+        "logo_size": 100,
+        "text_size": 85,
+        "heading_color": "#000000",
+        "text_color": "#f7f9fc",
+        "background_color": "",
+        "color_filter": "none",
+        "animation": "none",
+        "mobile_per_row": 2,
+        "base_width": 75,
+        "max_width": "",
+        "inner_padding": 0,
+        "outer_margin": 0,
+        "custom_css": "",
+        "mobile_custom_css": "",
+        "anchor_id": "",
+        "override_theme_font": false,
+        "heading_font": "serif",
+        "main_font": "system_ui_n4"
       }
     },
     "rich_text_nYwmVG": {
@@ -299,47 +370,6 @@
       "block_order": [
         "logo_TqThLC",
         "logo_rppC8b"
-      ],
-      "settings": {
-        "title": "",
-        "per_row": 4,
-        "logo_size": 100,
-        "text_size": 85,
-        "heading_color": "#000000",
-        "text_color": "#f7f9fc",
-        "background_color": "",
-        "color_filter": "none",
-        "animation": "none",
-        "mobile_per_row": 2,
-        "base_width": 75,
-        "max_width": "",
-        "inner_padding": 0,
-        "outer_margin": 0,
-        "custom_css": "",
-        "mobile_custom_css": "",
-        "anchor_id": "",
-        "override_theme_font": false,
-        "heading_font": "serif",
-        "main_font": "system_ui_n4"
-      }
-    },
-    "design_pack_logo_list_pHxPRc": {
-      "type": "design_pack_-_logo_list",
-      "blocks": {
-        "logo_3FcDTc": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"liquid-weekly\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"liquid-weekly\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"liquid-weekly\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"liquid-weekly\"].link.value }}",
-            "external_link": false
-          }
-        }
-      },
-      "block_order": [
-        "logo_3FcDTc"
       ],
       "settings": {
         "title": "",
