@@ -158,6 +158,34 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     opacity: 0.6;
   }
+
+  #alliance-globe-section-{{ section.id }} .globe-reset-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s ease;
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-reset-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  @keyframes globe-dot-ping {
+    75%, 100% {
+      transform: scale(3);
+      opacity: 0;
+    }
+  }
 </style>
 
 <section id="alliance-globe-section-{{ section.id }}" aria-label="Global member distribution visualization">
@@ -179,6 +207,8 @@
     <p>Interactive globe requires WebGL support.</p>
     <p>SDA members span 18 timezones worldwide.</p>
   </div>
+
+  <button class="globe-reset-btn" id="globe-reset-{{ section.id }}">Reset View</button>
 </section>
 
 <script src="//unpkg.com/globe.gl@2.27.0"></script>
@@ -307,15 +337,30 @@
         .showAtmosphere(true)
         .atmosphereColor(CONFIG.atmosphere)
         .atmosphereAltitude(0.15)
-        .pointsData(locations)
-        .pointAltitude(0.01)
-        .pointColor(function() { return CONFIG.dotColor; })
-        .pointRadius(0.5)
-        .pointResolution(16)
-        .pointLabel(function(d) {
-          if (!isLoggedIn) return null;
-          const locationText = d.state ? d.city + ', ' + d.state : d.city;
-          return '<div class="globe-tooltip">' + locationText + '</div>';
+        .htmlElementsData(locations)
+        .htmlLat(function(d) { return d.lat; })
+        .htmlLng(function(d) { return d.lng; })
+        .htmlAltitude(0.005)
+        .htmlElement(function(d) {
+          var wrapper = document.createElement('div');
+          wrapper.innerHTML = '&nbsp;';
+          wrapper.style.cssText = 'display: block !important; position: relative; width: 6px; height: 6px; pointer-events: auto; font-size: 0; line-height: 0;';
+
+          var ping = document.createElement('div');
+          ping.innerHTML = '&nbsp;';
+          ping.style.cssText = 'display: block !important; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: ' + CONFIG.dotColor + '; border-radius: 50%; opacity: 0.75; animation: globe-dot-ping 2s cubic-bezier(0,0,.2,1) infinite; font-size: 0; line-height: 0;';
+
+          var dot = document.createElement('div');
+          dot.innerHTML = '&nbsp;';
+          dot.style.cssText = 'display: block !important; position: relative; width: 100%; height: 100%; background: ' + CONFIG.dotColor + '; border-radius: 50%; font-size: 0; line-height: 0;';
+
+          wrapper.appendChild(ping);
+          wrapper.appendChild(dot);
+
+          if (isLoggedIn && d.city) {
+            wrapper.title = d.state ? d.city + ', ' + d.state : d.city;
+          }
+          return wrapper;
         });
 
       {% comment %} Configure controls - auto-rotate and disable scroll zoom {% endcomment %}
@@ -334,6 +379,21 @@
         resumeTimeout = setTimeout(function() {
           controls.autoRotate = true;
         }, 2000);
+      });
+
+      {% comment %} Double-click to zoom in {% endcomment %}
+      const defaultCameraDistance = world.camera().position.length();
+      container.addEventListener('dblclick', function(event) {
+        const currentDistance = world.camera().position.length();
+        const minDistance = 150;
+        const newDistance = currentDistance * 0.6;
+        world.camera().position.setLength(Math.max(newDistance, minDistance));
+      });
+
+      {% comment %} Reset view button {% endcomment %}
+      const resetBtn = document.getElementById('globe-reset-' + SECTION_ID);
+      resetBtn.addEventListener('click', function() {
+        world.camera().position.setLength(defaultCameraDistance);
       });
 
       {% comment %} Apply globe texture or hologram style {% endcomment %}
