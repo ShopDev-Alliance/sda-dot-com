@@ -194,50 +194,51 @@
       showTimezoneBands: {{ show_timezone_bands }}
     };
 
-    {% comment %} Build member location data from metaobjects with pagination {% endcomment %}
-    const rawMembers = [
-      {%- paginate shop.metaobjects.members.values by 500 -%}
-        {%- for member in shop.metaobjects.members.values -%}
-          {%- if member.coordinates != blank -%}
-            {%- assign coords = member.coordinates.value | split: ',' -%}
-            {%- assign lat = coords[0] | strip | plus: 0 -%}
-            {%- assign lng = coords[1] | strip | plus: 0 -%}
-            {%- if lat != 0 or lng != 0 -%}
-              {
-                city: "{{ member.city.value | default: '' | escape }}",
-                state: "{{ member.state.value | default: '' | escape }}",
-                lat: {{ lat }},
-                lng: {{ lng }}
-              },
-            {%- endif -%}
-          {%- endif -%}
-        {%- endfor -%}
-      {%- endpaginate -%}
-    ].filter(m => m.lat !== undefined);
+    {% comment %}
+      Build location data server-side in Liquid for privacy:
+      - Grouped by city (deduplicated) before reaching browser
+      - Coordinates rounded to 1 decimal for privacy
+      - City/state names only included for logged-in users
+    {% endcomment %}
+    {% liquid
+      assign locations_output = ''
+      assign seen_locations = ''
 
-    {% comment %} Check if user is logged in {% endcomment %}
+      paginate shop.metaobjects.members.values by 500
+        for member in shop.metaobjects.members.values
+          if member.coordinates != blank
+            assign coords = member.coordinates.value | split: ','
+            assign lat_raw = coords[0] | strip | plus: 0.0
+            assign lng_raw = coords[1] | strip | plus: 0.0
+
+            if lat_raw != 0 or lng_raw != 0
+              # Round to 1 decimal place for privacy
+              assign lat_rounded = lat_raw | round: 1
+              assign lng_rounded = lng_raw | round: 1
+
+              assign city_val = member.city.value | default: ''
+              assign state_val = member.state.value | default: ''
+              assign location_key = city_val | append: '-' | append: state_val | append: '-' | append: lat_rounded | append: '-' | append: lng_rounded
+
+              unless seen_locations contains location_key
+                assign seen_locations = seen_locations | append: location_key | append: '|'
+
+                if customer
+                  assign location_entry = '{"city":"' | append: city_val | append: '","state":"' | append: state_val | append: '","lat":' | append: lat_rounded | append: ',"lng":' | append: lng_rounded | append: '},'
+                else
+                  assign location_entry = '{"lat":' | append: lat_rounded | append: ',"lng":' | append: lng_rounded | append: '},'
+                endif
+
+                assign locations_output = locations_output | append: location_entry
+              endunless
+            endif
+          endif
+        endfor
+      endpaginate
+    %}
+
+    const locations = [{{ locations_output }}].filter(l => l.lat !== undefined);
     const isLoggedIn = {{ customer | default: false | json }};
-
-    {% comment %} Group members by city to create deduplicated location data {% endcomment %}
-    function groupByCity(members) {
-      const cityMap = {};
-      members.forEach(function(m) {
-        const key = m.city + '-' + m.state;
-        if (!cityMap[key]) {
-          cityMap[key] = {
-            city: m.city,
-            state: m.state,
-            lat: m.lat,
-            lng: m.lng,
-            count: 0
-          };
-        }
-        cityMap[key].count++;
-      });
-      return Object.values(cityMap);
-    }
-
-    const locations = groupByCity(rawMembers);
 
     {% comment %} Generate timezone bands from unique longitudes {% endcomment %}
     function generateTimezoneBands(locations) {
