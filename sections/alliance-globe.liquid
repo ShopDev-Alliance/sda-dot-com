@@ -8,6 +8,11 @@
   assign dot_color = section.settings.dot_color | default: '#00FFCC'
   assign bg_color = section.settings.bg_color | default: '#050505'
   assign show_timezone_bands = section.settings.show_timezone_bands | default: true
+
+  assign is_sda_member = false
+  if customer and customer.metafields.custom.sda_member == true
+    assign is_sda_member = true
+  endif
 %}
 
 <style>
@@ -220,7 +225,7 @@
     const CONFIG = {
       bg: '{{ bg_color }}',
       dotColor: '{{ dot_color }}',
-      atmosphere: '#7c4dff',
+      atmosphere: '#A0C4FF',
       showTimezoneBands: {{ show_timezone_bands }}
     };
 
@@ -253,7 +258,7 @@
               unless seen_locations contains location_key
                 assign seen_locations = seen_locations | append: location_key | append: '|'
 
-                if customer
+                if is_sda_member
                   assign location_entry = '{"city":"' | append: city_val | append: '","state":"' | append: state_val | append: '","lat":' | append: lat_rounded | append: ',"lng":' | append: lng_rounded | append: '},'
                 else
                   assign location_entry = '{"lat":' | append: lat_rounded | append: ',"lng":' | append: lng_rounded | append: '},'
@@ -268,7 +273,7 @@
     %}
 
     const locations = [{{ locations_output }}].filter(l => l.lat !== undefined);
-    const isLoggedIn = {{ customer | default: false | json }};
+    const isSdaMember = {{ is_sda_member | json }};
 
     {% comment %} Generate timezone bands from unique longitudes {% endcomment %}
     function generateTimezoneBands(locations) {
@@ -357,7 +362,7 @@
           wrapper.appendChild(ping);
           wrapper.appendChild(dot);
 
-          if (isLoggedIn && d.city) {
+          if (isSdaMember && d.city) {
             wrapper.title = d.state ? d.city + ', ' + d.state : d.city;
           }
           return wrapper;
@@ -407,7 +412,7 @@
         const timezoneBands = generateTimezoneBands(locations);
         world
           .ringsData(timezoneBands)
-          .ringColor(function() { return 'rgba(124, 77, 255, 0.15)'; })
+          .ringColor(function() { return 'rgba(253, 129, 79, 0.15)'; })
           .ringMaxRadius(90)
           .ringPropagationSpeed(0)
           .ringRepeatPeriod(0);
