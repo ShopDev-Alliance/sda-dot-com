@@ -323,12 +323,16 @@
       controls.autoRotateSpeed = 0.6;
       controls.enableZoom = false;
 
-      {% comment %} Pause rotation on hover, resume on leave {% endcomment %}
-      container.addEventListener('mouseenter', function() {
+      {% comment %} Pause rotation when user interacts, resume after 2 seconds of inactivity {% endcomment %}
+      let resumeTimeout;
+      controls.addEventListener('start', function() {
+        clearTimeout(resumeTimeout);
         controls.autoRotate = false;
       });
-      container.addEventListener('mouseleave', function() {
-        controls.autoRotate = true;
+      controls.addEventListener('end', function() {
+        resumeTimeout = setTimeout(function() {
+          controls.autoRotate = true;
+        }, 2000);
       });
 
       {% comment %} Apply globe texture or hologram style {% endcomment %}
