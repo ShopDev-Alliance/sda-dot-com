@@ -5,7 +5,6 @@
     Locations are grouped by city - no individual identification.
   endcomment
 
-  assign members_data = shop.metaobjects.members.values
   assign dot_color = section.settings.dot_color | default: '#00FFCC'
   assign bg_color = section.settings.bg_color | default: '#050505'
   assign show_timezone_bands = section.settings.show_timezone_bands | default: true
@@ -20,6 +19,49 @@
     overflow: hidden;
   }
 
+  #alliance-globe-section-{{ section.id }}::before,
+  #alliance-globe-section-{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+  }
+
+  #alliance-globe-section-{{ section.id }}::before {
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 45%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 40% 15%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 55% 60%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 30%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 70%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 15% 75%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 90%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 85%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 10%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 5% 50%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 95% 45%, rgba(255,255,255,0.7) 0%, transparent 100%);
+  }
+
+  #alliance-globe-section-{{ section.id }}::after {
+    background-image:
+      radial-gradient(1px 1px at 8% 35%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 22% 12%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 38% 68%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 52% 25%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 68% 52%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 82% 88%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 18% 95%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 42%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 8%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 88% 35%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 3% 82%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 62% 5%, rgba(255,255,255,0.7) 0%, transparent 100%);
+  }
+
   @media (max-width: 750px) {
     #alliance-globe-section-{{ section.id }} {
       height: 500px;
@@ -29,6 +71,7 @@
   #alliance-globe-section-{{ section.id }} .globe-canvas {
     width: 100%;
     height: 100%;
+    touch-action: pan-y;
   }
 
   #alliance-globe-section-{{ section.id }} .globe-ui-layer {
@@ -132,34 +175,39 @@
       showTimezoneBands: {{ show_timezone_bands }}
     };
 
-    {% comment %} Build member location data from metaobjects {% endcomment %}
+    {% comment %} Build member location data from metaobjects with pagination {% endcomment %}
     const rawMembers = [
-      {%- for member in members_data -%}
-        {%- if member.coordinates != blank -%}
-          {%- assign coords = member.coordinates.value | split: ',' -%}
-          {%- assign lat = coords[0] | strip | plus: 0 -%}
-          {%- assign lng = coords[1] | strip | plus: 0 -%}
-          {%- if lat != 0 or lng != 0 -%}
-            {
-              city: "{{ member.city.value | default: 'Unknown' | escape }}",
-              country: "{{ member.country.value | default: '' | escape }}",
-              lat: {{ lat }},
-              lng: {{ lng }}
-            }{%- unless forloop.last -%},{%- endunless -%}
+      {%- paginate shop.metaobjects.members.values by 500 -%}
+        {%- for member in shop.metaobjects.members.values -%}
+          {%- if member.coordinates != blank -%}
+            {%- assign coords = member.coordinates.value | split: ',' -%}
+            {%- assign lat = coords[0] | strip | plus: 0 -%}
+            {%- assign lng = coords[1] | strip | plus: 0 -%}
+            {%- if lat != 0 or lng != 0 -%}
+              {
+                city: "{{ member.city.value | default: '' | escape }}",
+                state: "{{ member.state.value | default: '' | escape }}",
+                lat: {{ lat }},
+                lng: {{ lng }}
+              },
+            {%- endif -%}
           {%- endif -%}
-        {%- endif -%}
-      {%- endfor -%}
+        {%- endfor -%}
+      {%- endpaginate -%}
     ].filter(m => m.lat !== undefined);
+
+    {% comment %} Check if user is logged in {% endcomment %}
+    const isLoggedIn = {{ customer | default: false | json }};
 
     {% comment %} Group members by city to create deduplicated location data {% endcomment %}
     function groupByCity(members) {
       const cityMap = {};
       members.forEach(function(m) {
-        const key = m.city + '-' + m.country;
+        const key = m.city + '-' + m.state;
         if (!cityMap[key]) {
           cityMap[key] = {
             city: m.city,
-            country: m.country,
+            state: m.state,
             lat: m.lat,
             lng: m.lng,
             count: 0
@@ -245,11 +293,24 @@
         .pointRadius(0.5)
         .pointResolution(16)
         .pointLabel(function(d) {
-          const locationText = d.country ? d.city + ', ' + d.country : d.city;
+          if (!isLoggedIn) return null;
+          const locationText = d.state ? d.city + ', ' + d.state : d.city;
           return '<div class="globe-tooltip">' + locationText + '</div>';
-        })
-        .autoRotate(true)
-        .autoRotateSpeed(0.6);
+        });
+
+      {% comment %} Configure controls - auto-rotate and disable scroll zoom {% endcomment %}
+      const controls = world.controls();
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 0.6;
+      controls.enableZoom = false;
+
+      {% comment %} Pause rotation on hover, resume on leave {% endcomment %}
+      container.addEventListener('mouseenter', function() {
+        controls.autoRotate = false;
+      });
+      container.addEventListener('mouseleave', function() {
+        controls.autoRotate = true;
+      });
 
       {% comment %} Apply globe texture or hologram style {% endcomment %}
       if (globeImageUrl) {
