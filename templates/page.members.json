@@ -30,24 +30,24 @@
         "hide_image": false
       }
     },
-    "page_members_9TcyFc": {
-      "type": "page-members",
-      "settings": {
-        "member_role": "Member",
-        "hide_image": true
-      }
-    },
     "alliance_globe_VAAaeF": {
       "type": "alliance-globe",
       "disabled": true,
       "name": "Alliance 3D Globe",
       "settings": {
-        "heading": "An Alliance that Spans the Globe",
-        "subheading": "Connecting developers across 18 timezones",
+        "heading": "A Worldwide Community",
+        "subheading": "Connecting Shopify developers across 18 timezones",
         "bg_color": "#050505",
         "dot_color": "#fd814f",
         "globe_style": "dark",
         "show_timezone_bands": true
+      }
+    },
+    "page_members_9TcyFc": {
+      "type": "page-members",
+      "settings": {
+        "member_role": "Member",
+        "hide_image": true
       }
     }
   },
@@ -55,7 +55,7 @@
     "main",
     "page_members_feELtF",
     "page_members_PVtw8d",
-    "page_members_9TcyFc",
-    "alliance_globe_VAAaeF"
+    "alliance_globe_VAAaeF",
+    "page_members_9TcyFc"
   ]
 }

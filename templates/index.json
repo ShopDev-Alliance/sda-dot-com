@@ -58,6 +58,18 @@
         "padding_bottom": 52
       }
     },
+    "alliance_globe_RPE7UR": {
+      "type": "alliance-globe",
+      "name": "Alliance 3D Globe",
+      "settings": {
+        "heading": "Community that Spans the Globe",
+        "subheading": "Connecting Shopify developers across 18 timezones",
+        "bg_color": "#050505",
+        "dot_color": "#fd814f",
+        "globe_style": "dark",
+        "show_timezone_bands": true
+      }
+    },
     "image_banner": {
       "type": "image-banner",
       "blocks": {
@@ -593,6 +605,7 @@
   },
   "order": [
     "rich_text_a9KGWB",
+    "alliance_globe_RPE7UR",
     "image_banner",
     "rich_text_enUFz6",
     "multicolumn_ACKpiK",
