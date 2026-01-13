@@ -1,0 +1,522 @@
+{% liquid
+  comment
+    Alliance 3D Globe Section
+    Displays an anonymous visualization of member locations globally.
+    Locations are grouped by city - no individual identification.
+  endcomment
+
+  assign dot_color = section.settings.dot_color | default: '#00FFCC'
+  assign bg_color = section.settings.bg_color | default: '#050505'
+  assign show_timezone_bands = section.settings.show_timezone_bands | default: true
+
+  assign is_sda_member = false
+  if customer and customer.metafields.custom.sda_member == true
+    assign is_sda_member = true
+  endif
+%}
+
+<style>
+  #alliance-globe-section-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    height: 700px;
+    background-color: {{ bg_color }};
+    overflow: hidden;
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-stars {
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 45%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 15%, rgba(255,255,255,1) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 60%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 30%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 70%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 15% 75%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 90%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 85%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 90% 10%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,1) 0%, transparent 100%),
+      radial-gradient(1px 1px at 95% 45%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 8% 35%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 22% 12%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 38% 68%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 52% 25%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 68% 52%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 82% 88%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 18% 95%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 42%, rgba(255,255,255,1) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 8%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 88% 35%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 3% 82%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 62% 5%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 2% 8%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 17% 28%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 33% 5%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 48% 78%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 63% 38%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 78% 62%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 93% 82%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 12% 58%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 27% 72%, rgba(255,255,255,1) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 42% 32%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 57% 95%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 72% 18%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 87% 48%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 98% 28%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 7% 92%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 55%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 5%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(2px 2px at 50% 50%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 65% 72%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 20% 3%, rgba(255,255,255,0.7) 0%, transparent 100%);
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-canvas {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 750px) {
+    #alliance-globe-section-{{ section.id }} {
+      height: 500px;
+    }
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-canvas {
+    width: 100%;
+    height: 100%;
+    touch-action: pan-y;
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-ui-layer {
+    position: absolute;
+    top: 40px;
+    left: 5%;
+    z-index: 10;
+    pointer-events: none;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-ui-layer h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  @media (max-width: 750px) {
+    #alliance-globe-section-{{ section.id }} .globe-ui-layer h2 {
+      font-size: 1.75rem;
+    }
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-ui-layer p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    max-width: 400px;
+    margin: 0;
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-tooltip {
+    background: rgba(10, 15, 30, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 10px 14px;
+    border-radius: 6px;
+    backdrop-filter: blur(4px);
+    color: #ffffff;
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-fallback {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-fallback p {
+    margin: 0.5rem 0;
+    opacity: 0.8;
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    opacity: 0.6;
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-reset-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s ease;
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-reset-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  @keyframes globe-dot-ping {
+    75%, 100% {
+      transform: scale(3);
+      opacity: 0;
+    }
+  }
+</style>
+
+<section id="alliance-globe-section-{{ section.id }}" aria-label="Global member distribution visualization">
+  <div class="globe-stars"></div>
+  <div class="globe-ui-layer">
+    {% if section.settings.heading != blank %}
+      <h2>{{ section.settings.heading }}</h2>
+    {% endif %}
+    {% if section.settings.subheading != blank %}
+      <p>{{ section.settings.subheading }}</p>
+    {% endif %}
+  </div>
+
+  <div class="globe-canvas" id="globe-canvas-{{ section.id }}">
+    <div class="globe-loading">Loading globe...</div>
+  </div>
+
+  <div class="globe-fallback" id="globe-fallback-{{ section.id }}">
+    <p>Interactive globe requires WebGL support.</p>
+    <p>SDA members span 18 timezones worldwide.</p>
+  </div>
+
+  <button class="globe-reset-btn" id="globe-reset-{{ section.id }}">Reset View</button>
+</section>
+
+<script src="//unpkg.com/globe.gl@2.27.0"></script>
+<script src="//unpkg.com/topojson-client@3.1.0"></script>
+
+<script>
+  (function() {
+    const SECTION_ID = '{{ section.id }}';
+    const CONFIG = {
+      bg: '{{ bg_color }}',
+      dotColor: '{{ dot_color }}',
+      atmosphere: '#A0C4FF',
+      showTimezoneBands: {{ show_timezone_bands }}
+    };
+
+    {% comment %}
+      Build location data server-side in Liquid for privacy:
+      - Grouped by city (deduplicated) before reaching browser
+      - Coordinates rounded to 1 decimal for privacy
+      - City/state names only included for logged-in users
+    {% endcomment %}
+    {% liquid
+      assign locations_output = ''
+      assign seen_locations = ''
+
+      paginate shop.metaobjects.members.values by 500
+        for member in shop.metaobjects.members.values
+          if member.coordinates != blank
+            assign coords = member.coordinates.value | split: ','
+            assign lat_raw = coords[0] | strip | plus: 0.0
+            assign lng_raw = coords[1] | strip | plus: 0.0
+
+            if lat_raw != 0 or lng_raw != 0
+              # Round to 1 decimal place for privacy
+              assign lat_rounded = lat_raw | round: 1
+              assign lng_rounded = lng_raw | round: 1
+
+              assign city_val = member.city.value | default: ''
+              assign state_val = member.state.value | default: ''
+              assign location_key = city_val | append: '-' | append: state_val | append: '-' | append: lat_rounded | append: '-' | append: lng_rounded
+
+              unless seen_locations contains location_key
+                assign seen_locations = seen_locations | append: location_key | append: '|'
+
+                if is_sda_member
+                  assign location_entry = '{"city":"' | append: city_val | append: '","state":"' | append: state_val | append: '","lat":' | append: lat_rounded | append: ',"lng":' | append: lng_rounded | append: '},'
+                else
+                  assign location_entry = '{"lat":' | append: lat_rounded | append: ',"lng":' | append: lng_rounded | append: '},'
+                endif
+
+                assign locations_output = locations_output | append: location_entry
+              endunless
+            endif
+          endif
+        endfor
+      endpaginate
+    %}
+
+    const locations = [{{ locations_output }}].filter(l => l.lat !== undefined);
+    const isSdaMember = {{ is_sda_member | json }};
+
+    {% comment %} Generate timezone bands from unique longitudes {% endcomment %}
+    function generateTimezoneBands(locations) {
+      const timezones = new Set();
+      locations.forEach(function(loc) {
+        const tz = Math.round(loc.lng / 15);
+        timezones.add(tz);
+      });
+
+      return Array.from(timezones).map(function(tz) {
+        return {
+          lat: 0,
+          lng: tz * 15,
+          maxR: 90,
+          propagationSpeed: 0,
+          repeatPeriod: 0
+        };
+      });
+    }
+
+    {% comment %} Check WebGL support {% endcomment %}
+    function hasWebGL() {
+      try {
+        const canvas = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext &&
+          (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+      } catch (e) {
+        return false;
+      }
+    }
+
+    {% comment %} Initialize the globe {% endcomment %}
+    function initGlobe() {
+      const container = document.getElementById('globe-canvas-' + SECTION_ID);
+      const fallback = document.getElementById('globe-fallback-' + SECTION_ID);
+      const loading = container.querySelector('.globe-loading');
+
+      if (!hasWebGL()) {
+        if (loading) loading.style.display = 'none';
+        fallback.style.display = 'block';
+        return;
+      }
+
+      if (loading) loading.style.display = 'none';
+
+      const Globe = window.Globe;
+      if (!Globe) {
+        console.error('Globe.gl library not loaded');
+        return;
+      }
+
+      {% comment %} Determine globe texture based on style setting {% endcomment %}
+      let globeImageUrl = '//unpkg.com/three-globe/example/img/earth-dark.jpg';
+      let showPolygons = false;
+      {% case section.settings.globe_style %}
+        {% when 'light' %}
+          globeImageUrl = '//unpkg.com/three-globe/example/img/earth-blue-marble.jpg';
+        {% when 'hologram' %}
+          globeImageUrl = null;
+          showPolygons = true;
+      {% endcase %}
+
+      const world = Globe()
+        (container)
+        .backgroundColor('rgba(0,0,0,0)')
+        .showAtmosphere(true)
+        .atmosphereColor(CONFIG.atmosphere)
+        .atmosphereAltitude(0.15)
+        .htmlElementsData(locations)
+        .htmlLat(function(d) { return d.lat; })
+        .htmlLng(function(d) { return d.lng; })
+        .htmlAltitude(0.005)
+        .htmlElement(function(d) {
+          var wrapper = document.createElement('div');
+          wrapper.innerHTML = '&nbsp;';
+          wrapper.style.cssText = 'display: block !important; position: relative; width: 6px; height: 6px; pointer-events: auto; font-size: 0; line-height: 0;';
+
+          var ping = document.createElement('div');
+          ping.innerHTML = '&nbsp;';
+          ping.style.cssText = 'display: block !important; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: ' + CONFIG.dotColor + '; border-radius: 50%; opacity: 0.75; animation: globe-dot-ping 2s cubic-bezier(0,0,.2,1) infinite; font-size: 0; line-height: 0;';
+
+          var dot = document.createElement('div');
+          dot.innerHTML = '&nbsp;';
+          dot.style.cssText = 'display: block !important; position: relative; width: 100%; height: 100%; background: ' + CONFIG.dotColor + '; border-radius: 50%; font-size: 0; line-height: 0;';
+
+          wrapper.appendChild(ping);
+          wrapper.appendChild(dot);
+
+          if (isSdaMember && d.city) {
+            wrapper.title = d.state ? d.city + ', ' + d.state : d.city;
+          }
+          return wrapper;
+        });
+
+      {% comment %} Configure controls - auto-rotate and disable scroll zoom {% endcomment %}
+      const controls = world.controls();
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 0.6;
+      controls.enableZoom = false;
+
+      {% comment %} Pause rotation when user interacts, resume after 2 seconds of inactivity {% endcomment %}
+      let resumeTimeout;
+      controls.addEventListener('start', function() {
+        clearTimeout(resumeTimeout);
+        controls.autoRotate = false;
+      });
+      controls.addEventListener('end', function() {
+        resumeTimeout = setTimeout(function() {
+          controls.autoRotate = true;
+        }, 2000);
+      });
+
+      {% comment %} Double-click to zoom in {% endcomment %}
+      const defaultCameraDistance = world.camera().position.length();
+      container.addEventListener('dblclick', function(event) {
+        const currentDistance = world.camera().position.length();
+        const minDistance = 150;
+        const newDistance = currentDistance * 0.6;
+        world.camera().position.setLength(Math.max(newDistance, minDistance));
+      });
+
+      {% comment %} Reset view button {% endcomment %}
+      const resetBtn = document.getElementById('globe-reset-' + SECTION_ID);
+      resetBtn.addEventListener('click', function() {
+        world.camera().position.setLength(defaultCameraDistance);
+      });
+
+      {% comment %} Apply globe texture or hologram style {% endcomment %}
+      if (globeImageUrl) {
+        world.globeImageUrl(globeImageUrl);
+        world.bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png');
+      }
+
+      {% comment %} Timezone bands {% endcomment %}
+      if (CONFIG.showTimezoneBands && locations.length > 0) {
+        const timezoneBands = generateTimezoneBands(locations);
+        world
+          .ringsData(timezoneBands)
+          .ringColor(function() { return 'rgba(253, 129, 79, 0.15)'; })
+          .ringMaxRadius(90)
+          .ringPropagationSpeed(0)
+          .ringRepeatPeriod(0);
+      }
+
+      {% comment %} Hologram style - vector borders {% endcomment %}
+      if (showPolygons) {
+        fetch('//unpkg.com/world-atlas/countries-110m.json')
+          .then(function(res) { return res.json(); })
+          .then(function(countries) {
+            world
+              .polygonsData(topojson.feature(countries, countries.objects.countries).features)
+              .polygonCapColor(function() { return 'rgba(0,0,0,0)'; })
+              .polygonSideColor(function() { return 'rgba(0,0,0,0)'; })
+              .polygonStrokeColor(function() { return '#2a2a4e'; });
+          });
+      }
+
+      {% comment %} Responsive resizing {% endcomment %}
+      const resizeObserver = new ResizeObserver(function(entries) {
+        for (let entry of entries) {
+          world.width(entry.contentRect.width);
+          world.height(entry.contentRect.height);
+        }
+      });
+      resizeObserver.observe(container.parentElement);
+    }
+
+    {% comment %} Lazy load with IntersectionObserver {% endcomment %}
+    const section = document.getElementById('alliance-globe-section-' + SECTION_ID);
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          initGlobe();
+          observer.disconnect();
+        }
+      });
+    }, { rootMargin: '200px' });
+
+    observer.observe(section);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Alliance 3D Globe",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Global Alliance"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Connecting developers across 18 timezones"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#050505"
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Dot Color",
+      "default": "#00FFCC"
+    },
+    {
+      "type": "select",
+      "id": "globe_style",
+      "label": "Globe Style",
+      "options": [
+        {
+          "value": "dark",
+          "label": "Dark Earth"
+        },
+        {
+          "value": "light",
+          "label": "Blue Marble"
+        },
+        {
+          "value": "hologram",
+          "label": "Hologram (Wireframe)"
+        }
+      ],
+      "default": "dark"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_timezone_bands",
+      "label": "Show Timezone Bands",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Alliance 3D Globe"
+    }
+  ]
+}
+{% endschema %}

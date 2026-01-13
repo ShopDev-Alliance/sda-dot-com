@@ -1,12 +1,12 @@
 /*
-* ------------------------------------------------------------
-* IMPORTANT: The contents of this file are auto-generated.
-*
-* This file may be updated by the Shopify admin theme editor
-* or related systems. Please exercise caution as any changes
-* made to this file may be overwritten.
-* ------------------------------------------------------------
-*/
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -36,12 +36,25 @@
         "member_role": "Member",
         "hide_image": true
       }
+    },
+    "alliance_globe_VAAaeF": {
+      "type": "alliance-globe",
+      "name": "Alliance 3D Globe",
+      "settings": {
+        "heading": "Global Alliance",
+        "subheading": "Connecting developers across 18 timezones",
+        "bg_color": "#050505",
+        "dot_color": "#fd814f",
+        "globe_style": "dark",
+        "show_timezone_bands": true
+      }
     }
   },
   "order": [
     "main",
     "page_members_feELtF",
     "page_members_PVtw8d",
-    "page_members_9TcyFc"
+    "page_members_9TcyFc",
+    "alliance_globe_VAAaeF"
   ]
 }
