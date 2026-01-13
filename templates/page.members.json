@@ -39,9 +39,10 @@
     },
     "alliance_globe_VAAaeF": {
       "type": "alliance-globe",
+      "disabled": true,
       "name": "Alliance 3D Globe",
       "settings": {
-        "heading": "Global Alliance",
+        "heading": "An Alliance that Spans the Globe",
         "subheading": "Connecting developers across 18 timezones",
         "bg_color": "#050505",
         "dot_color": "#fd814f",
