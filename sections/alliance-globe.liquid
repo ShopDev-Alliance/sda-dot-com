@@ -185,6 +185,27 @@
     background: rgba(255, 255, 255, 0.2);
   }
 
+  #alliance-globe-section-{{ section.id }} .globe-pulse-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 115px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s ease;
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-pulse-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
   @keyframes globe-dot-ping {
     75%, 100% {
       transform: scale(3);
@@ -213,6 +234,7 @@
     <p>SDA members span 18 timezones worldwide.</p>
   </div>
 
+  <button class="globe-pulse-btn" id="globe-pulse-{{ section.id }}">Pulse</button>
   <button class="globe-reset-btn" id="globe-reset-{{ section.id }}">Reset View</button>
 </section>
 
@@ -421,6 +443,17 @@
         world.camera().position.setLength(defaultCameraDistance);
       });
 
+      {% comment %} Pulse demo button - fires 5-10 arcs with staggered timing {% endcomment %}
+      const pulseBtn = document.getElementById('globe-pulse-' + SECTION_ID);
+      pulseBtn.addEventListener('click', function() {
+        const arcCount = 5 + Math.floor(Math.random() * 6);
+        [...Array(arcCount)].forEach(function(_, i) {
+          setTimeout(function() {
+            triggerGlobeArc();
+          }, i * 400);
+        });
+      });
+
       {% comment %} Apply globe texture or hologram style {% endcomment %}
       if (globeImageUrl) {
         world.globeImageUrl(globeImageUrl);
@@ -478,7 +511,6 @@
     {% endcomment %}
     function triggerGlobeArc() {
       if (!globeInstance || locations.length < 2) {
-        console.log('[Globe] Cannot fire arc - globe not ready or not enough locations');
         return;
       }
 
@@ -490,8 +522,6 @@
         to = locations[Math.floor(Math.random() * locations.length)];
         attempts++;
       }
-
-      console.log('[Globe] Arc from', from.lat.toFixed(1) + ',' + from.lng.toFixed(1), 'to', to.lat.toFixed(1) + ',' + to.lng.toFixed(1));
 
       {% comment %} Calculate distance-based altitude - longer arcs arc higher {% endcomment %}
       const toRad = function(deg) { return deg * Math.PI / 180; };
@@ -559,7 +589,6 @@
     {% comment %} Activity polling - connects to Cloudflare Worker middleware {% endcomment %}
     function startActivityPolling() {
       let lastKnownCount = null;
-      console.log('[Globe] Starting activity polling to:', CONFIG.activityWorkerUrl);
 
       function checkActivityLoop() {
         fetch(CONFIG.activityWorkerUrl)
@@ -568,7 +597,6 @@
             return res.json();
           })
           .then(function(data) {
-            console.log('[Globe] Poll result - recent_count:', data.recent_count, 'last_known:', lastKnownCount);
             const currentCount = data.recent_count;
 
             {% comment %} Initialize on first run {% endcomment %}
@@ -582,7 +610,6 @@
 
               {% comment %} Limit max burst to avoid overwhelming the browser {% endcomment %}
               const arcsToFire = Math.min(diff, 10);
-              console.log('[Globe] Activity detected! Firing', arcsToFire, 'arcs');
 
               for (let i = 0; i < arcsToFire; i++) {
                 {% comment %} Random delay (0-4s) for organic feel {% endcomment %}
