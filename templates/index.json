@@ -67,7 +67,9 @@
         "bg_color": "#050505",
         "dot_color": "#fd814f",
         "globe_style": "dark",
-        "show_timezone_bands": true
+        "show_timezone_bands": true,
+        "enable_activity_viz": true,
+        "activity_worker_url": "https://sda-slack-visualizer.taylor-d3a.workers.dev/activity-check"
       }
     },
     "image_banner": {
