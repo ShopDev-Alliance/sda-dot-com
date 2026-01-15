@@ -216,8 +216,11 @@
   <button class="globe-reset-btn" id="globe-reset-{{ section.id }}">Reset View</button>
 </section>
 
-<script src="//unpkg.com/globe.gl@2.27.0"></script>
-<script src="//unpkg.com/topojson-client@3.1.0"></script>
+<script src="{{ 'globe-gl.js' | asset_url }}"></script>
+{% comment %}
+  topojson-client removed - only needed for hologram wireframe style which we're not using.
+  Re-enable if hologram style is needed: <script src="//unpkg.com/topojson-client@3.1.0"></script>
+{% endcomment %}
 
 <script>
   (function() {
@@ -337,9 +340,11 @@
       {% case section.settings.globe_style %}
         {% when 'light' %}
           globeImageUrl = '//unpkg.com/three-globe/example/img/earth-blue-marble.jpg';
+        {% comment %} Hologram style disabled - requires topojson-client CDN
         {% when 'hologram' %}
           globeImageUrl = null;
           showPolygons = true;
+        {% endcomment %}
       {% endcase %}
 
       const world = Globe()
@@ -433,18 +438,20 @@
           .ringRepeatPeriod(0);
       }
 
-      {% comment %} Hologram style - vector borders {% endcomment %}
-      if (showPolygons) {
-        fetch('//unpkg.com/world-atlas/countries-110m.json')
-          .then(function(res) { return res.json(); })
-          .then(function(countries) {
-            world
-              .polygonsData(topojson.feature(countries, countries.objects.countries).features)
-              .polygonCapColor(function() { return 'rgba(0,0,0,0)'; })
-              .polygonSideColor(function() { return 'rgba(0,0,0,0)'; })
-              .polygonStrokeColor(function() { return '#2a2a4e'; });
-          });
-      }
+      {% comment %}
+        Hologram style disabled - requires topojson-client CDN and world-atlas data
+        if (showPolygons) {
+          fetch('//unpkg.com/world-atlas/countries-110m.json')
+            .then(function(res) { return res.json(); })
+            .then(function(countries) {
+              world
+                .polygonsData(topojson.feature(countries, countries.objects.countries).features)
+                .polygonCapColor(function() { return 'rgba(0,0,0,0)'; })
+                .polygonSideColor(function() { return 'rgba(0,0,0,0)'; })
+                .polygonStrokeColor(function() { return '#2a2a4e'; });
+            });
+        }
+      {% endcomment %}
 
       {% comment %} Responsive resizing {% endcomment %}
       const resizeObserver = new ResizeObserver(function(entries) {
@@ -619,6 +626,11 @@
   })();
 </script>
 
+{% comment %}
+  Note: Hologram globe style option removed from schema below.
+  It required topojson-client CDN which we're not using. Re-add if needed:
+  { "value": "hologram", "label": "Hologram (Wireframe)" }
+{% endcomment %}
 {% schema %}
 {
   "name": "Alliance 3D Globe",
@@ -661,10 +673,6 @@
         {
           "value": "light",
           "label": "Blue Marble"
-        },
-        {
-          "value": "hologram",
-          "label": "Hologram (Wireframe)"
         }
       ],
       "default": "dark"
