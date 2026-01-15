@@ -176,8 +176,10 @@
           "source": "{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"] }}",
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"].logo.value }}",
+            "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"].system.url }}"
+            "link": "{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"].system.url }}",
+            "external_link": false
           }
         },
         "logo_rzn7dA": {
@@ -185,8 +187,10 @@
           "source": "{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"] }}",
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"].logo.value }}",
+            "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"].system.url }}"
+            "link": "{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"].system.url }}",
+            "external_link": false
           }
         },
         "logo_thE6Mw": {
@@ -194,8 +198,19 @@
           "source": "{{ metaobjects.member_benefits[\"retail-ads-integration\"] }}",
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"retail-ads-integration\"].logo.value }}",
+            "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"retail-ads-integration\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"retail-ads-integration\"].system.url }}"
+            "link": "{{ metaobjects.member_benefits[\"retail-ads-integration\"].system.url }}",
+            "external_link": false
+          }
+        },
+        "logo_Pb8gmq": {
+          "type": "logo",
+          "source": "{{ metaobjects.member_benefits[\"espresso-live\"] }}",
+          "settings": {
+            "image": "{{ metaobjects.member_benefits[\"espresso-live\"].logo.value }}",
+            "title": "<p>{{ metaobjects.member_benefits[\"espresso-live\"].name.value }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"espresso-live\"].link.value }}"
           }
         }
       },
@@ -213,7 +228,8 @@
         "logo_tfikTN",
         "logo_JeyEFr",
         "logo_rzn7dA",
-        "logo_thE6Mw"
+        "logo_thE6Mw",
+        "logo_Pb8gmq"
       ],
       "settings": {
         "title": "",
