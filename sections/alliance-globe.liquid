@@ -348,14 +348,15 @@
         .showAtmosphere(true)
         .atmosphereColor(CONFIG.atmosphere)
         .atmosphereAltitude(0.15)
-        {% comment %} Activity arc layer - inspired by Shopify BFCM 2023 globe {% endcomment %}
+        {% comment %} Activity arc layer - traveling comet effect {% endcomment %}
         .arcsData([])
-        .arcColor(function() { return ['rgba(0, 255, 204, 0.8)', 'rgba(160, 196, 255, 0.8)']; })
-        .arcDashLength(0.4)
-        .arcDashGap(2)
-        .arcDashAnimateTime(2000)
-        .arcStroke(0.5)
-        .arcAltitudeAutoScale(0.3)
+        .arcColor(function(d) { return d.color || 'rgba(0, 255, 204, 0.8)'; })
+        .arcStroke(0.8)
+        .arcAltitude(function(d) { return d.altitude || 0.3; })
+        .arcDashLength(function(d) { return d.dashLength || 1; })
+        .arcDashGap(function(d) { return d.dashGap || 0; })
+        .arcDashInitialGap(function(d) { return d.initialGap || 0; })
+        .arcDashAnimateTime(0)
         .htmlElementsData(locations)
         .htmlLat(function(d) { return d.lat; })
         .htmlLng(function(d) { return d.lng; })
@@ -469,7 +470,10 @@
       https://shopify.engineering/how-we-built-shopifys-bfcm-2023-globe
     {% endcomment %}
     function triggerGlobeArc() {
-      if (!globeInstance || locations.length < 2) return;
+      if (!globeInstance || locations.length < 2) {
+        console.log('[Globe] Cannot fire arc - globe not ready or not enough locations');
+        return;
+      }
 
       {% comment %} Pick two random different member locations {% endcomment %}
       const from = locations[Math.floor(Math.random() * locations.length)];
@@ -480,10 +484,9 @@
         attempts++;
       }
 
-      {% comment %}
-        Calculate distance for altitude variation (Shopify technique)
-        Longer arcs should arc higher for better visibility
-      {% endcomment %}
+      console.log('[Globe] Arc from', from.lat.toFixed(1) + ',' + from.lng.toFixed(1), 'to', to.lat.toFixed(1) + ',' + to.lng.toFixed(1));
+
+      {% comment %} Calculate distance-based altitude - longer arcs arc higher {% endcomment %}
       const toRad = function(deg) { return deg * Math.PI / 180; };
       const lat1 = toRad(from.lat);
       const lat2 = toRad(to.lat);
@@ -492,38 +495,64 @@
         Math.sin(lat1) * Math.sin(lat2) +
         Math.cos(lat1) * Math.cos(lat2) * Math.cos(dLon)
       );
-      {% comment %} Normalize distance (0-π) to altitude (0.1-0.5) {% endcomment %}
       const altitude = 0.1 + (distance / Math.PI) * 0.4;
 
-      {% comment %} Create temporary arc with unique ID for tracking {% endcomment %}
-      const activityArc = {
-        id: 'activity-' + Date.now() + '-' + Math.random(),
+      {% comment %} Animation duration based on distance {% endcomment %}
+      const duration = 2500 + (distance / Math.PI) * 3000;
+
+      {% comment %} Create arc - small traveling segment (comet effect) {% endcomment %}
+      const segmentLength = 0.15;
+      const arc = {
+        id: 'arc-' + Date.now() + '-' + Math.random(),
         startLat: from.lat,
         startLng: from.lng,
         endLat: to.lat,
         endLng: to.lng,
         altitude: altitude,
-        isActivity: true
+        color: 'rgba(0, 255, 204, 0.8)',
+        dashLength: segmentLength,
+        dashGap: 2,
+        initialGap: 0
       };
 
-      {% comment %} Add arc to the visualization {% endcomment %}
-      activityArcs.push(activityArc);
+      activityArcs.push(arc);
       globeInstance.arcsData(activityArcs.slice());
 
-      {% comment %} Remove after animation completes (arc lifecycle: age 0→1→2) {% endcomment %}
-      setTimeout(function() {
-        activityArcs = activityArcs.filter(function(a) {
-          return a.id !== activityArc.id;
-        });
-        if (globeInstance) {
-          globeInstance.arcsData(activityArcs.slice());
+      {% comment %} Animate the segment traveling from start to end {% endcomment %}
+      const startTime = performance.now();
+      function animate() {
+        const elapsed = performance.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        {% comment %} Ease-in-out for smooth acceleration and deceleration {% endcomment %}
+        const eased = progress < 0.5
+          ? 2 * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+        {% comment %} Move segment along arc - initialGap goes from 0 to 1 {% endcomment %}
+        arc.initialGap = eased * (1 + segmentLength);
+        globeInstance.arcsData(activityArcs.slice());
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          {% comment %} Remove arc immediately when segment reaches end {% endcomment %}
+          activityArcs = activityArcs.filter(function(a) {
+            return a.id !== arc.id;
+          });
+          if (globeInstance) {
+            globeInstance.arcsData(activityArcs.slice());
+          }
         }
-      }, 2500);
+      }
+
+      requestAnimationFrame(animate);
     }
 
     {% comment %} Activity polling - connects to Cloudflare Worker middleware {% endcomment %}
     function startActivityPolling() {
       let lastKnownCount = null;
+      console.log('[Globe] Starting activity polling to:', CONFIG.activityWorkerUrl);
 
       function checkActivityLoop() {
         fetch(CONFIG.activityWorkerUrl)
@@ -532,6 +561,7 @@
             return res.json();
           })
           .then(function(data) {
+            console.log('[Globe] Poll result - recent_count:', data.recent_count, 'last_known:', lastKnownCount);
             const currentCount = data.recent_count;
 
             {% comment %} Initialize on first run {% endcomment %}
@@ -545,6 +575,7 @@
 
               {% comment %} Limit max burst to avoid overwhelming the browser {% endcomment %}
               const arcsToFire = Math.min(diff, 10);
+              console.log('[Globe] Activity detected! Firing', arcsToFire, 'arcs');
 
               for (let i = 0; i < arcsToFire; i++) {
                 {% comment %} Random delay (0-4s) for organic feel {% endcomment %}
