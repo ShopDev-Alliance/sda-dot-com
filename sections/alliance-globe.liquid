@@ -226,8 +226,14 @@
       bg: '{{ bg_color }}',
       dotColor: '{{ dot_color }}',
       atmosphere: '#A0C4FF',
-      showTimezoneBands: {{ show_timezone_bands }}
+      showTimezoneBands: {{ show_timezone_bands }},
+      activityWorkerUrl: '{{ section.settings.activity_worker_url }}',
+      enableActivityViz: {{ section.settings.enable_activity_viz | default: false }}
     };
+
+    {% comment %} Globe instance reference for activity arcs {% endcomment %}
+    let globeInstance = null;
+    let activityArcs = [];
 
     {% comment %}
       Build location data server-side in Liquid for privacy:
@@ -342,6 +348,14 @@
         .showAtmosphere(true)
         .atmosphereColor(CONFIG.atmosphere)
         .atmosphereAltitude(0.15)
+        {% comment %} Activity arc layer - inspired by Shopify BFCM 2023 globe {% endcomment %}
+        .arcsData([])
+        .arcColor(function() { return ['rgba(0, 255, 204, 0.8)', 'rgba(160, 196, 255, 0.8)']; })
+        .arcDashLength(0.4)
+        .arcDashGap(2)
+        .arcDashAnimateTime(2000)
+        .arcStroke(0.5)
+        .arcAltitudeAutoScale(0.3)
         .htmlElementsData(locations)
         .htmlLat(function(d) { return d.lat; })
         .htmlLng(function(d) { return d.lng; })
@@ -439,7 +453,125 @@
         }
       });
       resizeObserver.observe(container.parentElement);
+
+      {% comment %} Store globe reference for activity visualization {% endcomment %}
+      globeInstance = world;
+
+      {% comment %} Start activity polling if enabled {% endcomment %}
+      if (CONFIG.enableActivityViz && CONFIG.activityWorkerUrl) {
+        startActivityPolling();
+      }
     }
+
+    {% comment %}
+      Activity Visualization Functions
+      Inspired by Shopify's BFCM 2023 Globe
+      https://shopify.engineering/how-we-built-shopifys-bfcm-2023-globe
+    {% endcomment %}
+    function triggerGlobeArc() {
+      if (!globeInstance || locations.length < 2) return;
+
+      {% comment %} Pick two random different member locations {% endcomment %}
+      const from = locations[Math.floor(Math.random() * locations.length)];
+      let to = locations[Math.floor(Math.random() * locations.length)];
+      let attempts = 0;
+      while (to === from && locations.length > 1 && attempts < 10) {
+        to = locations[Math.floor(Math.random() * locations.length)];
+        attempts++;
+      }
+
+      {% comment %}
+        Calculate distance for altitude variation (Shopify technique)
+        Longer arcs should arc higher for better visibility
+      {% endcomment %}
+      const toRad = function(deg) { return deg * Math.PI / 180; };
+      const lat1 = toRad(from.lat);
+      const lat2 = toRad(to.lat);
+      const dLon = toRad(to.lng - from.lng);
+      const distance = Math.acos(
+        Math.sin(lat1) * Math.sin(lat2) +
+        Math.cos(lat1) * Math.cos(lat2) * Math.cos(dLon)
+      );
+      {% comment %} Normalize distance (0-π) to altitude (0.1-0.5) {% endcomment %}
+      const altitude = 0.1 + (distance / Math.PI) * 0.4;
+
+      {% comment %} Create temporary arc with unique ID for tracking {% endcomment %}
+      const activityArc = {
+        id: 'activity-' + Date.now() + '-' + Math.random(),
+        startLat: from.lat,
+        startLng: from.lng,
+        endLat: to.lat,
+        endLng: to.lng,
+        altitude: altitude,
+        isActivity: true
+      };
+
+      {% comment %} Add arc to the visualization {% endcomment %}
+      activityArcs.push(activityArc);
+      globeInstance.arcsData(activityArcs.slice());
+
+      {% comment %} Remove after animation completes (arc lifecycle: age 0→1→2) {% endcomment %}
+      setTimeout(function() {
+        activityArcs = activityArcs.filter(function(a) {
+          return a.id !== activityArc.id;
+        });
+        if (globeInstance) {
+          globeInstance.arcsData(activityArcs.slice());
+        }
+      }, 2500);
+    }
+
+    {% comment %} Activity polling - connects to Cloudflare Worker middleware {% endcomment %}
+    function startActivityPolling() {
+      let lastKnownCount = null;
+
+      function checkActivityLoop() {
+        fetch(CONFIG.activityWorkerUrl)
+          .then(function(res) {
+            if (!res.ok) throw new Error('Worker Error');
+            return res.json();
+          })
+          .then(function(data) {
+            const currentCount = data.recent_count;
+
+            {% comment %} Initialize on first run {% endcomment %}
+            if (lastKnownCount === null) {
+              lastKnownCount = currentCount;
+            }
+            {% comment %} If count increased, fire arc visualizations {% endcomment %}
+            else if (currentCount > lastKnownCount) {
+              const diff = currentCount - lastKnownCount;
+              lastKnownCount = currentCount;
+
+              {% comment %} Limit max burst to avoid overwhelming the browser {% endcomment %}
+              const arcsToFire = Math.min(diff, 10);
+
+              for (let i = 0; i < arcsToFire; i++) {
+                {% comment %} Random delay (0-4s) for organic feel {% endcomment %}
+                setTimeout(function() {
+                  triggerGlobeArc();
+                }, Math.random() * 4000);
+              }
+            }
+            {% comment %} Rolling window: count can decrease as old events expire {% endcomment %}
+            else if (currentCount < lastKnownCount) {
+              lastKnownCount = currentCount;
+            }
+          })
+          .catch(function(err) {
+            {% comment %} Silently skip on error - don't break the visualization {% endcomment %}
+          });
+
+        {% comment %} Poll again in 5s (aligns with Edge Cache TTL) {% endcomment %}
+        setTimeout(checkActivityLoop, 5000);
+      }
+
+      {% comment %} Start the polling loop {% endcomment %}
+      checkActivityLoop();
+    }
+
+    {% comment %} Expose triggerGlobeArc globally for testing {% endcomment %}
+    window.triggerGlobeArc = triggerGlobeArc;
 
     {% comment %} Lazy load with IntersectionObserver {% endcomment %}
     const section = document.getElementById('alliance-globe-section-' + SECTION_ID);
@@ -511,6 +643,23 @@
       "id": "show_timezone_bands",
       "label": "Show Timezone Bands",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Slack Activity Visualization"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_activity_viz",
+      "label": "Enable Activity Visualization",
+      "default": false,
+      "info": "Shows animated arcs when Slack activity occurs (requires Cloudflare Worker setup)"
+    },
+    {
+      "type": "url",
+      "id": "activity_worker_url",
+      "label": "Activity Worker URL",
+      "info": "Full URL to your Cloudflare Worker /activity-check endpoint"
     }
   ],
   "presets": [
