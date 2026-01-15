@@ -216,8 +216,11 @@
   <button class="globe-reset-btn" id="globe-reset-{{ section.id }}">Reset View</button>
 </section>
 
-<script src="//unpkg.com/globe.gl@2.27.0"></script>
-<script src="//unpkg.com/topojson-client@3.1.0"></script>
+<script src="{{ 'globe-gl.js' | asset_url }}"></script>
+{% comment %}
+  topojson-client removed - only needed for hologram wireframe style which we're not using.
+  Re-enable if hologram style is needed: <script src="//unpkg.com/topojson-client@3.1.0"></script>
+{% endcomment %}
 
 <script>
   (function() {
@@ -226,8 +229,14 @@
       bg: '{{ bg_color }}',
       dotColor: '{{ dot_color }}',
       atmosphere: '#A0C4FF',
-      showTimezoneBands: {{ show_timezone_bands }}
+      showTimezoneBands: {{ show_timezone_bands }},
+      activityWorkerUrl: '{{ section.settings.activity_worker_url }}',
+      enableActivityViz: {{ section.settings.enable_activity_viz | default: false }}
     };
+
+    {% comment %} Globe instance reference for activity arcs {% endcomment %}
+    let globeInstance = null;
+    let activityArcs = [];
 
     {% comment %}
       Build location data server-side in Liquid for privacy:
@@ -331,9 +340,11 @@
       {% case section.settings.globe_style %}
         {% when 'light' %}
           globeImageUrl = '//unpkg.com/three-globe/example/img/earth-blue-marble.jpg';
+        {% comment %} Hologram style disabled - requires topojson-client CDN
         {% when 'hologram' %}
           globeImageUrl = null;
           showPolygons = true;
+        {% endcomment %}
       {% endcase %}
 
       const world = Globe()
@@ -342,6 +353,15 @@
         .showAtmosphere(true)
         .atmosphereColor(CONFIG.atmosphere)
         .atmosphereAltitude(0.15)
+        {% comment %} Activity arc layer - traveling comet effect {% endcomment %}
+        .arcsData([])
+        .arcColor(function(d) { return d.color || 'rgba(0, 255, 204, 0.8)'; })
+        .arcStroke(0.8)
+        .arcAltitude(function(d) { return d.altitude || 0.3; })
+        .arcDashLength(function(d) { return d.dashLength || 1; })
+        .arcDashGap(function(d) { return d.dashGap || 0; })
+        .arcDashInitialGap(function(d) { return d.initialGap || 0; })
+        .arcDashAnimateTime(0)
         .htmlElementsData(locations)
         .htmlLat(function(d) { return d.lat; })
         .htmlLng(function(d) { return d.lng; })
@@ -418,18 +438,20 @@
           .ringRepeatPeriod(0);
       }
 
-      {% comment %} Hologram style - vector borders {% endcomment %}
-      if (showPolygons) {
-        fetch('//unpkg.com/world-atlas/countries-110m.json')
-          .then(function(res) { return res.json(); })
-          .then(function(countries) {
-            world
-              .polygonsData(topojson.feature(countries, countries.objects.countries).features)
-              .polygonCapColor(function() { return 'rgba(0,0,0,0)'; })
-              .polygonSideColor(function() { return 'rgba(0,0,0,0)'; })
-              .polygonStrokeColor(function() { return '#2a2a4e'; });
-          });
-      }
+      {% comment %}
+        Hologram style disabled - requires topojson-client CDN and world-atlas data
+        if (showPolygons) {
+          fetch('//unpkg.com/world-atlas/countries-110m.json')
+            .then(function(res) { return res.json(); })
+            .then(function(countries) {
+              world
+                .polygonsData(topojson.feature(countries, countries.objects.countries).features)
+                .polygonCapColor(function() { return 'rgba(0,0,0,0)'; })
+                .polygonSideColor(function() { return 'rgba(0,0,0,0)'; })
+                .polygonStrokeColor(function() { return '#2a2a4e'; });
+            });
+        }
+      {% endcomment %}
 
       {% comment %} Responsive resizing {% endcomment %}
       const resizeObserver = new ResizeObserver(function(entries) {
@@ -439,7 +461,155 @@
         }
       });
       resizeObserver.observe(container.parentElement);
+
+      {% comment %} Store globe reference for activity visualization {% endcomment %}
+      globeInstance = world;
+
+      {% comment %} Start activity polling if enabled {% endcomment %}
+      if (CONFIG.enableActivityViz && CONFIG.activityWorkerUrl) {
+        startActivityPolling();
+      }
     }
+
+    {% comment %}
+      Activity Visualization Functions
+      Inspired by Shopify's BFCM 2023 Globe
+      https://shopify.engineering/how-we-built-shopifys-bfcm-2023-globe
+    {% endcomment %}
+    function triggerGlobeArc() {
+      if (!globeInstance || locations.length < 2) {
+        console.log('[Globe] Cannot fire arc - globe not ready or not enough locations');
+        return;
+      }
+
+      {% comment %} Pick two random different member locations {% endcomment %}
+      const from = locations[Math.floor(Math.random() * locations.length)];
+      let to = locations[Math.floor(Math.random() * locations.length)];
+      let attempts = 0;
+      while (to === from && locations.length > 1 && attempts < 10) {
+        to = locations[Math.floor(Math.random() * locations.length)];
+        attempts++;
+      }
+
+      console.log('[Globe] Arc from', from.lat.toFixed(1) + ',' + from.lng.toFixed(1), 'to', to.lat.toFixed(1) + ',' + to.lng.toFixed(1));
+
+      {% comment %} Calculate distance-based altitude - longer arcs arc higher {% endcomment %}
+      const toRad = function(deg) { return deg * Math.PI / 180; };
+      const lat1 = toRad(from.lat);
+      const lat2 = toRad(to.lat);
+      const dLon = toRad(to.lng - from.lng);
+      const distance = Math.acos(
+        Math.sin(lat1) * Math.sin(lat2) +
+        Math.cos(lat1) * Math.cos(lat2) * Math.cos(dLon)
+      );
+      const altitude = 0.1 + (distance / Math.PI) * 0.4;
+
+      {% comment %} Animation duration based on distance {% endcomment %}
+      const duration = 2500 + (distance / Math.PI) * 3000;
+
+      {% comment %} Create arc - small traveling segment (comet effect) {% endcomment %}
+      const segmentLength = 0.15;
+      const arc = {
+        id: 'arc-' + Date.now() + '-' + Math.random(),
+        startLat: from.lat,
+        startLng: from.lng,
+        endLat: to.lat,
+        endLng: to.lng,
+        altitude: altitude,
+        color: 'rgba(0, 255, 204, 0.8)',
+        dashLength: segmentLength,
+        dashGap: 2,
+        initialGap: 0
+      };
+
+      activityArcs.push(arc);
+      globeInstance.arcsData(activityArcs.slice());
+
+      {% comment %} Animate the segment traveling from start to end {% endcomment %}
+      const startTime = performance.now();
+      function animate() {
+        const elapsed = performance.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        {% comment %} Ease-in-out for smooth acceleration and deceleration {% endcomment %}
+        const eased = progress < 0.5
+          ? 2 * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+        {% comment %} Move segment along arc - initialGap goes from 0 to 1 {% endcomment %}
+        arc.initialGap = eased * (1 + segmentLength);
+        globeInstance.arcsData(activityArcs.slice());
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          {% comment %} Remove arc immediately when segment reaches end {% endcomment %}
+          activityArcs = activityArcs.filter(function(a) {
+            return a.id !== arc.id;
+          });
+          if (globeInstance) {
+            globeInstance.arcsData(activityArcs.slice());
+          }
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    {% comment %} Activity polling - connects to Cloudflare Worker middleware {% endcomment %}
+    function startActivityPolling() {
+      let lastKnownCount = null;
+      console.log('[Globe] Starting activity polling to:', CONFIG.activityWorkerUrl);
+
+      function checkActivityLoop() {
+        fetch(CONFIG.activityWorkerUrl)
+          .then(function(res) {
+            if (!res.ok) throw new Error('Worker Error');
+            return res.json();
+          })
+          .then(function(data) {
+            console.log('[Globe] Poll result - recent_count:', data.recent_count, 'last_known:', lastKnownCount);
+            const currentCount = data.recent_count;
+
+            {% comment %} Initialize on first run {% endcomment %}
+            if (lastKnownCount === null) {
+              lastKnownCount = currentCount;
+            }
+            {% comment %} If count increased, fire arc visualizations {% endcomment %}
+            else if (currentCount > lastKnownCount) {
+              const diff = currentCount - lastKnownCount;
+              lastKnownCount = currentCount;
+
+              {% comment %} Limit max burst to avoid overwhelming the browser {% endcomment %}
+              const arcsToFire = Math.min(diff, 10);
+              console.log('[Globe] Activity detected! Firing', arcsToFire, 'arcs');
+
+              for (let i = 0; i < arcsToFire; i++) {
+                {% comment %} Random delay (0-4s) for organic feel {% endcomment %}
+                setTimeout(function() {
+                  triggerGlobeArc();
+                }, Math.random() * 4000);
+              }
+            }
+            {% comment %} Rolling window: count can decrease as old events expire {% endcomment %}
+            else if (currentCount < lastKnownCount) {
+              lastKnownCount = currentCount;
+            }
+          })
+          .catch(function(err) {
+            {% comment %} Silently skip on error - don't break the visualization {% endcomment %}
+          });
+
+        {% comment %} Poll again in 5s (aligns with Edge Cache TTL) {% endcomment %}
+        setTimeout(checkActivityLoop, 5000);
+      }
+
+      {% comment %} Start the polling loop {% endcomment %}
+      checkActivityLoop();
+    }
+
+    {% comment %} Expose triggerGlobeArc globally for testing {% endcomment %}
+    window.triggerGlobeArc = triggerGlobeArc;
 
     {% comment %} Lazy load with IntersectionObserver {% endcomment %}
     const section = document.getElementById('alliance-globe-section-' + SECTION_ID);
@@ -456,6 +626,11 @@
   })();
 </script>
 
+{% comment %}
+  Note: Hologram globe style option removed from schema below.
+  It required topojson-client CDN which we're not using. Re-add if needed:
+  { "value": "hologram", "label": "Hologram (Wireframe)" }
+{% endcomment %}
 {% schema %}
 {
   "name": "Alliance 3D Globe",
@@ -498,10 +673,6 @@
         {
           "value": "light",
           "label": "Blue Marble"
-        },
-        {
-          "value": "hologram",
-          "label": "Hologram (Wireframe)"
         }
       ],
       "default": "dark"
@@ -511,6 +682,23 @@
       "id": "show_timezone_bands",
       "label": "Show Timezone Bands",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Slack Activity Visualization"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_activity_viz",
+      "label": "Enable Activity Visualization",
+      "default": false,
+      "info": "Shows animated arcs when Slack activity occurs (requires Cloudflare Worker setup)"
+    },
+    {
+      "type": "url",
+      "id": "activity_worker_url",
+      "label": "Activity Worker URL",
+      "info": "Full URL to your Cloudflare Worker /activity-check endpoint"
     }
   ],
   "presets": [
