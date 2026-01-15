@@ -381,14 +381,12 @@
 
     {% comment %} Check WebGL support {% endcomment %}
     function hasWebGL() {
-      return false;
-      {% comment %} try {
+      try {
         const canvas = document.createElement('canvas');
         return !!(window.WebGLRenderingContext &&
           (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
       } catch (e) {
         return false;
-      } {% endcomment %}
     }
 
     {% comment %} Initialize the globe {% endcomment %}
