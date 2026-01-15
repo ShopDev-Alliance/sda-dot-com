@@ -16,6 +16,11 @@ header.header.header--middle-center {
     margin-bottom: 0;
   }
 }
+@media screen and (max-width: 779px) {
+  header h1 a.header__heading-link span.h3{
+    font-size: 20px;
+  }
+}
 
 /* # Header  */
 .header.header--middle-left .header__inline-menu {
