@@ -140,18 +140,68 @@
 
   #alliance-globe-section-{{ section.id }} .globe-fallback {
     display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-sizing: border-box;
     text-align: center;
     color: #ffffff;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
+  #alliance-globe-section-{{ section.id }} .globe-fallback.active {
+    display: flex;
+  }
+
   #alliance-globe-section-{{ section.id }} .globe-fallback p {
     margin: 0.5rem 0;
     opacity: 0.8;
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-fallback-map {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    aspect-ratio: 2000 / 857;
+    margin: 0 auto 1rem;
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-fallback-map svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  {% comment %} Override simplemaps SVG colors for dark theme {% endcomment %}
+  #alliance-globe-section-{{ section.id }} .globe-fallback-map svg path {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.5);
+  }
+
+  #alliance-globe-section-{{ section.id }} .fallback-dot {
+    display: block !important;
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: {{ dot_color }} !important;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 4px {{ dot_color }};
+    z-index: 10;
+    pointer-events: none;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  #alliance-globe-section-{{ section.id }} .globe-fallback-hint {
+    font-size: 0.85rem;
+    opacity: 0.5;
+    margin-top: 1rem;
   }
 
   #alliance-globe-section-{{ section.id }} .globe-loading {
@@ -230,8 +280,12 @@
   </div>
 
   <div class="globe-fallback" id="globe-fallback-{{ section.id }}">
-    <p>Interactive globe requires WebGL support.</p>
+    <div class="globe-fallback-map" id="globe-fallback-map-{{ section.id }}">
+      {% comment %} World map SVG from https://simplemaps.com/resources/svg-world {% endcomment %}
+      {% render 'globe-fallback' %}
+    </div>
     <p>SDA members span 18 timezones worldwide.</p>
+    <p class="globe-fallback-hint">Update your browser for the interactive 3D globe experience.</p>
   </div>
 
   <button class="globe-pulse-btn" id="globe-pulse-{{ section.id }}">Pulse</button>
@@ -327,13 +381,14 @@
 
     {% comment %} Check WebGL support {% endcomment %}
     function hasWebGL() {
-      try {
+      return false;
+      {% comment %} try {
         const canvas = document.createElement('canvas');
         return !!(window.WebGLRenderingContext &&
           (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
       } catch (e) {
         return false;
-      }
+      } {% endcomment %}
     }
 
     {% comment %} Initialize the globe {% endcomment %}
@@ -344,7 +399,38 @@
 
       if (!hasWebGL()) {
         if (loading) loading.style.display = 'none';
-        fallback.style.display = 'block';
+        container.style.display = 'none';
+        fallback.classList.add('active');
+
+        {% comment %} Hide buttons that only apply to 3D globe {% endcomment %}
+        document.getElementById('globe-pulse-' + SECTION_ID).style.display = 'none';
+        document.getElementById('globe-reset-' + SECTION_ID).style.display = 'none';
+
+        {% comment %} Render member dots on 2D fallback map {% endcomment %}
+        const mapContainer = document.getElementById('globe-fallback-map-' + SECTION_ID);
+
+        {% comment %} Fix SVG scaling - add viewBox if missing {% endcomment %}
+        const svg = mapContainer.querySelector('svg');
+        if (svg && !svg.getAttribute('viewBox')) {
+          svg.setAttribute('viewBox', '0 0 2000 857');
+        }
+
+        {% comment %}
+          TODO: Revisit dot positioning - calibration offsets not quite aligned with simplemaps SVG projection
+          if (mapContainer && locations.length > 0) {
+            locations.forEach(function(loc) {
+              const x = ((loc.lng + 180) / 360) * 100 + 2.5;
+              const y = ((90 - loc.lat) / 180) * 100 - 0.4;
+
+              const dot = document.createElement('div');
+              dot.className = 'fallback-dot';
+              dot.style.left = x + '%';
+              dot.style.top = y + '%';
+              mapContainer.appendChild(dot);
+            });
+          }
+        {% endcomment %}
+        {% comment %} Don't start activity polling in 2D mode {% endcomment %}
         return;
       }
 
