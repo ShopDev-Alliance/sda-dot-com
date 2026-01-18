@@ -5,13 +5,35 @@
 {% endcomment %}
 
 {% liquid
-  assign all_briefings = shop.metaobjects.sda_briefings.values | sort: 'date.value' | reverse
+  comment
+    Build sortable list: timestamp::handle pairs
+    Unix timestamps sort correctly as strings
+  endcomment
+  assign briefings_sortable = ''
+
+  for briefing in shop.metaobjects.sda_briefings.values
+    if briefing.date
+      assign timestamp = briefing.date.value | date: '%s'
+      assign handle = briefing.system.handle
+      assign entry = timestamp | append: '::' | append: handle
+      if briefings_sortable == ''
+        assign briefings_sortable = entry
+      else
+        assign briefings_sortable = briefings_sortable | append: '|' | append: entry
+      endif
+    endif
+  endfor
+
+  assign sorted_entries = briefings_sortable | split: '|' | sort | reverse
 
   comment
-    Collect unique years from briefings
+    Collect unique years from sorted briefings
   endcomment
   assign years_string = ''
-  for briefing in all_briefings
+  for entry in sorted_entries
+    assign parts = entry | split: '::'
+    assign handle = parts[1]
+    assign briefing = shop.metaobjects.sda_briefings[handle]
     if briefing.date
       assign year = briefing.date.value | date: '%Y'
       assign year_check = years_string | append: '|'
@@ -26,7 +48,6 @@
   endfor
 
   assign years = years_string | split: ','
-  assign years = years | sort | reverse
 %}
 
 {{ 'section-multicolumn.css' | asset_url | stylesheet_tag }}
@@ -146,7 +167,10 @@
       </div>
 
       <ul class="briefing-list">
-        {% for briefing in all_briefings %}
+        {% for entry in sorted_entries %}
+          {% assign parts = entry | split: '::' %}
+          {% assign handle = parts[1] %}
+          {% assign briefing = shop.metaobjects.sda_briefings[handle] %}
           {% if briefing.date %}
             {% assign briefing_year = briefing.date.value | date: '%Y' %}
             {% if briefing_year == year %}
