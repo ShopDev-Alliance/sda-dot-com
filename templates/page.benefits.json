@@ -209,8 +209,10 @@
           "source": "{{ metaobjects.member_benefits[\"espresso-live\"] }}",
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"espresso-live\"].logo.value }}",
+            "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"espresso-live\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"espresso-live\"].link.value }}"
+            "link": "{{ metaobjects.member_benefits[\"espresso-live\"].system.url }}",
+            "external_link": false
           }
         }
       },
