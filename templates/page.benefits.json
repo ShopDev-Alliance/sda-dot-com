@@ -527,23 +527,21 @@
         "padding_bottom": 0
       }
     },
-    "design_pack_logo_list_ePWKNF": {
+    "design_pack_logo_list_ewn9VA": {
       "type": "design_pack_-_logo_list",
       "blocks": {
-        "logo_7tLDCX": {
+        "logo_pPkV3d": {
           "type": "logo",
           "source": "{{ metaobjects.member_benefits[\"shop-quest\"] }}",
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"shop-quest\"].logo.value }}",
-            "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"shop-quest\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"shop-quest\"].system.url }}",
-            "external_link": false
+            "link": "{{ metaobjects.member_benefits[\"shop-quest\"].system.url }}"
           }
         }
       },
       "block_order": [
-        "logo_7tLDCX"
+        "logo_pPkV3d"
       ],
       "settings": {
         "title": "",
@@ -580,6 +578,6 @@
     "rich_text_a9Vp8L",
     "design_pack_logo_list_LVkk3x",
     "rich_text_GD8bnp",
-    "design_pack_logo_list_ePWKNF"
+    "design_pack_logo_list_ewn9VA"
   ]
 }
