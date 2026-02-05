@@ -536,7 +536,7 @@
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"shop-quest\"].logo.value }}",
             "title": "<p>{{ metaobjects.member_benefits[\"shop-quest\"].name.value }}</p>",
-            "link": ""
+            "link": "{{ metaobjects.member_benefits[\"shop-quest\"].system.url }}"
           }
         }
       },
