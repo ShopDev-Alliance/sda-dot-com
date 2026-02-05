@@ -532,11 +532,11 @@
       "blocks": {
         "logo_pPkV3d": {
           "type": "logo",
-          "source": "{{ metaobjects.sda_briefings[\"016-escaping-hourly-billing\"] }}",
+          "source": "{{ metaobjects.member_benefits[\"shop-quest\"] }}",
           "settings": {
-            "image": "{{ metaobjects.sda_briefings[\"016-escaping-hourly-billing\"].transcript.value }}",
-            "title": "{{ metaobjects.sda_briefings[\"016-escaping-hourly-billing\"].description | metafield_tag }}",
-            "link": "{{ metaobjects.sda_briefings[\"016-escaping-hourly-billing\"].video_url.value }}"
+            "image": "{{ metaobjects.member_benefits[\"shop-quest\"].logo.value }}",
+            "title": "<p>{{ metaobjects.member_benefits[\"shop-quest\"].name.value }}</p>",
+            "link": "{{ metaobjects.member_benefits[\"shop-quest\"].system.url }}"
           }
         }
       },
