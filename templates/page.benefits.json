@@ -535,8 +535,10 @@
           "source": "{{ metaobjects.member_benefits[\"shop-quest\"] }}",
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"shop-quest\"].logo.value }}",
+            "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"shop-quest\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"shop-quest\"].system.url }}"
+            "link": "{{ metaobjects.member_benefits[\"shop-quest\"].system.url }}",
+            "external_link": false
           }
         }
       },
