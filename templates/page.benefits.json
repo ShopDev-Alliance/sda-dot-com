@@ -530,20 +530,18 @@
     "design_pack_logo_list_ewn9VA": {
       "type": "design_pack_-_logo_list",
       "blocks": {
-        "logo_pPkV3d": {
+        "logo_MUB8zr": {
           "type": "logo",
           "source": "{{ metaobjects.member_benefits[\"shop-quest\"] }}",
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"shop-quest\"].logo.value }}",
-            "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"shop-quest\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"shop-quest\"].system.url }}",
-            "external_link": false
+            "link": "{{ metaobjects.member_benefits[\"shop-quest\"].system.url }}"
           }
         }
       },
       "block_order": [
-        "logo_pPkV3d"
+        "logo_MUB8zr"
       ],
       "settings": {
         "title": "",
