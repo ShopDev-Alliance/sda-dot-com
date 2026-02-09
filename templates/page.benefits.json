@@ -535,8 +535,10 @@
           "source": "{{ metaobjects.member_benefits[\"shop-quest\"] }}",
           "settings": {
             "image": "{{ metaobjects.member_benefits[\"shop-quest\"].logo.value }}",
+            "scale": 1,
             "title": "<p>{{ metaobjects.member_benefits[\"shop-quest\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"shop-quest\"].system.url }}"
+            "link": "{{ metaobjects.member_benefits[\"shop-quest\"].system.url }}",
+            "external_link": false
           }
         }
       },
@@ -565,6 +567,38 @@
         "heading_font": "serif",
         "main_font": "system_ui_n4"
       }
+    },
+    "rich_text_LxNtbU": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_UzJiKA": {
+          "type": "heading",
+          "source": "{{ metaobjects.member_benefits[\"shop-quest\"] }}",
+          "settings": {
+            "heading": "{{ metaobjects.member_benefits[\"shop-quest\"].name.value }}"
+          }
+        },
+        "text_akXGfN": {
+          "type": "text",
+          "settings": {
+            "text": "<p>{{ metaobjects.member_benefits[\"shop-quest\"].page_description | metafield_tag }}</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_UzJiKA",
+        "text_akXGfN"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "border_is_visible": false,
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
@@ -578,6 +612,7 @@
     "rich_text_a9Vp8L",
     "design_pack_logo_list_LVkk3x",
     "rich_text_GD8bnp",
-    "design_pack_logo_list_ewn9VA"
+    "design_pack_logo_list_ewn9VA",
+    "rich_text_LxNtbU"
   ]
 }
