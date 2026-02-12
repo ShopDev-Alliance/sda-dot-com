@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
@@ -16,603 +7,98 @@
         "padding_bottom": 28
       }
     },
-    "rich_text_x63Xxp": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_36EqWQ": {
-          "type": "heading",
-          "settings": {
-            "heading": "Shopify Apps",
-            "heading_size": "h1"
-          }
-        },
-        "text_QEkp9a": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Exclusive discounts, extended free trials, affiliate programs, and more.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_36EqWQ",
-        "text_QEkp9a"
-      ],
+    "benefits_shopify_apps": {
+      "type": "metaobject-logo-list",
       "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "left",
-        "border_is_visible": false,
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 0
-      }
-    },
-    "design_pack_logo_list_UXgcWw": {
-      "type": "design_pack_-_logo_list",
-      "blocks": {
-        "logo_r7cVjP": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits.yakk }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits.yakk.logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits.yakk.name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits.yakk.system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_wCwiPe": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"ablestar-bulk-product-editor\"].system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_D8fnUC": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"izi-gift\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"izi-gift\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"izi-gift\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"izi-gift\"].system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_QV8hPN": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"design-packs-theme-sections\"].system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_UpDjrT": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"design-packs-product-blocks\"].system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_QQx7fp": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"stoq-preorders-back-in-stock-alerts\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"stoq-preorders-back-in-stock-alerts\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"stoq-preorders-back-in-stock-alerts\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"stoq-preorders-back-in-stock-alerts\"].system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_qWUUqc": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"rubik-variant-images\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"rubik-variant-images\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"rubik-variant-images\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"rubik-variant-images\"].system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_Nccrdz": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"cs-smart-bulk-image-upload\"].system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_qKJaY4": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"zipchat-ai-chatbot-whatsapp-ai\"].system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_g79bHV": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"geolocation-orbe\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"geolocation-orbe\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"geolocation-orbe\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"geolocation-orbe\"].system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_tfikTN": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"swym-wishlist-plus\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"swym-wishlist-plus\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"swym-wishlist-plus\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"swym-wishlist-plus\"].system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_JeyEFr": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"bb-dhl-packstation-at-checkout\"].system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_rzn7dA": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"bb-coupon-code-crafter\"].system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_thE6Mw": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"retail-ads-integration\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"retail-ads-integration\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"retail-ads-integration\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"retail-ads-integration\"].system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_Pb8gmq": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"espresso-live\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"espresso-live\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"espresso-live\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"espresso-live\"].system.url }}",
-            "external_link": false
-          }
-        }
-      },
-      "block_order": [
-        "logo_r7cVjP",
-        "logo_wCwiPe",
-        "logo_D8fnUC",
-        "logo_QV8hPN",
-        "logo_UpDjrT",
-        "logo_QQx7fp",
-        "logo_qWUUqc",
-        "logo_Nccrdz",
-        "logo_qKJaY4",
-        "logo_g79bHV",
-        "logo_tfikTN",
-        "logo_JeyEFr",
-        "logo_rzn7dA",
-        "logo_thE6Mw",
-        "logo_Pb8gmq"
-      ],
-      "settings": {
-        "title": "",
-        "per_row": 4,
+        "title": "Shopify Apps",
+        "description": "<p>Exclusive discounts, extended free trials, affiliate programs, and more.</p>",
+        "heading_size": "h1",
+        "filter_type": "Shopify Apps",
+        "columns_desktop": 4,
+        "columns_mobile": 2,
         "logo_size": 100,
-        "text_size": 85,
         "heading_color": "#000000",
         "text_color": "#f7f9fc",
-        "background_color": "",
-        "color_filter": "none",
-        "animation": "none",
-        "mobile_per_row": 2,
-        "base_width": 75,
-        "max_width": "",
-        "inner_padding": 0,
-        "outer_margin": 0,
-        "custom_css": "",
-        "mobile_custom_css": "",
-        "anchor_id": "",
-        "override_theme_font": false,
-        "heading_font": "serif",
-        "main_font": "system_ui_n4"
-      }
-    },
-    "rich_text_ejzQRc": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_c6Qji9": {
-          "type": "heading",
-          "settings": {
-            "heading": "Advertising",
-            "heading_size": "h1"
-          }
-        },
-        "text_TfJkrT": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Promote your apps, services, or tools directly to developers who are actively building and innovating. Boost your visibility in a targeted, cost-effective way.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_c6Qji9",
-        "text_TfJkrT"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "left",
-        "border_is_visible": false,
         "color_scheme": "",
-        "full_width": true,
         "padding_top": 40,
-        "padding_bottom": 0
+        "padding_bottom": 40
       }
     },
-    "design_pack_logo_list_pHxPRc": {
-      "type": "design_pack_-_logo_list",
-      "blocks": {
-        "logo_3FcDTc": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"liquid-weekly\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"liquid-weekly\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"liquid-weekly\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"liquid-weekly\"].link.value }}",
-            "external_link": false
-          }
-        }
-      },
-      "block_order": [
-        "logo_3FcDTc"
-      ],
+    "benefits_advertising": {
+      "type": "metaobject-logo-list",
       "settings": {
-        "title": "",
-        "per_row": 4,
+        "title": "Advertising",
+        "description": "<p>Promote your apps, services, or tools directly to developers who are actively building and innovating. Boost your visibility in a targeted, cost-effective way.</p>",
+        "heading_size": "h1",
+        "filter_type": "Advertising",
+        "columns_desktop": 4,
+        "columns_mobile": 2,
         "logo_size": 100,
-        "text_size": 85,
         "heading_color": "#000000",
         "text_color": "#f7f9fc",
-        "background_color": "",
-        "color_filter": "none",
-        "animation": "none",
-        "mobile_per_row": 2,
-        "base_width": 75,
-        "max_width": "",
-        "inner_padding": 0,
-        "outer_margin": 0,
-        "custom_css": "",
-        "mobile_custom_css": "",
-        "anchor_id": "",
-        "override_theme_font": false,
-        "heading_font": "serif",
-        "main_font": "system_ui_n4"
-      }
-    },
-    "rich_text_nYwmVG": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_EwaYHq": {
-          "type": "heading",
-          "settings": {
-            "heading": "Saas and Developer Tools",
-            "heading_size": "h1"
-          }
-        },
-        "text_gyn7F8": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Exclusive deals on software-as-a-service, APIs, Databases, and more to help Shopify Developers better support merchants.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_EwaYHq",
-        "text_gyn7F8"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "left",
-        "border_is_visible": false,
         "color_scheme": "",
-        "full_width": true,
         "padding_top": 40,
-        "padding_bottom": 0
+        "padding_bottom": 40
       }
     },
-    "design_pack_logo_list_4E7mxt": {
-      "type": "design_pack_-_logo_list",
-      "blocks": {
-        "logo_TqThLC": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"rankbase-io\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"rankbase-io\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"rankbase-io\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"rankbase-io\"].system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_rppC8b": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"shopinfo-app\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"shopinfo-app\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"shopinfo-app\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"shopinfo-app\"].system.url }}",
-            "external_link": false
-          }
-        }
-      },
-      "block_order": [
-        "logo_TqThLC",
-        "logo_rppC8b"
-      ],
+    "benefits_saas": {
+      "type": "metaobject-logo-list",
       "settings": {
-        "title": "",
-        "per_row": 4,
+        "title": "SaaS and Developer Tools",
+        "description": "<p>Exclusive deals on software-as-a-service, APIs, Databases, and more to help Shopify Developers better support merchants.</p>",
+        "heading_size": "h1",
+        "filter_type": "SaaS, Developer Tools",
+        "columns_desktop": 4,
+        "columns_mobile": 2,
         "logo_size": 100,
-        "text_size": 85,
         "heading_color": "#000000",
         "text_color": "#f7f9fc",
-        "background_color": "",
-        "color_filter": "none",
-        "animation": "none",
-        "mobile_per_row": 2,
-        "base_width": 75,
-        "max_width": "",
-        "inner_padding": 0,
-        "outer_margin": 0,
-        "custom_css": "",
-        "mobile_custom_css": "",
-        "anchor_id": "",
-        "override_theme_font": false,
-        "heading_font": "serif",
-        "main_font": "system_ui_n4"
-      }
-    },
-    "rich_text_a9Vp8L": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_rU6dNm": {
-          "type": "heading",
-          "settings": {
-            "heading": "Courses and Trainings",
-            "heading_size": "h1"
-          }
-        },
-        "text_bdq36D": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Free access to educational content created within the community and discounts to courses and advanced trainings to help you better serve merchants</p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_rU6dNm",
-        "text_bdq36D"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "left",
-        "border_is_visible": false,
         "color_scheme": "",
-        "full_width": true,
         "padding_top": 40,
-        "padding_bottom": 0
+        "padding_bottom": 40
       }
     },
-    "design_pack_logo_list_LVkk3x": {
-      "type": "design_pack_-_logo_list",
-      "blocks": {
-        "logo_8a48Hg": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"how-to-build-shopify-apps\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"how-to-build-shopify-apps\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"how-to-build-shopify-apps\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"how-to-build-shopify-apps\"].system.url }}",
-            "external_link": false
-          }
-        },
-        "logo_ADFUG6": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"shopify-java-script-mastery\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"shopify-java-script-mastery\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"shopify-java-script-mastery\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"shopify-java-script-mastery\"].system.url }}",
-            "external_link": false
-          }
-        }
-      },
-      "block_order": [
-        "logo_8a48Hg",
-        "logo_ADFUG6"
-      ],
+    "benefits_courses": {
+      "type": "metaobject-logo-list",
       "settings": {
-        "title": "",
-        "per_row": 4,
+        "title": "Courses and Trainings",
+        "description": "<p>Free access to educational content created within the community and discounts to courses and advanced trainings to help you better serve merchants</p>",
+        "heading_size": "h1",
+        "filter_type": "Courses & Trainings",
+        "columns_desktop": 4,
+        "columns_mobile": 2,
         "logo_size": 100,
-        "text_size": 85,
         "heading_color": "#000000",
         "text_color": "#f7f9fc",
-        "background_color": "",
-        "color_filter": "none",
-        "animation": "none",
-        "mobile_per_row": 2,
-        "base_width": 75,
-        "max_width": "",
-        "inner_padding": 0,
-        "outer_margin": 0,
-        "custom_css": "",
-        "mobile_custom_css": "",
-        "anchor_id": "",
-        "override_theme_font": false,
-        "heading_font": "serif",
-        "main_font": "system_ui_n4"
-      }
-    },
-    "rich_text_GD8bnp": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_wUpxEE": {
-          "type": "heading",
-          "settings": {
-            "heading": "Events",
-            "heading_size": "h1"
-          }
-        },
-        "text_DqRyKL": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Get special discounts on amazing Shopify Developer events like <a href=\"https://www.shopify.com/dotdev\" target=\"_blank\" title=\"https://www.shopify.com/dotdev\">Shopify Editions Dot Dev</a> and <a href=\"https://heymantle.com/techtonic\" target=\"_blank\" title=\"https://heymantle.com/techtonic\">Techtonic</a>.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_wUpxEE",
-        "text_DqRyKL"
-      ],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "left",
-        "border_is_visible": false,
         "color_scheme": "",
-        "full_width": true,
         "padding_top": 40,
-        "padding_bottom": 0
+        "padding_bottom": 40
       }
     },
-    "design_pack_logo_list_ewn9VA": {
-      "type": "design_pack_-_logo_list",
-      "blocks": {
-        "logo_MUB8zr": {
-          "type": "logo",
-          "source": "{{ metaobjects.member_benefits[\"shop-quest\"] }}",
-          "settings": {
-            "image": "{{ metaobjects.member_benefits[\"shop-quest\"].logo.value }}",
-            "scale": 1,
-            "title": "<p>{{ metaobjects.member_benefits[\"shop-quest\"].name.value }}</p>",
-            "link": "{{ metaobjects.member_benefits[\"shop-quest\"].system.url }}",
-            "external_link": false
-          }
-        }
-      },
-      "block_order": [
-        "logo_MUB8zr"
-      ],
+    "benefits_events": {
+      "type": "metaobject-logo-list",
       "settings": {
-        "title": "",
-        "per_row": 4,
+        "title": "Events",
+        "description": "<p>Get special discounts on amazing Shopify Developer events like <a href=\"https://www.shopify.com/dotdev\" target=\"_blank\" title=\"https://www.shopify.com/dotdev\">Shopify Editions Dot Dev</a> and <a href=\"https://heymantle.com/techtonic\" target=\"_blank\" title=\"https://heymantle.com/techtonic\">Techtonic</a>.</p>",
+        "heading_size": "h1",
+        "filter_type": "Events",
+        "columns_desktop": 4,
+        "columns_mobile": 2,
         "logo_size": 100,
-        "text_size": 85,
         "heading_color": "#000000",
         "text_color": "#f7f9fc",
-        "background_color": "",
-        "color_filter": "none",
-        "animation": "none",
-        "mobile_per_row": 2,
-        "base_width": 75,
-        "max_width": "",
-        "inner_padding": 0,
-        "outer_margin": 0,
-        "custom_css": "",
-        "mobile_custom_css": "",
-        "anchor_id": "",
-        "override_theme_font": false,
-        "heading_font": "serif",
-        "main_font": "system_ui_n4"
-      }
-    },
-    "rich_text_LxNtbU": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_UzJiKA": {
-          "type": "heading",
-          "source": "{{ metaobjects.member_benefits[\"shop-quest\"] }}",
-          "settings": {
-            "heading": "{{ metaobjects.member_benefits[\"shop-quest\"].name.value }}"
-          }
-        },
-        "text_akXGfN": {
-          "type": "text",
-          "settings": {
-            "text": "<p>{{ metaobjects.member_benefits[\"shop-quest\"].page_description | metafield_tag }}</p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_UzJiKA",
-        "text_akXGfN"
-      ],
-      "name": "t:sections.rich-text.presets.name",
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "border_is_visible": false,
         "color_scheme": "",
-        "full_width": true,
         "padding_top": 40,
-        "padding_bottom": 52
+        "padding_bottom": 40
       }
     }
   },
   "order": [
     "main",
-    "rich_text_x63Xxp",
-    "design_pack_logo_list_UXgcWw",
-    "rich_text_ejzQRc",
-    "design_pack_logo_list_pHxPRc",
-    "rich_text_nYwmVG",
-    "design_pack_logo_list_4E7mxt",
-    "rich_text_a9Vp8L",
-    "design_pack_logo_list_LVkk3x",
-    "rich_text_GD8bnp",
-    "design_pack_logo_list_ewn9VA",
-    "rich_text_LxNtbU"
+    "benefits_shopify_apps",
+    "benefits_advertising",
+    "benefits_saas",
+    "benefits_courses",
+    "benefits_events"
   ]
 }
