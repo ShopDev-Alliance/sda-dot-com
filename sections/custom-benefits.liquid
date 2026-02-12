@@ -1,6 +1,16 @@
 {% liquid
   assign show_benefits = metaobject.publicly_available | default: false
-  assign visit_url = metaobject.link 
+  assign visit_url = metaobject.link
+
+  assign utm_params_benefit = 'utm_source=shopdev-alliance&utm_medium=referral&utm_campaign=member-benefit'
+  assign benefit_link_url = ''
+  if visit_url != blank
+    if visit_url.value contains '?'
+      assign benefit_link_url = visit_url.value | append: '&' | append: utm_params_benefit
+    else
+      assign benefit_link_url = visit_url.value | append: '?' | append: utm_params_benefit
+    endif
+  endif
 %}
 
 <section id="profile-page" class="page-width benefits-page">
@@ -22,7 +32,7 @@
           <ul class="list-unstyled">
             {% unless visit_url == blank %}
               <div class="profile-left--cta">
-                <a class="button button--primary" href="{{ visit_url }}">Learn More</a>
+                <a class="button button--primary" href="{{ benefit_link_url }}">Learn More</a>
               </div>
             {% endunless %}
             {% unless metaobject.twitter == blank %}

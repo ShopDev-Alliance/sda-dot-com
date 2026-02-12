@@ -1,6 +1,26 @@
 {% liquid
   assign show_profile = metaobject.profile.value | default: false
-  assign contact_url = metaobject.alternative_contact | default: metaobject.website 
+  assign contact_url = metaobject.alternative_contact | default: metaobject.website
+
+  assign utm_params_profile = 'utm_source=shopdev-alliance&utm_medium=referral&utm_campaign=member-profile'
+
+  assign website_link_url = ''
+  if metaobject.website != blank
+    if metaobject.website.value contains '?'
+      assign website_link_url = metaobject.website.value | append: '&' | append: utm_params_profile
+    else
+      assign website_link_url = metaobject.website.value | append: '?' | append: utm_params_profile
+    endif
+  endif
+
+  assign contact_link_url = ''
+  if contact_url != blank
+    if contact_url.value contains '?'
+      assign contact_link_url = contact_url.value | append: '&' | append: utm_params_profile
+    else
+      assign contact_link_url = contact_url.value | append: '?' | append: utm_params_profile
+    endif
+  endif
 %}
 
 {% if show_profile %}
@@ -30,7 +50,7 @@
             <ul class="list-unstyled">
               {% unless metaobject.website == blank %}
                 <li class="list-social__item">
-                  <a class="link list-social__link" href="{{ metaobject.website.value }}" target="_blank">{% render 'icon-website' %}
+                  <a class="link list-social__link" href="{{ website_link_url }}" target="_blank">{% render 'icon-website' %}
                     <span class="visually-hidden">Website</span>
                   </a>
                 </li>
@@ -67,7 +87,7 @@
           </div>
           {% if contact_url != null %}
             <div class="profile-left--cta">
-              <a class="button button--primary" href="{{ contact_url.value }}?utm_source=shopdev-alliance-profile">Contact</a>
+              <a class="button button--primary" href="{{ contact_link_url }}">Contact</a>
             </div>
           {% endif %}
         </div>
@@ -140,7 +160,17 @@
                 <div class="review">
                   {{ review.review_content | metafield_tag }}
                   <p class="reviewer-link">
-                    {% unless review.link == blank %}<a href="{{review.link.value }}" target="_blank">{% endunless %}
+                    {% unless review.link == blank %}
+                      {% liquid
+                        assign reviewer_link_url = ''
+                        if review.link.value contains '?'
+                          assign reviewer_link_url = review.link.value | append: '&' | append: utm_params_profile
+                        else
+                          assign reviewer_link_url = review.link.value | append: '?' | append: utm_params_profile
+                        endif
+                      %}
+                      <a href="{{ reviewer_link_url }}" target="_blank">
+                    {% endunless %}
                       {{ review.reviewer.value }}
                     {% unless review.link == blank %}</a>{% endunless %}
                   </p>
