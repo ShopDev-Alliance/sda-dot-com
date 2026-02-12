@@ -1,10 +1,19 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-page",
       "settings": {
         "padding_top": 28,
-        "padding_bottom": 28
+        "padding_bottom": 0
       }
     },
     "benefits_shopify_apps": {
@@ -13,14 +22,16 @@
         "title": "Shopify Apps",
         "description": "<p>Exclusive discounts, extended free trials, affiliate programs, and more.</p>",
         "heading_size": "h1",
-        "filter_type": "Shopify Apps",
+        "filter_type": "Shopify App",
+        "content_width": "page-width page-width--narrow",
         "columns_desktop": 4,
         "columns_mobile": 2,
         "logo_size": 100,
-        "heading_color": "#000000",
+        "heading_color": "#f7f9fc",
         "text_color": "#f7f9fc",
+        "background_color": "",
         "color_scheme": "",
-        "padding_top": 40,
+        "padding_top": 0,
         "padding_bottom": 40
       }
     },
@@ -31,11 +42,13 @@
         "description": "<p>Promote your apps, services, or tools directly to developers who are actively building and innovating. Boost your visibility in a targeted, cost-effective way.</p>",
         "heading_size": "h1",
         "filter_type": "Advertising",
+        "content_width": "page-width page-width--narrow",
         "columns_desktop": 4,
         "columns_mobile": 2,
         "logo_size": 100,
-        "heading_color": "#000000",
+        "heading_color": "#f7f9fc",
         "text_color": "#f7f9fc",
+        "background_color": "",
         "color_scheme": "",
         "padding_top": 40,
         "padding_bottom": 40
@@ -48,11 +61,13 @@
         "description": "<p>Exclusive deals on software-as-a-service, APIs, Databases, and more to help Shopify Developers better support merchants.</p>",
         "heading_size": "h1",
         "filter_type": "SaaS, Developer Tools",
+        "content_width": "page-width page-width--narrow",
         "columns_desktop": 4,
         "columns_mobile": 2,
         "logo_size": 100,
-        "heading_color": "#000000",
+        "heading_color": "#f7f9fc",
         "text_color": "#f7f9fc",
+        "background_color": "",
         "color_scheme": "",
         "padding_top": 40,
         "padding_bottom": 40
@@ -64,12 +79,14 @@
         "title": "Courses and Trainings",
         "description": "<p>Free access to educational content created within the community and discounts to courses and advanced trainings to help you better serve merchants</p>",
         "heading_size": "h1",
-        "filter_type": "Courses & Trainings",
+        "filter_type": "Courses and Education",
+        "content_width": "page-width page-width--narrow",
         "columns_desktop": 4,
         "columns_mobile": 2,
         "logo_size": 100,
-        "heading_color": "#000000",
+        "heading_color": "#f7f9fc",
         "text_color": "#f7f9fc",
+        "background_color": "",
         "color_scheme": "",
         "padding_top": 40,
         "padding_bottom": 40
@@ -81,12 +98,14 @@
         "title": "Events",
         "description": "<p>Get special discounts on amazing Shopify Developer events like <a href=\"https://www.shopify.com/dotdev\" target=\"_blank\" title=\"https://www.shopify.com/dotdev\">Shopify Editions Dot Dev</a> and <a href=\"https://heymantle.com/techtonic\" target=\"_blank\" title=\"https://heymantle.com/techtonic\">Techtonic</a>.</p>",
         "heading_size": "h1",
-        "filter_type": "Events",
+        "filter_type": "Event",
+        "content_width": "page-width page-width--narrow",
         "columns_desktop": 4,
         "columns_mobile": 2,
         "logo_size": 100,
-        "heading_color": "#000000",
+        "heading_color": "#f7f9fc",
         "text_color": "#f7f9fc",
+        "background_color": "",
         "color_scheme": "",
         "padding_top": 40,
         "padding_bottom": 40
