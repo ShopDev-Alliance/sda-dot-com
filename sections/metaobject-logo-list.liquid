@@ -1,0 +1,327 @@
+{% paginate shop.metaobjects.member_benefits.values by 250 %}
+  {% liquid
+    assign all_items = shop.metaobjects.member_benefits.values
+    assign has_filter = false
+    assign filter_types_lower = ""
+
+    if section.settings.filter_type != blank
+      assign has_filter = true
+      assign filter_types = section.settings.filter_type | split: ","
+      for filter_type in filter_types
+        assign filter_type_lower = filter_type | downcase | strip
+        if filter_types_lower == ""
+          assign filter_types_lower = filter_type_lower
+        else
+          assign filter_types_lower = filter_types_lower | append: "," | append: filter_type_lower
+        endif
+      endfor
+    endif
+  %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  #metaobject-logo-list-{{ section.id }} {
+    {% if section.settings.background_color != blank %}
+      background: {{ section.settings.background_color }};
+    {% endif %}
+  }
+
+  #metaobject-logo-list-{{ section.id }} .metaobject-logo-list__heading {
+    color: {{ section.settings.heading_color }};
+    margin-bottom: 0.5em;
+  }
+
+  #metaobject-logo-list-{{ section.id }} .metaobject-logo-list__description {
+    margin-bottom: 2rem;
+  }
+
+  #metaobject-logo-list-{{ section.id }} .metaobject-logo-list__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: flex-start;
+  }
+
+  #metaobject-logo-list-{{ section.id }} .metaobject-logo-list__item {
+    width: calc(100% / {{ section.settings.columns_mobile }} - 1.5rem * {{ section.settings.columns_mobile | minus: 1 }} / {{ section.settings.columns_mobile }});
+  }
+
+  @media screen and (min-width: 750px) {
+    #metaobject-logo-list-{{ section.id }} .metaobject-logo-list__item {
+      width: calc(100% / {{ section.settings.columns_desktop }} - 1.5rem * {{ section.settings.columns_desktop | minus: 1 }} / {{ section.settings.columns_desktop }});
+    }
+  }
+
+  #metaobject-logo-list-{{ section.id }} .metaobject-logo-list__link {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  #metaobject-logo-list-{{ section.id }} .metaobject-logo-list__link:hover .metaobject-logo-list__image-wrapper {
+    opacity: 0.8;
+  }
+
+  #metaobject-logo-list-{{ section.id }} .metaobject-logo-list__image-wrapper {
+    width: {{ section.settings.logo_size }}%;
+    margin: 0 auto 1em;
+    transition: opacity 0.2s ease;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #metaobject-logo-list-{{ section.id }} .metaobject-logo-list__image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: var(--text-boxes-radius);
+  }
+
+  #metaobject-logo-list-{{ section.id }} .metaobject-logo-list__name {
+    margin: 0;
+    color: {{ section.settings.text_color }};
+    font-size: calc(var(--font-body-scale) * 1.4rem);
+    line-height: 1.4;
+  }
+{%- endstyle -%}
+
+<section
+  id="metaobject-logo-list-{{ section.id }}"
+  class="metaobject-logo-list {{ section.settings.content_width }} color-{{ section.settings.color_scheme }} gradient"
+>
+  <div class="section-{{ section.id }}-padding">
+    {% if section.settings.title != blank %}
+      <h2 class="metaobject-logo-list__heading {{ section.settings.heading_size }}">
+        {{ section.settings.title }}
+      </h2>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <div class="metaobject-logo-list__description rte">
+        {{ section.settings.description }}
+      </div>
+    {% endif %}
+
+    {% if all_items.size > 0 %}
+      <ul class="metaobject-logo-list__grid" role="list">
+        {% for item in all_items %}
+          {% liquid
+            assign show_item = true
+            if has_filter
+              assign item_type_lower = item.type.value | downcase | strip
+              assign show_item = false
+              assign check_filters = filter_types_lower | split: ","
+              for check_filter in check_filters
+                if item_type_lower == check_filter
+                  assign show_item = true
+                  break
+                endif
+              endfor
+            endif
+          %}
+          {% if show_item %}
+            <li class="metaobject-logo-list__item">
+              <a href="{{ item.system.url }}" class="metaobject-logo-list__link">
+                {% if item.logo.value != blank %}
+                  <div class="metaobject-logo-list__image-wrapper">
+                    {{ item.logo.value | image_url: width: 400 | image_tag:
+                      widths: '200, 300, 400',
+                      sizes: '(max-width: 749px) 150px, 200px',
+                      alt: item.name.value,
+                      loading: 'lazy'
+                    }}
+                  </div>
+                {% endif %}
+                <p class="metaobject-logo-list__name">{{ item.name.value }}</p>
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% else %}
+      {% if request.design_mode %}
+        <p>No member benefits found{% if section.settings.filter_type != blank %} for type "{{ section.settings.filter_type }}"{% endif %}. Add member benefits in the Shopify admin under Content > Metaobjects.</p>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "Metaobject Logo List",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Heading",
+      "default": "Member Benefits"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h0",
+          "label": "X-Large"
+        },
+        {
+          "value": "h1",
+          "label": "Large"
+        },
+        {
+          "value": "h2",
+          "label": "Medium"
+        },
+        {
+          "value": "h3",
+          "label": "Small"
+        }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "header",
+      "content": "Filtering"
+    },
+    {
+      "type": "text",
+      "id": "filter_type",
+      "label": "Filter by Type",
+      "info": "Enter Type values to filter by, comma-separated for multiple (e.g., 'SaaS, Developer Tools'). Case-insensitive. Leave blank to show all."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "Content width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "Standard"
+        },
+        {
+          "value": "page-width page-width--narrow",
+          "label": "Narrow"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "logo_size",
+      "label": "Logo size",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#f7f9fc"
+    },
+    {
+      "type": "color_background",
+      "id": "background_color",
+      "label": "Background color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 40,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Metaobject Logo List"
+    }
+  ]
+}
+{% endschema %}
