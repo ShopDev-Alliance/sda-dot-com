@@ -96,7 +96,7 @@
       "type": "metaobject-logo-list",
       "settings": {
         "title": "Events",
-        "description": "<p>Get special discounts on amazing Shopify Developer events like <a href=\"https://www.shopify.com/dotdev\" target=\"_blank\" title=\"https://www.shopify.com/dotdev\">Shopify Editions Dot Dev</a> and <a href=\"https://heymantle.com/techtonic\" target=\"_blank\" title=\"https://heymantle.com/techtonic\">Techtonic</a>.</p>",
+        "description": "<p>Get special discounts on amazing Shopify Developer events like <a href=\"https://www.shopify.com/dotdev\" target=\"_blank\" title=\"https://www.shopify.com/dotdev\">Shopify Dot Dev</a> (formerly Editions.dev) and <a href=\"https://heymantle.com/techtonic\" target=\"_blank\" title=\"https://heymantle.com/techtonic\">Techtonic</a>.</p>",
         "heading_size": "h1",
         "filter_type": "Event",
         "content_width": "page-width page-width--narrow",
