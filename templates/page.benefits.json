@@ -35,51 +35,13 @@
         "padding_bottom": 40
       }
     },
-    "metaobject_logo_list_W6pgUW": {
+    "benefits_events": {
       "type": "metaobject-logo-list",
       "settings": {
-        "title": "Specialized Services",
-        "description": "<p>Preferential rates on expert-led services to help you scale your agency, fill skill gaps, and offer high-value niche solutions like accessibility, SEO, and specialized migrations.</p>",
+        "title": "Events",
+        "description": "<p>Get special discounts on amazing Shopify Developer events like <a href=\"https://www.shopify.com/dotdev\" target=\"_blank\" title=\"https://www.shopify.com/dotdev\">Shopify Dot Dev</a> (formerly Editions.dev) and <a href=\"https://heymantle.com/techtonic\" target=\"_blank\" title=\"https://heymantle.com/techtonic\">Techtonic</a>.</p>",
         "heading_size": "h1",
-        "filter_type": "Services",
-        "content_width": "page-width page-width--narrow",
-        "columns_desktop": 4,
-        "columns_mobile": 2,
-        "logo_size": 100,
-        "heading_color": "#f7f9fc",
-        "text_color": "#f7f9fc",
-        "background_color": "",
-        "color_scheme": "",
-        "padding_top": 0,
-        "padding_bottom": 40
-      }
-    },
-    "benefits_advertising": {
-      "type": "metaobject-logo-list",
-      "settings": {
-        "title": "Advertising",
-        "description": "<p>Promote your apps, services, or tools directly to developers who are actively building and innovating. Boost your visibility in a targeted, cost-effective way.</p>",
-        "heading_size": "h1",
-        "filter_type": "Advertising",
-        "content_width": "page-width page-width--narrow",
-        "columns_desktop": 4,
-        "columns_mobile": 2,
-        "logo_size": 100,
-        "heading_color": "#f7f9fc",
-        "text_color": "#f7f9fc",
-        "background_color": "",
-        "color_scheme": "",
-        "padding_top": 40,
-        "padding_bottom": 40
-      }
-    },
-    "benefits_saas": {
-      "type": "metaobject-logo-list",
-      "settings": {
-        "title": "SaaS and Developer Tools",
-        "description": "<p>Exclusive deals on software-as-a-service, APIs, Databases, and more to help Shopify Developers better support merchants.</p>",
-        "heading_size": "h1",
-        "filter_type": "SaaS, Developer Tools",
+        "filter_type": "Event",
         "content_width": "page-width page-width--narrow",
         "columns_desktop": 4,
         "columns_mobile": 2,
@@ -111,13 +73,13 @@
         "padding_bottom": 40
       }
     },
-    "benefits_events": {
+    "benefits_saas": {
       "type": "metaobject-logo-list",
       "settings": {
-        "title": "Events",
-        "description": "<p>Get special discounts on amazing Shopify Developer events like <a href=\"https://www.shopify.com/dotdev\" target=\"_blank\" title=\"https://www.shopify.com/dotdev\">Shopify Dot Dev</a> (formerly Editions.dev) and <a href=\"https://heymantle.com/techtonic\" target=\"_blank\" title=\"https://heymantle.com/techtonic\">Techtonic</a>.</p>",
+        "title": "SaaS and Developer Tools",
+        "description": "<p>Exclusive deals on software-as-a-service, APIs, Databases, and more to help Shopify Developers better support merchants.</p>",
         "heading_size": "h1",
-        "filter_type": "Event",
+        "filter_type": "SaaS, Developer Tools",
         "content_width": "page-width page-width--narrow",
         "columns_desktop": 4,
         "columns_mobile": 2,
@@ -129,15 +91,53 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
+    },
+    "benefits_advertising": {
+      "type": "metaobject-logo-list",
+      "settings": {
+        "title": "Advertising",
+        "description": "<p>Promote your apps, services, or tools directly to developers who are actively building and innovating. Boost your visibility in a targeted, cost-effective way.</p>",
+        "heading_size": "h1",
+        "filter_type": "Advertising",
+        "content_width": "page-width page-width--narrow",
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "logo_size": 100,
+        "heading_color": "#f7f9fc",
+        "text_color": "#f7f9fc",
+        "background_color": "",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "metaobject_logo_list_W6pgUW": {
+      "type": "metaobject-logo-list",
+      "settings": {
+        "title": "Services",
+        "description": "<p>Preferential rates on expert-led services to help you scale your agency, fill skill gaps, and offer high-value niche solutions like accessibility, SEO, and specialized migrations.</p>",
+        "heading_size": "h1",
+        "filter_type": "Services",
+        "content_width": "page-width page-width--narrow",
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "logo_size": 100,
+        "heading_color": "#f7f9fc",
+        "text_color": "#f7f9fc",
+        "background_color": "",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
     "main",
     "benefits_shopify_apps",
-    "metaobject_logo_list_W6pgUW",
-    "benefits_advertising",
-    "benefits_saas",
+    "benefits_events",
     "benefits_courses",
-    "benefits_events"
+    "benefits_saas",
+    "benefits_advertising",
+    "metaobject_logo_list_W6pgUW"
   ]
 }
