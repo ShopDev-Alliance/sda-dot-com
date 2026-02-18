@@ -125,29 +125,15 @@
           </nav>
           <div class="menu-drawer__utility-links">
             {%- if shop.customer_accounts_enabled -%}
-              <a
-                href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+              <shopify-account
+                {% if section.settings.customer_account_menu != blank %}menu="{{ section.settings.customer_account_menu }}"{% endif %}
                 class="menu-drawer__account link focus-inset h5 medium-hide large-up-hide"
               >
-                {%- if section.settings.enable_customer_avatar -%}
-                  <account-icon>
-                    {%- if customer and customer.has_avatar? -%}
-                      {{ customer | avatar }}
-                    {%- else -%}
-                      {% render 'icon-account' %}
-                    {%- endif -%}
-                  </account-icon>
-                {%- else -%}
+                <div slot="signed-out-avatar">
                   {% render 'icon-account' %}
-                {%- endif -%}
-                {%- liquid
-                  if customer
-                    echo 'customer.account_fallback' | t
-                  else
-                    echo 'customer.log_in' | t
-                  endif
-                -%}
-              </a>
+                  {{ 'customer.log_in' | t }}
+                </div>
+              </shopify-account>
             {%- endif -%}
             {%- if localization.available_countries or localization.available_languages -%}
               <div class="menu-drawer__localization header-localization">

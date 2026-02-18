@@ -24,7 +24,7 @@ header.header.header--middle-center {
 
 /* # Header  */
 .header.header--middle-left .header__inline-menu {
-  grid-area: icons;
+  grid-area: navigation;
   justify-self: end;
 }
 
