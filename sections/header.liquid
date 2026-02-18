@@ -76,6 +76,49 @@
       padding-top: 0.5rem;
     }
   }
+
+  .header__icons {
+    position: relative;
+  }
+
+  shopify-account.header__icon {
+    position: static;
+    --shopify-account-dialog-position-top: calc(var(--header-height, 60px) + 10px);
+    --shopify-account-color-background: rgb(var(--color-background));
+    --shopify-account-color-text: rgb(var(--color-foreground));
+    --shopify-account-color-accent: rgb(var(--color-button));
+    --shopify-account-color-accent-text: rgb(var(--color-button-text));
+  }
+
+  shopify-account::part(signed-out-avatar) {
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  shopify-account [slot="signed-out-avatar"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  shopify-account [slot="signed-out-avatar"] .icon-account {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .menu-drawer__account.shopify-account,
+  shopify-account.menu-drawer__account {
+    --shopify-account-dialog-position-top: auto;
+    --shopify-account-color-background: rgb(var(--color-background));
+    --shopify-account-color-text: rgb(var(--color-foreground));
+    --shopify-account-color-accent: rgb(var(--color-button));
+    --shopify-account-color-accent-text: rgb(var(--color-button-text));
+  }
 </style>
 
 {%- style -%}
@@ -257,28 +300,14 @@
       {% render 'header-search', input_id: 'Search-In-Modal' %}
 
       {%- if shop.customer_accounts_enabled -%}
-        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}">
-          {%- if section.settings.enable_customer_avatar -%}
-            <account-icon>
-              {%- if customer and customer.has_avatar? -%}
-                {{ customer | avatar }}
-              {%- else -%}
-                {% render 'icon-account' %}
-              {%- endif -%}
-            </account-icon>
-          {%- else -%}
+        <shopify-account
+          {% if section.settings.customer_account_menu != blank %}menu="{{ section.settings.customer_account_menu }}"{% endif %}
+          class="header__icon header__icon--account{% if section.settings.menu != blank %} small-hide{% endif %}"
+        >
+          <div slot="signed-out-avatar">
             {% render 'icon-account' %}
-          {%- endif -%}
-          <span class="visually-hidden">
-            {%- liquid
-              if customer
-                echo 'customer.account_fallback' | t
-              else
-                echo 'customer.log_in' | t
-              endif
-            -%}
-          </span>
-        </a>
+          </div>
+        </shopify-account>
       {%- endif -%}
 
       {%- for block in section.blocks -%}
@@ -595,15 +624,14 @@
     },
     {
       "type": "header",
-      "content": "t:sections.header.settings.header__7.content",
-      "info": "t:sections.header.settings.header__7.info"
+      "content": "Customer account"
     },
     {
-      "type": "checkbox",
-      "id": "enable_customer_avatar",
-      "default": true,
-      "label": "t:sections.header.settings.enable_customer_avatar.label",
-      "info": "t:sections.header.settings.enable_customer_avatar.info"
+      "type": "text",
+      "id": "customer_account_menu",
+      "label": "Customer account menu handle",
+      "default": "customer-account-main-menu",
+      "info": "Enter the menu handle to show in the customer account sheet. Default is 'customer-account-main-menu'."
     },
     {
       "type": "header",
