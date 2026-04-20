@@ -1,16 +1,83 @@
 {{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'article-enhanced.js' | asset_url }}" defer="defer"></script>
 
-<article class="article-template">
+{% liquid
+  assign show_toc = section.settings.show_toc
+  assign toc_collapsed_default = section.settings.toc_collapsed_default
+  assign show_progress = section.settings.show_reading_progress
+  assign code_theme = section.settings.code_theme | default: 'dark'
+  assign reading_words_per_minute = 230
+
+  assign content_word_count = article.content | strip_html | split: ' ' | size
+  assign reading_minutes = content_word_count | divided_by: reading_words_per_minute | at_least: 1
+
+  assign tag_label = ''
+  if article.tags.size > 0
+    assign tag_label = article.tags | first
+  endif
+
+  assign author_name = article.author
+  assign author_bio = ''
+  assign author_avatar = ''
+  if article.metafields.custom.author_bio
+    assign author_bio = article.metafields.custom.author_bio
+  endif
+  if article.metafields.custom.author_avatar
+    assign author_avatar = article.metafields.custom.author_avatar
+  endif
+
+  assign prev_article = null
+  assign next_article = null
+  assign found_current = false
+  for item in blog.articles
+    if found_current
+      assign prev_article = item
+      break
+    endif
+    if item.id == article.id
+      assign found_current = true
+    else
+      assign next_article = item
+    endif
+  endfor
+%}
+
+<style>
+  .article-template {
+    --article-content-max: 72rem;
+    --article-toc-width: 24rem;
+    --article-rail-width: 20rem;
+    --article-gutter: 4rem;
+    --article-code-bg: {% if code_theme == 'light' %}#f6f8fa{% else %}#0d1117{% endif %};
+    --article-code-fg: {% if code_theme == 'light' %}#24292f{% else %}#e6edf3{% endif %};
+    --article-code-border: {% if code_theme == 'light' %}#d0d7de{% else %}#30363d{% endif %};
+  }
+</style>
+
+{%- if show_progress -%}
+  <div class="article-progress" aria-hidden="true" data-article-progress>
+    <div class="article-progress__bar" data-article-progress-bar></div>
+  </div>
+{%- endif -%}
+
+<article
+  class="article-template"
+  data-article
+  data-toc-enabled="{{ show_toc }}"
+  data-toc-default-collapsed="{{ toc_collapsed_default }}"
+  data-code-theme="{{ code_theme }}"
+>
   {%- for block in section.blocks -%}
     {%- case block.type -%}
       {%- when '@app' -%}
         <div class="page-width page-width--narrow">
           {% render block %}
         </div>
+
       {%- when 'featured_image' -%}
         {%- if article.image -%}
           <div
-            class="article-template__hero-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+            class="article-template__hero{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
             {{ block.shopify_attributes }}
           >
             <div
@@ -29,8 +96,8 @@
                   {% if article.image.width >= 3000 %}{{ article.image | image_url: width: 3000 }} 3000w,{% endif %}
                   {{ article.image | image_url }} {{ article.image.width }}w
                 "
-                sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 }}px, (min-width: 750px) calc(100vw - 10rem), 100vw"
-                src="{{ article.image | image_url: width: 1100 }}"
+                sizes="(min-width: 1400px) 1400px, 100vw"
+                src="{{ article.image | image_url: width: 1400 }}"
                 loading="eager"
                 fetchpriority="high"
                 width="{{ article.image.width }}"
@@ -43,51 +110,310 @@
 
       {%- when 'title' -%}
         <header
-          class="page-width page-width--narrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+          class="article-template__header{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
           {{ block.shopify_attributes }}
         >
-          <h1
-            class="article-template__title"
-          >
+          <nav class="article-template__breadcrumb" aria-label="Breadcrumb">
+            <a href="{{ routes.root_url }}">Home</a>
+            <span aria-hidden="true">/</span>
+            <a href="{{ blog.url }}">{{ blog.title }}</a>
+          </nav>
+
+          {%- if tag_label != blank -%}
+            <p class="article-template__eyebrow">{{ tag_label | escape }}</p>
+          {%- endif -%}
+
+          <h1 class="article-template__title">
             {{ article.title | escape }}
           </h1>
-          {%- if block.settings.blog_show_date -%}
-            <span class="circle-divider caption-with-letter-spacing">
-              {{- article.published_at | time_tag: format: 'date' -}}
-            </span>
+
+          {%- if article.excerpt != blank -%}
+            <div class="article-template__excerpt">
+              {{ article.excerpt | strip_html }}
+            </div>
           {%- endif -%}
-          {%- if block.settings.blog_show_author -%}
-            <span class="caption-with-letter-spacing">
-              <span>{{ article.author }}</span>
-            </span>
-          {%- endif -%}
+
+          <div class="article-template__meta">
+            <div class="article-template__author-inline">
+              {%- if author_avatar != blank -%}
+                <img
+                  class="article-template__author-avatar"
+                  src="{{ author_avatar | image_url: width: 96 }}"
+                  alt="{{ author_name | escape }}"
+                  width="40"
+                  height="40"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <span class="article-template__author-avatar article-template__author-avatar--initial" aria-hidden="true">
+                  {{ author_name | slice: 0, 1 | upcase }}
+                </span>
+              {%- endif -%}
+              <div class="article-template__meta-text">
+                {%- if block.settings.blog_show_author -%}
+                  <span class="article-template__author-name">{{ author_name }}</span>
+                {%- endif -%}
+                <span class="article-template__meta-line">
+                  {%- if block.settings.blog_show_date -%}
+                    <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                      {{- article.published_at | date: '%b %-d, %Y' -}}
+                    </time>
+                  {%- endif -%}
+                  {%- if block.settings.blog_show_date and block.settings.blog_show_reading_time -%}
+                    <span class="article-template__meta-dot" aria-hidden="true">·</span>
+                  {%- endif -%}
+                  {%- if block.settings.blog_show_reading_time -%}
+                    <span>{{ reading_minutes }} min read</span>
+                  {%- endif -%}
+                </span>
+              </div>
+            </div>
+          </div>
         </header>
 
       {%- when 'content' -%}
-        <div
-          class="article-template__content page-width page-width--narrow rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-          {{ block.shopify_attributes }}
-        >
-          {{ article.content }}
+        <div class="article-template__body" data-article-body>
+          {%- if show_toc -%}
+            <aside
+              class="article-template__toc"
+              data-article-toc
+              aria-label="Table of contents"
+            >
+              <div class="article-template__toc-inner">
+                <div class="article-template__toc-header">
+                  <span class="article-template__toc-title">On this page</span>
+                  <button
+                    type="button"
+                    class="article-template__toc-toggle"
+                    data-article-toc-toggle
+                    aria-expanded="true"
+                    aria-controls="ArticleTocNav"
+                    title="Collapse table of contents"
+                  >
+                    <svg class="article-template__toc-chevron" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                      <path d="M10 4L6 8l4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="visually-hidden">Toggle table of contents</span>
+                  </button>
+                </div>
+                <nav
+                  id="ArticleTocNav"
+                  class="article-template__toc-nav"
+                  data-article-toc-nav
+                ></nav>
+                <p class="article-template__toc-empty" data-article-toc-empty hidden>
+                  No headings yet.
+                </p>
+              </div>
+              <button
+                type="button"
+                class="article-template__toc-reopen"
+                data-article-toc-reopen
+                aria-label="Show table of contents"
+                hidden
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                  <path d="M2 4h12M2 8h12M2 12h8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </aside>
+          {%- endif -%}
+
+          <div
+            class="article-template__content rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            data-article-content
+            {{ block.shopify_attributes }}
+          >
+            {{ article.content }}
+          </div>
+
+          <aside class="article-template__rail" aria-hidden="true"></aside>
         </div>
 
       {%- when 'share' -%}
         <div
-          class="article-template__social-sharing page-width page-width--narrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          class="article-template__social-sharing{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
           {{ block.shopify_attributes }}
         >
           {% assign share_url = request.origin | append: article.url %}
           {% render 'share-button', block: block, share_link: share_url %}
         </div>
+
+      {%- when 'author_card' -%}
+        {%- if author_name != blank -%}
+          <section
+            class="article-template__author-card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            {%- if author_avatar != blank -%}
+              <img
+                class="article-template__author-card-avatar"
+                src="{{ author_avatar | image_url: width: 200 }}"
+                alt="{{ author_name | escape }}"
+                width="80"
+                height="80"
+                loading="lazy"
+              >
+            {%- else -%}
+              <span class="article-template__author-card-avatar article-template__author-card-avatar--initial" aria-hidden="true">
+                {{ author_name | slice: 0, 1 | upcase }}
+              </span>
+            {%- endif -%}
+            <div class="article-template__author-card-body">
+              <p class="article-template__author-card-label">Written by</p>
+              <p class="article-template__author-card-name">{{ author_name }}</p>
+              {%- if author_bio != blank -%}
+                <p class="article-template__author-card-bio">{{ author_bio }}</p>
+              {%- endif -%}
+            </div>
+          </section>
+        {%- endif -%}
+
+      {%- when 'prev_next' -%}
+        {%- if prev_article or next_article -%}
+          <nav
+            class="article-template__prev-next{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+            aria-label="More articles"
+            {{ block.shopify_attributes }}
+          >
+            {%- if prev_article -%}
+              <a class="article-template__prev-next-item" href="{{ prev_article.url }}" data-dir="prev">
+                <span class="article-template__prev-next-dir">
+                  <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
+                    <path d="M9 2L4 7l5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Previous
+                </span>
+                <span class="article-template__prev-next-title">{{ prev_article.title | escape }}</span>
+              </a>
+            {%- else -%}
+              <span></span>
+            {%- endif -%}
+            {%- if next_article -%}
+              <a class="article-template__prev-next-item article-template__prev-next-item--next" href="{{ next_article.url }}" data-dir="next">
+                <span class="article-template__prev-next-dir">
+                  Next
+                  <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
+                    <path d="M5 2l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span class="article-template__prev-next-title">{{ next_article.title | escape }}</span>
+              </a>
+            {%- endif -%}
+          </nav>
+        {%- endif -%}
+
+      {%- when 'newsletter' -%}
+        <section
+          class="article-template__newsletter{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="article-template__newsletter-inner">
+            {%- if block.settings.heading != blank -%}
+              <h2 class="article-template__newsletter-heading">{{ block.settings.heading | escape }}</h2>
+            {%- endif -%}
+            {%- if block.settings.subheading != blank -%}
+              <p class="article-template__newsletter-subheading">{{ block.settings.subheading | escape }}</p>
+            {%- endif -%}
+            {% form 'customer', class: 'article-template__newsletter-form' %}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <label for="ArticleNewsletterEmail-{{ block.id }}" class="visually-hidden">
+                {{ 'newsletter.label' | t }}
+              </label>
+              <div class="article-template__newsletter-input-group">
+                <input
+                  id="ArticleNewsletterEmail-{{ block.id }}"
+                  type="email"
+                  name="contact[email]"
+                  placeholder="{{ block.settings.placeholder | default: 'you@example.com' | escape }}"
+                  required
+                  autocomplete="email"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  spellcheck="false"
+                >
+                <button type="submit" class="article-template__newsletter-button">
+                  {{ block.settings.button_label | default: 'Subscribe' | escape }}
+                </button>
+              </div>
+              {%- if form.posted_successfully? -%}
+                <p class="article-template__newsletter-success" role="status">
+                  {{ 'newsletter.success' | t }}
+                </p>
+              {%- endif -%}
+            {% endform %}
+          </div>
+        </section>
+
+      {%- when 'related_articles' -%}
+        {%- assign count_needed = block.settings.count | default: 3 -%}
+        {%- assign siblings = blog.articles -%}
+        {%- assign shown = 0 -%}
+        {%- if siblings.size > 1 -%}
+          <section
+            class="article-template__related{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="article-template__related-header">
+              <h2 class="article-template__related-heading">
+                {{ block.settings.heading | default: 'Keep reading' | escape }}
+              </h2>
+              <a class="article-template__related-all link animate-arrow" href="{{ blog.url }}">
+                View all
+                <span class="icon-wrap">{% render 'icon-arrow' %}</span>
+              </a>
+            </div>
+            <ul class="article-template__related-grid" role="list">
+              {%- for item in siblings -%}
+                {%- if item.id == article.id -%}{% continue %}{%- endif -%}
+                {%- if shown >= count_needed -%}{% break %}{%- endif -%}
+                {%- assign shown = shown | plus: 1 -%}
+                <li class="article-template__related-item">
+                  <a class="article-template__related-link" href="{{ item.url }}">
+                    {%- if item.image -%}
+                      <div class="article-template__related-image">
+                        <img
+                          src="{{ item.image | image_url: width: 600 }}"
+                          srcset="
+                            {{ item.image | image_url: width: 400 }} 400w,
+                            {{ item.image | image_url: width: 600 }} 600w,
+                            {{ item.image | image_url: width: 900 }} 900w
+                          "
+                          sizes="(min-width: 990px) 30vw, 100vw"
+                          alt="{{ item.image.alt | escape }}"
+                          loading="lazy"
+                          width="{{ item.image.width }}"
+                          height="{{ item.image.height }}"
+                        >
+                      </div>
+                    {%- endif -%}
+                    <div class="article-template__related-body">
+                      {%- if item.tags.size > 0 -%}
+                        <p class="article-template__related-tag">{{ item.tags | first | escape }}</p>
+                      {%- endif -%}
+                      <h3 class="article-template__related-title">{{ item.title | escape }}</h3>
+                      <p class="article-template__related-meta">
+                        <time datetime="{{ item.published_at | date: '%Y-%m-%d' }}">
+                          {{- item.published_at | date: '%b %-d, %Y' -}}
+                        </time>
+                      </p>
+                    </div>
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </section>
+        {%- endif -%}
     {%- endcase -%}
   {%- endfor -%}
 
-  <div class="article-template__back element-margin-top center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="article-template__back{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     <a href="{{ blog.url }}" class="article-template__link link animate-arrow">
       <span class="icon-wrap">{% render 'icon-arrow' %}</span>
       {{ 'blogs.article.back_to_blog' | t: title: blog.title | escape }}
     </a>
   </div>
+
   {%- if blog.comments_enabled? -%}
     <div class="article-template__comment-wrapper background-secondary">
       <div
@@ -283,6 +609,41 @@
   "name": "t:sections.main-article.name",
   "tag": "section",
   "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Reading experience"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_toc",
+      "label": "Show table of contents",
+      "default": true,
+      "info": "Auto-generated from h2 and h3 headings in the article. Hidden on posts with no headings."
+    },
+    {
+      "type": "checkbox",
+      "id": "toc_collapsed_default",
+      "label": "Collapse TOC by default on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reading_progress",
+      "label": "Show reading progress bar",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "code_theme",
+      "label": "Code block theme",
+      "options": [
+        { "value": "dark", "label": "Dark" },
+        { "value": "light", "label": "Light" }
+      ],
+      "default": "dark"
+    }
+  ],
   "blocks": [
     {
       "type": "@app"
@@ -333,8 +694,14 @@
         {
           "type": "checkbox",
           "id": "blog_show_author",
-          "default": false,
+          "default": true,
           "label": "t:sections.main-article.blocks.title.settings.blog_show_author.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "blog_show_reading_time",
+          "default": true,
+          "label": "Show reading time"
         }
       ]
     },
@@ -361,6 +728,75 @@
         {
           "type": "paragraph",
           "content": "t:sections.main-article.blocks.share.settings.title_info.content"
+        }
+      ]
+    },
+    {
+      "type": "author_card",
+      "name": "Author card",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Pulls author name from the article. To add a bio and avatar, set article metafields `custom.author_bio` (single-line text) and `custom.author_avatar` (file reference)."
+        }
+      ]
+    },
+    {
+      "type": "prev_next",
+      "name": "Previous / next article",
+      "limit": 1
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter CTA",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Get more articles like this"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Once a month. No spam, just the good stuff."
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Email placeholder",
+          "default": "you@example.com"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Subscribe"
+        }
+      ]
+    },
+    {
+      "type": "related_articles",
+      "name": "Related articles",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Keep reading"
+        },
+        {
+          "type": "range",
+          "id": "count",
+          "label": "Number of articles",
+          "min": 2,
+          "max": 6,
+          "step": 1,
+          "default": 3
         }
       ]
     }

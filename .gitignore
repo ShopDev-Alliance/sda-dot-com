@@ -1,2 +1,3 @@
 *.mp4
 .shopify/
+.DS_Store
