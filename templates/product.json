@@ -43,6 +43,7 @@
         },
         "inventory_9cyeMi": {
           "type": "inventory",
+          "disabled": true,
           "settings": {
             "text_style": "body",
             "inventory_threshold": 10,
@@ -58,7 +59,15 @@
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
+            "show_gift_card_recipient": true,
+            "enable_line_item_property": true,
+            "line_item_property_name": "Planning to attend DotDev 2026",
+            "line_item_property_tag": "",
+            "line_item_property_option_1": "Yes",
+            "line_item_property_option_2": "No",
+            "line_item_property_required": true,
+            "line_item_property_preselect": false,
+            "line_item_property_default": "option_2"
           }
         },
         "description": {
