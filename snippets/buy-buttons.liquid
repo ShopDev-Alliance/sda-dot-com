@@ -64,6 +64,118 @@
           class="product-variant-id"
         >
 
+        {%- liquid
+          assign show_lip = false
+          if block.settings.enable_line_item_property and block.settings.line_item_property_name != blank
+            assign show_lip = true
+            assign gate_tag = block.settings.line_item_property_tag | strip
+            if gate_tag != blank
+              unless product.tags contains gate_tag
+                assign show_lip = false
+              endunless
+            endif
+          endif
+        -%}
+
+        {%- if show_lip -%}
+          {%- liquid
+            assign lip_name = block.settings.line_item_property_name
+            assign lip_opt_1 = block.settings.line_item_property_option_1 | default: 'Yes'
+            assign lip_opt_2 = block.settings.line_item_property_option_2 | default: 'No'
+            assign lip_preselect = block.settings.line_item_property_preselect
+            assign lip_default = block.settings.line_item_property_default | default: 'option_2'
+            assign lip_required = block.settings.line_item_property_required
+            assign lip_uid = 'lip-' | append: section_id
+          -%}
+
+          <fieldset
+            class="js product-form__input product-form__input--pill"
+            data-lip-fieldset="{{ lip_uid }}"
+            {% if lip_required %}data-lip-required="true"{% endif %}
+          >
+            <legend class="form__label">{{ lip_name }}</legend>
+
+            <input
+              type="radio"
+              id="{{ lip_uid }}-1"
+              name="properties[{{ lip_name | escape }}]"
+              value="{{ lip_opt_1 | escape }}"
+              {% if lip_preselect and lip_default == 'option_1' %}checked{% endif %}
+            >
+            <label for="{{ lip_uid }}-1">{{ lip_opt_1 }}</label>
+
+            <input
+              type="radio"
+              id="{{ lip_uid }}-2"
+              name="properties[{{ lip_name | escape }}]"
+              value="{{ lip_opt_2 | escape }}"
+              {% if lip_preselect and lip_default == 'option_2' %}checked{% endif %}
+            >
+            <label for="{{ lip_uid }}-2">{{ lip_opt_2 }}</label>
+
+            {%- if lip_required -%}
+              <div
+                class="lip-error"
+                data-lip-error
+                role="alert"
+                hidden
+              >
+                Please select an option to continue.
+              </div>
+            {%- endif -%}
+          </fieldset>
+
+          {%- if lip_required -%}
+            <style>
+              .lip-error {
+                display: block;
+                width: 100%;
+                margin-top: 0.6rem;
+                font-size: 1.3rem;
+                color: rgb(var(--color-foreground));
+                padding: 0.6rem 1rem;
+                border-left: 0.3rem solid #eb001b;
+                background: rgba(235, 0, 27, 0.06);
+              }
+              .lip-error[hidden] {
+                display: none;
+              }
+            </style>
+            <script>
+              (function () {
+                const fieldset = document.querySelector('[data-lip-fieldset="{{ lip_uid }}"]');
+                if (!fieldset) return;
+                const form = fieldset.closest('form');
+                if (!form) return;
+
+                const radios = fieldset.querySelectorAll('input[type="radio"]');
+                const errorEl = fieldset.querySelector('[data-lip-error]');
+
+                const hideError = () => { if (errorEl) errorEl.hidden = true; };
+                const showError = () => {
+                  if (errorEl) errorEl.hidden = false;
+                  fieldset.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                };
+
+                form.addEventListener(
+                  'submit',
+                  (evt) => {
+                    const anyChecked = Array.from(radios).some((r) => r.checked);
+                    if (!anyChecked) {
+                      evt.preventDefault();
+                      evt.stopImmediatePropagation();
+                      showError();
+                    }
+                  },
+                  true
+                );
+
+                radios.forEach((r) => r.addEventListener('change', hideError));
+              })();
+            </script>
+          {%- endif -%}
+        {%- endif -%}
+
         {%- if gift_card_recipient_feature_active -%}
           {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
         {%- endif -%}

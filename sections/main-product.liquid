@@ -16,11 +16,25 @@
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
 
-  {% unless product.has_only_default_variant %}
+  {%- liquid
+    assign load_variant_picker_css = false
+    unless product.has_only_default_variant
+      assign load_variant_picker_css = true
+    endunless
+    unless load_variant_picker_css
+      for blk in section.blocks
+        if blk.type == 'buy_buttons' and blk.settings.enable_line_item_property and blk.settings.line_item_property_name != blank
+          assign load_variant_picker_css = true
+          break
+        endif
+      endfor
+    endunless
+  -%}
+  {% if load_variant_picker_css %}
     {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
     {{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
     {{ 'component-swatch.css' | asset_url | stylesheet_tag }}
-  {% endunless %}
+  {% endif %}
   {%- if product.quantity_price_breaks_configured? -%}
     {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
@@ -908,6 +922,73 @@
           "default": true,
           "label": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.label",
           "info": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.info"
+        },
+        {
+          "type": "header",
+          "content": "Line item property"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_line_item_property",
+          "default": false,
+          "label": "Enable line item property",
+          "info": "Adds a yes/no style selector inside the buy button form that posts as a line item property on the order."
+        },
+        {
+          "type": "text",
+          "id": "line_item_property_name",
+          "default": "Attending DotDev 2026",
+          "label": "Property name",
+          "info": "Used as both the customer-facing question and the property label on the order.",
+          "visible_if": "{{ block.settings.enable_line_item_property }}"
+        },
+        {
+          "type": "text",
+          "id": "line_item_property_tag",
+          "label": "Product tag gate (optional)",
+          "info": "If set, the selector only appears on products carrying this tag. Leave blank to show on every product using this block.",
+          "visible_if": "{{ block.settings.enable_line_item_property }}"
+        },
+        {
+          "type": "text",
+          "id": "line_item_property_option_1",
+          "default": "Yes",
+          "label": "Option 1 value",
+          "visible_if": "{{ block.settings.enable_line_item_property }}"
+        },
+        {
+          "type": "text",
+          "id": "line_item_property_option_2",
+          "default": "No",
+          "label": "Option 2 value",
+          "visible_if": "{{ block.settings.enable_line_item_property }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "line_item_property_required",
+          "default": true,
+          "label": "Require a selection",
+          "info": "Blocks add-to-cart until the customer picks an option.",
+          "visible_if": "{{ block.settings.enable_line_item_property }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "line_item_property_preselect",
+          "default": false,
+          "label": "Pre-select a default option",
+          "info": "When off, both options start unselected.",
+          "visible_if": "{{ block.settings.enable_line_item_property }}"
+        },
+        {
+          "type": "select",
+          "id": "line_item_property_default",
+          "options": [
+            { "value": "option_1", "label": "Option 1" },
+            { "value": "option_2", "label": "Option 2" }
+          ],
+          "default": "option_2",
+          "label": "Default selection",
+          "visible_if": "{{ block.settings.enable_line_item_property and block.settings.line_item_property_preselect }}"
         }
       ]
     },
