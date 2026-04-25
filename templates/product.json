@@ -41,6 +41,13 @@
             "swatch_shape": "circle"
           }
         },
+        "popup_9yeBzW": {
+          "type": "popup",
+          "settings": {
+            "text": "Size Chart",
+            "page": "sda-dotdev-2026-shirt"
+          }
+        },
         "inventory_9cyeMi": {
           "type": "inventory",
           "disabled": true,
@@ -88,6 +95,7 @@
         "title",
         "price",
         "variant_picker",
+        "popup_9yeBzW",
         "inventory_9cyeMi",
         "quantity_selector",
         "buy_buttons",
