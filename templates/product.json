@@ -103,7 +103,8 @@
         "share"
       ],
       "custom_css": [
-        ".product-popup-modal__opener {margin: 0;}"
+        ".product-popup-modal__opener {margin: 0;}",
+        ".product-media-container.media-type-image {border: none;}"
       ],
       "settings": {
         "enable_sticky_info": true,
