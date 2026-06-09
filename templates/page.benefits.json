@@ -138,6 +138,7 @@
     },
     "metaobject_logo_list_pX3xKr": {
       "type": "metaobject-logo-list",
+      "disabled": true,
       "name": "Services",
       "settings": {
         "title": "Shopify Theme",
