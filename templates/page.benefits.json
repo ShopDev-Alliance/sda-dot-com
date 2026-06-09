@@ -135,6 +135,26 @@
         "padding_top": 0,
         "padding_bottom": 40
       }
+    },
+    "metaobject_logo_list_pX3xKr": {
+      "type": "metaobject-logo-list",
+      "name": "Services",
+      "settings": {
+        "title": "Shopify Theme",
+        "description": "<p>Exclusive discounts, extended free trials, partner programs, and more.</p>",
+        "heading_size": "h1",
+        "filter_type": "Shopify Theme",
+        "content_width": "page-width page-width--narrow",
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "logo_size": 100,
+        "heading_color": "#f7f9fc",
+        "text_color": "#f7f9fc",
+        "background_color": "",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
@@ -144,6 +164,7 @@
     "benefits_courses",
     "benefits_saas",
     "benefits_advertising",
-    "metaobject_logo_list_W6pgUW"
+    "metaobject_logo_list_W6pgUW",
+    "metaobject_logo_list_pX3xKr"
   ]
 }
