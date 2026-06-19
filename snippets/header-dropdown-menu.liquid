@@ -14,8 +14,9 @@
             <details id="Details-HeaderMenu-{{ forloop.index }}">
               <summary
                 id="HeaderMenu-{{ link.handle }}"
-                class="header__menu-item list-menu__item link focus-inset"
+                class="header__menu-item list-menu__item link focus-inset{% if forloop.first %} bw-link{% endif %}"
               >
+                {%- if forloop.first -%}{% render 'icon-brightwork-star' %}{%- endif -%}
                 <span
                   {%- if link.child_active %}
                     class="header__active-menu-item"
@@ -83,11 +84,12 @@
           <a
             id="HeaderMenu-{{ link.handle }}"
             href="{{ link.url }}"
-            class="header__menu-item list-menu__item link link--text focus-inset"
+            class="header__menu-item list-menu__item link link--text focus-inset{% if forloop.first %} bw-link{% endif %}"
             {% if link.current %}
               aria-current="page"
             {% endif %}
           >
+            {%- if forloop.first -%}{% render 'icon-brightwork-star' %}{%- endif -%}
             <span
               {%- if link.current %}
                 class="header__active-menu-item"

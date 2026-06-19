@@ -324,3 +324,79 @@ a.member-card:hover img {
     gap: 5rem;
   }
 }
+
+/* Brightwork — first nav link callout */
+.header__inline-menu .bw-link.bw-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 500;
+  border-bottom: 2px solid #C7A24E;
+  text-decoration: none;
+}
+/* Gold text in EVERY state — incl. when Brightwork is the current page,
+   where Dawn adds .header__active-menu-item to override the color + add an underline */
+.header__inline-menu .bw-link span,
+.header__inline-menu .bw-link .header__active-menu-item {
+  color: #E4C879;
+  text-decoration: none;
+}
+/* Brighten the text on hover instead of darkening with opacity; no extra underline */
+.header__inline-menu .bw-link:hover span,
+.header__inline-menu .bw-link:hover .header__active-menu-item {
+  color: #F2D98A;
+  text-decoration: none;
+}
+.header__inline-menu .bw-link .bw-star {
+  flex: 0 0 auto;
+  transition: transform 1.1s ease;
+}
+.header__inline-menu .bw-link .bw-star path {
+  transition: fill 0.2s ease;
+}
+/* Spin + brighten the star on hover */
+.header__inline-menu .bw-link:hover .bw-star {
+  transform: rotate(360deg);
+}
+.header__inline-menu .bw-link:hover .bw-star path {
+  fill: #F2D98A;
+}
+
+/* Brightwork — mobile drawer first item.
+   The star + title are wrapped in .bw-label so the gold underline hugs the
+   content instead of spanning the full-width row like a divider.
+   The current page adds .menu-drawer__menu-item--active. */
+.menu-drawer .bw-link.bw-link {
+  color: #E4C879;
+  font-weight: 500;
+  text-decoration: none;
+}
+/* Keep gold on active page instead of Dawn's foreground color */
+.menu-drawer .bw-link.menu-drawer__menu-item--active {
+  color: #E4C879;
+}
+/* Brighten the text on hover */
+.menu-drawer .bw-link.bw-link:hover {
+  color: #F2D98A;
+}
+/* Underline + star alignment live on the inline-flex label so they wrap the text only */
+.menu-drawer .bw-link .bw-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border-bottom: 2px solid #C7A24E;
+  padding-bottom: 14px;
+}
+.menu-drawer .bw-link .bw-star {
+  flex: 0 0 auto;
+  transition: transform 1.1s ease;
+}
+.menu-drawer .bw-link .bw-star path {
+  transition: fill 0.2s ease;
+}
+.menu-drawer .bw-link:hover .bw-star {
+  transform: rotate(360deg);
+}
+.menu-drawer .bw-link:hover .bw-star path {
+  fill: #F2D98A;
+}
