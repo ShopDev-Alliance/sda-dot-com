@@ -1,6 +1,17 @@
 <!doctype html>
 <html class="js" lang="{{ request.locale.iso_code }}">
   <head>
+    {% liquid
+      # Block templates via metaobject (strict match)
+      assign blocked = shop.metaobjects.access_control.global.blocked_templates.value
+
+      for type in blocked
+        if type == template.type
+          echo '<script>window.location.replace("/");</script>'
+          break
+        endif
+      endfor
+    %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -256,7 +267,6 @@
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'custom-styles.css' | asset_url | stylesheet_tag }}
 
-
     {%- unless settings.type_body_font.system? -%}
       {% comment %}theme-check-disable AssetPreload{% endcomment %}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -287,10 +297,9 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
-        <link rel="preload" href="{{ 'design-pack-styles.css' | asset_url }}" as="style">
-      {{ 'design-pack-styles.css' | asset_url | stylesheet_tag }} 
-      </head>
-
+    <link rel="preload" href="{{ 'design-pack-styles.css' | asset_url }}" as="style">
+    {{ 'design-pack-styles.css' | asset_url | stylesheet_tag }}
+  </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
@@ -366,6 +375,5 @@
     {% if template.suffix == 'members' %}
       {% render 'for-hire-btn' %}
     {% endif %}
-
   </body>
 </html>
