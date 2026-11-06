@@ -156,6 +156,47 @@ a.member-card:hover img {
 }
 /* END - MEMBER PAGE SECTION */
 
+/* Build Award badge */
+.build-award-badge {
+  --build-award-color: currentColor;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  text-decoration: none;
+}
+
+.build-award-badge .icon-diamond {
+  flex-shrink: 0;
+  color: var(--build-award-color);
+}
+
+.build-award-badge--icon {
+  width: 0.9em;
+  height: 0.9em;
+  margin-left: 0.4rem;
+}
+
+.build-award-badge--icon .icon-diamond {
+  width: 100%;
+  height: 100%;
+}
+
+.build-award-badge--full {
+  align-self: start;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--build-award-color);
+  font-size: 1.25rem;
+  font-weight: bold;
+  border-radius: 30px;
+}
+
+.build-award-badge--full .icon-diamond {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
 /* avatar stack - in rich text blocks */
 .avatar-stack {
   display: flex;

@@ -1,3 +1,14 @@
+{% doc %}
+  Renders a member card with an optional profile link and award badge.
+
+  @param {string} name - Member name.
+  @param {boolean} [profile] - Whether to link to the profile.
+  @param {string} [link] - Profile URL.
+  @param {boolean} [hide_image] - Whether to hide the photo.
+  @param {image} [profile_photo] - Member photo.
+  @param {boolean} [build_award] - Whether the member is a Build Award winner.
+{% enddoc %}
+
 {% liquid
   assign show_profile = 'div'
   if profile
@@ -12,7 +23,7 @@
     </div>
   {% endif %}
   <h3 class="member-card__name h5">
-    {{ name }}
+    {{ name }}{%- if build_award %}&#8288;{%- render 'badge-build-award', variant: 'icon' -%}{% endif %}
   </h3>
   {% if show_profile == 'a' %}
   <span class="member-card__cta link">

@@ -1,0 +1,26 @@
+{%- doc -%}
+  Renders a Shopify Build Award Winner badge.
+
+  @param {string} [variant] - 'icon' (default) or 'full'.
+{%- enddoc -%}
+
+{%- liquid
+  assign badge_variant = 'icon'
+  if variant == 'full'
+    assign badge_variant = 'full'
+  endif
+-%}
+
+{%- comment -%} Shared badge styles live in assets/custom-styles.css. {%- endcomment -%}
+
+{%- if badge_variant == 'full' -%}
+  <p class="build-award-badge build-award-badge--full">
+    {% render 'icon-diamond' %}
+    <span>Shopify Build Award Winner</span>
+  </p>
+{%- else -%}
+  <span class="build-award-badge build-award-badge--icon" title="Shopify Build Award Winner">
+    {% render 'icon-diamond' %}
+    <span class="visually-hidden">Shopify Build Award Winner</span>
+  </span>
+{%- endif -%}

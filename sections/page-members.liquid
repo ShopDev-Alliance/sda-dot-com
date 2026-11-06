@@ -7,25 +7,31 @@
       {% paginate shop.metaobjects.members.values by 500 %}
         {% assign member_type = shop.metaobjects.members.values | where: 'role', section.settings.member_role %}
         {%- for metaobject in member_type -%}
+          {% liquid
+            assign is_build_award_winner = false
+            if metaobject.build_award_winner.value == true
+              assign is_build_award_winner = true
+            endif
+          %}
 
           <li class="members-row--member {% if metaobject.open_to_work %} open-for-hire{% endif %}">
             {% if metaobject.role != 'Member' %}
               {% render 'card-member',
                 link: metaobject.system.url,
                 hide_image: section.settings.hide_image,
-                profile_photo: metaobject.profile_photo,
                 name: metaobject.name.value,
                 profile_photo: metaobject.profile_photo.value,
-                profile: metaobject.profile
+                profile: metaobject.profile,
+                build_award: is_build_award_winner
               %}
             {% else %}
               {% if metaobject.profile %}
                 <a class="members-row__member-link h5" href="{{metaobject.system.url}}">
-                  {{ metaobject.name.value }}
+                  {{ metaobject.name.value }}{%- if is_build_award_winner %}&#8288;{%- render 'badge-build-award', variant: 'icon' -%}{% endif %}
                 </a>
               {% else  %}
                 <h5 class="members-row__member h5">
-                  {{ metaobject.name.value }}
+                  {{ metaobject.name.value }}{%- if is_build_award_winner %}&#8288;{%- render 'badge-build-award', variant: 'icon' -%}{% endif %}
                 </h5>
               {% endif %}
             {% endif %}
