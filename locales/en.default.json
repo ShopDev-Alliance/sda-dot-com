@@ -92,6 +92,10 @@
   "blogs": {
     "article": {
       "blog": "Blog",
+      "for_developers": "For developers",
+      "for_merchants": "For merchants",
+      "open_contents_sharing": "Open contents and sharing",
+      "contents_sharing": "Contents and sharing",
       "breadcrumb": "Breadcrumb",
       "home": "Home",
       "read_minutes": "{{ count }} min read",

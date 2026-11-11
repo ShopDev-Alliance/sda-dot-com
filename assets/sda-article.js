@@ -7,7 +7,10 @@ if (!customElements.get('sda-article')) {
       this.body = this.querySelector('.sda-article__body');
       if (!this.body) return;
       this.dialog = this.querySelector('dialog');
-      this.contentsButton = this.querySelector('.sda-contents-button');
+      this.contentsButton = this.querySelector('.sda-reading-bar');
+      this.contentsLabel = this.querySelector('[data-contents-label]');
+      this.contentsFallback = this.contentsFallback || this.contentsLabel.textContent;
+      this.barPercent = this.querySelector('[data-bar-percent]');
       this.progress = this.querySelector('.sda-progress');
       this.percent = this.querySelector('[data-read-percent]');
       this.topButton = this.querySelector('.sda-back-to-top');
@@ -24,7 +27,7 @@ if (!customElements.get('sda-article')) {
       this.addEventListener('click', (event) => this.handleClick(event), { signal });
       this.dialog.addEventListener('close', () => {
         this.contentsButton.setAttribute('aria-expanded', 'false');
-        this.scheduleProgress();
+        this.updateProgress();
       }, { signal });
       window.addEventListener('scroll', () => this.scheduleProgress(), { passive: true, signal });
       window.addEventListener('resize', () => this.scheduleProgress(), { signal });
@@ -139,6 +142,7 @@ if (!customElements.get('sda-article')) {
 
     buildContents() {
       this.headings = Array.from(this.body.querySelectorAll('h2, h3'));
+      this.headingLabels = new Map();
       const used = new Set(Array.from(document.querySelectorAll('[id]'), (node) => node.id));
       const list = this.querySelector('[data-toc]');
       list.replaceChildren();
@@ -147,6 +151,7 @@ if (!customElements.get('sda-article')) {
       for (const heading of this.headings) {
         heading.querySelector('.sda-heading-anchor')?.remove();
         const text = heading.textContent.trim();
+        this.headingLabels.set(heading, text);
         if (!heading.id) {
           const base = text.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '') || 'section';
           let id = base;
@@ -185,6 +190,7 @@ if (!customElements.get('sda-article')) {
       this.querySelector('[data-mobile-toc]').replaceChildren(clone);
       this.links = Array.from(this.querySelectorAll('[data-heading-id]'));
       this.querySelector('[data-toc-group]').hidden = this.headings.length < 2;
+      this.querySelector('[data-mobile-toc-group]').hidden = this.headings.length < 2;
     }
 
     scheduleProgress() {
@@ -197,7 +203,10 @@ if (!customElements.get('sda-article')) {
       const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / Math.max(1, rect.height)));
       this.style.setProperty('--sda-progress', String(progress));
       this.percent.textContent = `${Math.round(progress * 100)}%`;
-      this.contentsButton.hidden = this.headings.length < 2 || rect.top >= window.innerHeight || rect.bottom <= this.headerOffset();
+      this.barPercent.textContent = this.percent.textContent;
+      const visible = this.getBoundingClientRect().top < window.innerHeight && rect.bottom > this.headerOffset() && !this.dialog.open;
+      this.contentsButton.dataset.visible = String(visible);
+      this.contentsButton.inert = !visible;
       this.topButton.hidden = window.scrollY <= 600;
       this.updateActive();
     }
@@ -207,12 +216,15 @@ if (!customElements.get('sda-article')) {
     }
 
     updateActive() {
-      let active = this.headings[0];
+      let active = null;
       const offset = this.headerOffset();
       for (const heading of this.headings) {
         if (heading.getBoundingClientRect().top <= offset + 20) active = heading;
         else break;
       }
+      this.contentsLabel.textContent = this.headings.length >= 2 && active
+        ? this.headingLabels.get(active)
+        : this.contentsFallback;
       for (const link of this.links) {
         if (link.dataset.headingId === active?.id) link.setAttribute('aria-current', 'location');
         else link.removeAttribute('aria-current');
@@ -278,6 +290,7 @@ if (!customElements.get('sda-article')) {
       } else if (action === 'open-contents') {
         this.dialog.showModal();
         control.setAttribute('aria-expanded', 'true');
+        this.updateProgress();
       } else if (action === 'close-contents') {
         this.dialog.close();
       } else if (action === 'top') {

@@ -14,6 +14,26 @@
   assign share_url = canonical_url | url_encode
   assign share_title = article.title | url_encode
   assign hero_type = false
+  assign audience = 'developers'
+  assign audience_value = article.metafields.custom.audience.value | downcase
+  if audience_value == 'merchants'
+    assign audience = 'merchants'
+  endif
+  assign structured_description = article.excerpt | strip_html | strip
+  assign structured_image = blank
+  assign structured_author_url = blank
+  assign structured_logo = blank
+  assign structured_published_at = article.published_at | date: '%Y-%m-%dT%H:%M:%S%:z'
+  assign structured_updated_at = article.updated_at | date: '%Y-%m-%dT%H:%M:%S%:z'
+  if structured_description == blank
+    assign structured_description = article.content | strip_html | strip | truncate: 160
+  endif
+  if article.image != blank
+    assign structured_image = article.image | image_url: width: 1200 | prepend: 'https:'
+  endif
+  if settings.logo != blank
+    assign structured_logo = settings.logo | image_url: width: 600 | prepend: 'https:'
+  endif
   if article.user != blank
     assign author_name = article.user.name | default: author_name
     assign author_photo = article.user.image
@@ -31,6 +51,7 @@
     if author_member.profile.value == true
       assign member_profile_url = author_member.system.url
       assign author_url = member_profile_url
+      assign structured_author_url = shop.url | append: member_profile_url
     endif
   endif
   if author_url != blank
@@ -77,9 +98,18 @@
   <header class="sda-hero{% if hero_type %} sda-hero--type{% endif %}">
     <div class="sda-tags">
       <a class="sda-tag sda-tag--accent" href="{{ blog.url }}">{{ blog.title | escape }}</a>
-      {% for tag in article.tags -%}
+      {% if article.metafields.custom.audience.value != blank %}
+        <span class="sda-tag sda-tag--accent">
+          {% if audience == 'merchants' %}
+            {{ 'blogs.article.for_merchants' | t }}
+          {% else %}
+            {{ 'blogs.article.for_developers' | t }}
+          {% endif %}
+        </span>
+      {% endif %}
+      {% for tag in article.tags %}
         <a class="sda-tag" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag | escape }}</a>
-      {%- endfor %}
+      {% endfor %}
     </div>
     <h1 class="sda-hero__title">{{ title_html }}</h1>
     {% if article.excerpt != blank %}
@@ -289,7 +319,7 @@
             <div>
               <div class="sda-comment__head">
                 <strong>{{ comment.author | escape }}</strong>
-                {%- if comment.author == article.author -%}
+                {%- if comment.author == author_name -%}
                   <span class="sda-comment__badge">{{ 'blogs.article.author_badge' | t }}</span>
                 {%- endif -%}
                 <span class="sda-meta">{{ comment.created_at | time_tag: format: 'date' }}</span>
@@ -447,28 +477,81 @@
     </section>
   {% endif %}
   <button
-    class="sda-contents-button"
+    class="sda-reading-bar"
     type="button"
     data-action="open-contents"
+    data-visible="false"
     aria-expanded="false"
     aria-controls="SdaContents-{{ section.id }}"
-    hidden
+    aria-label="{{ 'blogs.article.open_contents_sharing' | t | escape }}"
+    inert
   >
-    {{ 'blogs.article.contents' | t -}}
-    <span class="sda-contents-button__progress" aria-hidden="true"></span>
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      aria-hidden="true"
+    >
+      <path d="M8 6h13M8 12h13M8 18h13M3 6h1M3 12h1M3 18h1"/>
+    </svg>
+    <span class="sda-reading-bar__label" data-contents-label>{{ 'blogs.article.contents' | t }}</span>
+    <span class="sda-reading-bar__percent" data-bar-percent>0%</span>
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      aria-hidden="true"
+    >
+      <path d="m6 15 6-6 6 6"/>
+    </svg>
+    <span class="sda-reading-bar__progress" aria-hidden="true"></span>
   </button>
   <dialog class="sda-contents" id="SdaContents-{{ section.id }}" aria-labelledby="SdaContentsTitle-{{ section.id }}">
     <div class="sda-contents__head">
-      <h2 id="SdaContentsTitle-{{ section.id }}">{{ 'blogs.article.on_this_page' | t }}</h2>
+      <h2 id="SdaContentsTitle-{{ section.id }}">{{ 'blogs.article.contents_sharing' | t }}</h2>
       <button type="button" data-action="close-contents" aria-label="{{ 'accessibility.close' | t | escape }}">
         ×
       </button>
     </div>
-    <nav data-mobile-toc aria-label="{{ 'blogs.article.on_this_page' | t | escape }}"></nav>
+    <div class="sda-contents__group" data-mobile-toc-group hidden>
+      <h3 class="sda-eyebrow">{{ 'blogs.article.on_this_page' | t }}</h3>
+      <nav data-mobile-toc aria-label="{{ 'blogs.article.on_this_page' | t | escape }}"></nav>
+    </div>
+    {% if section.settings.show_share %}
+      <div class="sda-contents__group">
+        <h3 class="sda-eyebrow">{{ 'blogs.article.share' | t }}</h3>
+        <div class="sda-share sda-share--tray">
+          <a
+            href="https://twitter.com/intent/tweet?text={{ share_title }}&amp;url={{ share_url }}"
+            target="_blank"
+            rel="noopener"
+          >
+            {{- 'blogs.article.twitter' | t -}}
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}" target="_blank" rel="noopener">
+            {{- 'blogs.article.linked_in' | t -}}
+          </a>
+          <button type="button" data-action="copy-link">{{ 'blogs.article.copy_link' | t }}</button>
+        </div>
+      </div>
+    {% endif %}
+    {% if article.tags.size > 0 %}
+      <div class="sda-contents__group">
+        <h3 class="sda-eyebrow">{{ 'blogs.article.filed_under' | t }}</h3>
+        <div class="sda-tags">
+          {% for tag in article.tags %}
+            <a class="sda-tag" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag | escape }}</a>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
     <div class="sda-contents__actions">
-      {% if section.settings.show_share -%}
-        <button type="button" data-action="copy-link">{{ 'blogs.article.copy_link' | t }}</button>
-      {%- endif -%}
       <button type="button" data-action="top">{{ 'blogs.article.back_to_top' | t }}</button>
     </div>
     <p class="sda-sr-only" data-dialog-status role="status" aria-live="polite"></p>
@@ -487,7 +570,33 @@
 
 <script src="{{ 'sda-article.js' | asset_url }}" defer="defer"></script>
 <script type="application/ld+json">
-  {{ article | structured_data }}
+  {
+    "@context": {{ 'https://schema.org' | json }},
+    "@type": {{ 'BlogPosting' | json }},
+    "headline": {{ article.title | json }},
+    "description": {{ structured_description | json }},
+    {% if structured_image != blank %}
+      "image": {{ structured_image | json }},
+    {% endif %}
+    "datePublished": {{ structured_published_at | json }},
+    "dateModified": {{ structured_updated_at | json }},
+    "author": {
+      "@type": {{ 'Person' | json }},
+      "name": {{ author_name | json }}
+      {% if structured_author_url != blank %}, "url": {{ structured_author_url | json }}{% endif %}
+    },
+    "publisher": {
+      "@type": {{ 'Organization' | json }},
+      "name": {{ shop.name | json }}
+      {% if structured_logo != blank %}
+        , "logo": {
+          "@type": {{ 'ImageObject' | json }},
+          "url": {{ structured_logo | json }}
+        }
+      {% endif %}
+    },
+    "mainEntityOfPage": {{ canonical_url | json }}
+  }
 </script>
 
 {% schema %}

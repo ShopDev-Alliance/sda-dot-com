@@ -13,13 +13,27 @@
     "join": {
       "type": "sda-join-cta",
       "settings": {
-        "button_link": "shopify://pages/how-to-join"
+        "button_link": "shopify://pages/how-to-join",
+        "audience": "developers"
+      }
+    },
+    "join_merchants": {
+      "type": "sda-join-cta",
+      "settings": {
+        "eyebrow": "For merchants",
+        "heading": "Need a Shopify developer you can trust?",
+        "text": "Alliance members are vetted Shopify developers. Tell us what you're building and we'll connect you with the right one.",
+        "button_label": "Get a quote",
+        "button_link": "shopify://pages/get-a-quote",
+        "show_avatars": true,
+        "audience": "merchants"
       }
     }
   },
   "order": [
     "main",
     "related",
-    "join"
+    "join",
+    "join_merchants"
   ]
 }
