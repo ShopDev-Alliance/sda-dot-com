@@ -11,7 +11,7 @@ if (!customElements.get('sda-article')) {
       this.contentsLabel = this.querySelector('[data-contents-label]');
       this.contentsFallback = this.contentsFallback || this.contentsLabel.textContent;
       this.barPercent = this.querySelector('[data-bar-percent]');
-      this.progress = this.querySelector('.sda-progress');
+      this.railProgress = this.querySelector('[data-rail-progress]');
       this.percent = this.querySelector('[data-read-percent]');
       this.topButton = this.querySelector('.sda-back-to-top');
       this.status = this.querySelector('[data-status]');
@@ -21,8 +21,7 @@ if (!customElements.get('sda-article')) {
       this.enhanceCode();
       this.enhanceQuotes();
       this.buildContents();
-      this.progress.hidden = false;
-      this.percent.parentElement.hidden = false;
+      this.railProgress.hidden = false;
       for (const button of this.querySelectorAll('[data-action="copy-link"]')) button.hidden = false;
       this.addEventListener('click', (event) => this.handleClick(event), { signal });
       this.dialog.addEventListener('close', () => {

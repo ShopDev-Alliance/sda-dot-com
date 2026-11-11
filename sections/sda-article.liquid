@@ -89,7 +89,6 @@
   data-tip="{{ 'blogs.article.tip' | t | escape }}"
   data-warning="{{ 'blogs.article.warning' | t | escape }}"
 >
-  <div class="sda-progress" aria-hidden="true" hidden></div>
   <nav class="sda-crumbs" aria-label="{{ 'blogs.article.breadcrumb' | t | escape }}">
     <a href="{{ routes.root_url }}">{{ 'blogs.article.home' | t }}</a><span aria-hidden="true">/</span>
     <a href="{{ blog.url }}">{{ blog.title | escape }}</a><span aria-hidden="true">/</span>
@@ -142,9 +141,6 @@
       </{{ author_tag }}>
       <span class="sda-meta">{{ article.published_at | time_tag: format: 'date' }}</span>
       <span class="sda-meta">{{ 'blogs.article.read_minutes' | t: count: read_minutes }}</span>
-      <span class="sda-meta sda-meta--progress" hidden
-        ><span data-read-percent>0%</span> {{ 'blogs.article.read' | t -}}
-      </span>
     </div>
     {% if article.image != blank %}
       <div class="sda-hero__image">
@@ -240,6 +236,13 @@
       {% endif %}
     </div>
     <aside class="sda-rail">
+      <div class="sda-rail__progress" data-rail-progress hidden>
+        <div class="sda-rail__progress-label">
+          <span class="sda-rail__percent" data-read-percent>0%</span>
+          <span class="sda-rail__read">{{ 'blogs.article.read' | t }}</span>
+        </div>
+        <div class="sda-rail__track" aria-hidden="true"><div class="sda-rail__fill"></div></div>
+      </div>
       <nav class="sda-rail__group" data-toc-group hidden aria-label="{{ 'blogs.article.on_this_page' | t | escape }}">
         <button
           class="sda-rail__toggle"
@@ -291,189 +294,191 @@
   {% if blog.comments_enabled? %}
     {% comment %}Display gating only: the comment endpoint is public. Keep this blog moderated.{% endcomment %}
     <section class="sda-comments" id="comments" aria-labelledby="SdaComments-{{ section.id }}">
-      <h2 id="SdaComments-{{ section.id }}">{{ 'blogs.article.comments' | t: count: article.comments_count }}</h2>
-      {% paginate article.comments by 20 %}
-        {% if comment.status == 'pending' and comment.content %}
-          <article class="sda-comment" id="{{ comment.id }}">
-            <span class="sda-avatar" aria-hidden="true">{{ comment.author | slice: 0 | upcase | escape }}</span>
-            <div>
-              <div class="sda-comment__head">
-                <strong>{{ comment.author | escape }}</strong
-                ><span class="sda-meta">{{ comment.created_at | time_tag: format: 'date' }}</span>
+      <div class="sda-comments__inner">
+        <h2 id="SdaComments-{{ section.id }}">{{ 'blogs.article.comments' | t: count: article.comments_count }}</h2>
+        {% paginate article.comments by 20 %}
+          {% if comment.status == 'pending' and comment.content %}
+            <article class="sda-comment" id="{{ comment.id }}">
+              <span class="sda-avatar" aria-hidden="true">{{ comment.author | slice: 0 | upcase | escape }}</span>
+              <div>
+                <div class="sda-comment__head">
+                  <strong>{{ comment.author | escape }}</strong
+                  ><span class="sda-meta">{{ comment.created_at | time_tag: format: 'date' }}</span>
+                </div>
+                {{ comment.content }}
               </div>
-              {{ comment.content }}
-            </div>
-          </article>
-        {% endif %}
-        {% for comment in article.comments %}
-          {% liquid
-            assign comment_words = comment.author | split: ' '
-            assign comment_initials = comment_words.first | slice: 0 | upcase
-            if comment_words.size > 1
-              assign comment_last_initial = comment_words.last | slice: 0 | upcase
-              assign comment_initials = comment_initials | append: comment_last_initial
-            endif
-          %}
-          <article class="sda-comment" id="{{ comment.id }}">
-            <span class="sda-avatar" aria-hidden="true">{{ comment_initials | escape }}</span>
-            <div>
-              <div class="sda-comment__head">
-                <strong>{{ comment.author | escape }}</strong>
-                {%- if comment.author == author_name -%}
-                  <span class="sda-comment__badge">{{ 'blogs.article.author_badge' | t }}</span>
-                {%- endif -%}
-                <span class="sda-meta">{{ comment.created_at | time_tag: format: 'date' }}</span>
+            </article>
+          {% endif %}
+          {% for comment in article.comments %}
+            {% liquid
+              assign comment_words = comment.author | split: ' '
+              assign comment_initials = comment_words.first | slice: 0 | upcase
+              if comment_words.size > 1
+                assign comment_last_initial = comment_words.last | slice: 0 | upcase
+                assign comment_initials = comment_initials | append: comment_last_initial
+              endif
+            %}
+            <article class="sda-comment" id="{{ comment.id }}">
+              <span class="sda-avatar" aria-hidden="true">{{ comment_initials | escape }}</span>
+              <div>
+                <div class="sda-comment__head">
+                  <strong>{{ comment.author | escape }}</strong>
+                  {%- if comment.author == author_name -%}
+                    <span class="sda-comment__badge">{{ 'blogs.article.author_badge' | t }}</span>
+                  {%- endif -%}
+                  <span class="sda-meta">{{ comment.created_at | time_tag: format: 'date' }}</span>
+                </div>
+                {{ comment.content }}
               </div>
-              {{ comment.content }}
-            </div>
-          </article>
-        {% endfor %}
-        {% if paginate.pages > 1 %}
-          <nav class="sda-pagination" aria-label="{{ 'general.pagination.label' | t | escape }}">
-            {% if paginate.previous -%}
-              <a
-                href="{{ paginate.previous.url }}#comments"
-                aria-label="{{ 'general.pagination.previous' | t | escape }}"
-                >←</a
-              >
-            {%- endif %}
-            {% for part in paginate.parts -%}
-              {%- if part.is_link -%}
+            </article>
+          {% endfor %}
+          {% if paginate.pages > 1 %}
+            <nav class="sda-pagination" aria-label="{{ 'general.pagination.label' | t | escape }}">
+              {% if paginate.previous -%}
                 <a
-                  href="{{ part.url }}#comments"
-                  aria-label="{{ 'general.pagination.page' | t: number: part.title | escape }}"
+                  href="{{ paginate.previous.url }}#comments"
+                  aria-label="{{ 'general.pagination.previous' | t | escape }}"
+                  >←</a
                 >
-                  {{- part.title -}}
-                </a>
-              {%- else -%}
-                <span
-                  {% if part.title == paginate.current_page %}
-                    aria-current="page"
-                  {% endif %}
-                >
-                  {{- part.title -}}
-                </span>
-              {%- endif -%}
-            {%- endfor %}
-            {% if paginate.next -%}
-              <a href="{{ paginate.next.url }}#comments" aria-label="{{ 'general.pagination.next' | t | escape }}">→</a>
-            {%- endif %}
-          </nav>
-        {% endif %}
-      {% endpaginate %}
-      {% if can_comment %}
-        {% form 'new_comment', article, class: 'sda-comment-form' %}
-          {% liquid
-            assign post_message = 'blogs.article.success'
-            if blog.moderated? and comment.status == 'unapproved'
-              assign post_message = 'blogs.article.success_moderated'
-            endif
-          %}
-          <h2>{{ 'blogs.article.comment_form_title' | t }}</h2>
-          {% if form.errors %}
-            <div class="sda-form-status" role="alert" tabindex="-1" autofocus>
-              <h3>{{ 'templates.contact.form.error_heading' | t }}</h3>
-              <ul>
-                {% for field in form.errors %}
-                  <li>
-                    {% if section.settings.comments_members_only and field != 'body' -%}
-                      {{- form.errors.translated_fields[field] }}
-                      {{ form.errors.messages[field] -}}
-                    {%- else -%}
-                      <a href="#SdaComment-{{ section.id }}-{{ field }}">
+              {%- endif %}
+              {% for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <a
+                    href="{{ part.url }}#comments"
+                    aria-label="{{ 'general.pagination.page' | t: number: part.title | escape }}"
+                  >
+                    {{- part.title -}}
+                  </a>
+                {%- else -%}
+                  <span
+                    {% if part.title == paginate.current_page %}
+                      aria-current="page"
+                    {% endif %}
+                  >
+                    {{- part.title -}}
+                  </span>
+                {%- endif -%}
+              {%- endfor %}
+              {% if paginate.next -%}
+                <a href="{{ paginate.next.url }}#comments" aria-label="{{ 'general.pagination.next' | t | escape }}">→</a>
+              {%- endif %}
+            </nav>
+          {% endif %}
+        {% endpaginate %}
+        {% if can_comment %}
+          {% form 'new_comment', article, class: 'sda-comment-form' %}
+            {% liquid
+              assign post_message = 'blogs.article.success'
+              if blog.moderated? and comment.status == 'unapproved'
+                assign post_message = 'blogs.article.success_moderated'
+              endif
+            %}
+            <h2>{{ 'blogs.article.comment_form_title' | t }}</h2>
+            {% if form.errors %}
+              <div class="sda-form-status" role="alert" tabindex="-1" autofocus>
+                <h3>{{ 'templates.contact.form.error_heading' | t }}</h3>
+                <ul>
+                  {% for field in form.errors %}
+                    <li>
+                      {% if section.settings.comments_members_only and field != 'body' -%}
                         {{- form.errors.translated_fields[field] }}
                         {{ form.errors.messages[field] -}}
-                      </a>
-                    {%- endif %}
-                  </li>
-                {% endfor %}
-              </ul>
-            </div>
-          {% elsif form.posted_successfully? %}
-            <p class="sda-form-status" role="status" tabindex="-1" autofocus>{{ post_message | t }}</p>
-          {% endif %}
-          {% if section.settings.comments_members_only %}
-            <input type="hidden" name="comment[author]" value="{{ customer.name | escape }}">
-            <input type="hidden" name="comment[email]" value="{{ customer.email | escape }}">
-          {% else %}
-            <div class="sda-comment-form__fields">
-              <div>
-                <label for="SdaComment-{{ section.id }}-author">
-                  {{- 'blogs.article.name' | t }}
-                  <span aria-hidden="true">*</span></label
-                ><input
-                  type="text"
-                  name="comment[author]"
-                  id="SdaComment-{{ section.id }}-author"
-                  value="{{ form.author | escape }}"
-                  autocomplete="name"
-                  required
-                  aria-required="true"
-                  {% if form.errors contains 'author' %}
-                    aria-invalid="true" aria-describedby="SdaComment-{{ section.id }}-author-error"
-                  {% endif %}
-                >
-                {%- if form.errors contains 'author' -%}
-                  <small id="SdaComment-{{ section.id }}-author-error">{{ form.errors.messages.author }}</small>
-                {%- endif %}
+                      {%- else -%}
+                        <a href="#SdaComment-{{ section.id }}-{{ field }}">
+                          {{- form.errors.translated_fields[field] }}
+                          {{ form.errors.messages[field] -}}
+                        </a>
+                      {%- endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
               </div>
-              <div>
-                <label for="SdaComment-{{ section.id }}-email">
-                  {{- 'blogs.article.email' | t }}
-                  <span aria-hidden="true">*</span></label
-                ><input
-                  type="email"
-                  name="comment[email]"
-                  id="SdaComment-{{ section.id }}-email"
-                  value="{{ form.email | escape }}"
-                  autocomplete="email"
-                  autocorrect="off"
-                  autocapitalize="off"
-                  required
-                  aria-required="true"
-                  {% if form.errors contains 'email' %}
-                    aria-invalid="true" aria-describedby="SdaComment-{{ section.id }}-email-error"
-                  {% endif %}
-                >
-                {%- if form.errors contains 'email' -%}
-                  <small id="SdaComment-{{ section.id }}-email-error">{{ form.errors.messages.email }}</small>
-                {%- endif %}
+            {% elsif form.posted_successfully? %}
+              <p class="sda-form-status" role="status" tabindex="-1" autofocus>{{ post_message | t }}</p>
+            {% endif %}
+            {% if section.settings.comments_members_only %}
+              <input type="hidden" name="comment[author]" value="{{ customer.name | escape }}">
+              <input type="hidden" name="comment[email]" value="{{ customer.email | escape }}">
+            {% else %}
+              <div class="sda-comment-form__fields">
+                <div>
+                  <label for="SdaComment-{{ section.id }}-author">
+                    {{- 'blogs.article.name' | t }}
+                    <span aria-hidden="true">*</span></label
+                  ><input
+                    type="text"
+                    name="comment[author]"
+                    id="SdaComment-{{ section.id }}-author"
+                    value="{{ form.author | escape }}"
+                    autocomplete="name"
+                    required
+                    aria-required="true"
+                    {% if form.errors contains 'author' %}
+                      aria-invalid="true" aria-describedby="SdaComment-{{ section.id }}-author-error"
+                    {% endif %}
+                  >
+                  {%- if form.errors contains 'author' -%}
+                    <small id="SdaComment-{{ section.id }}-author-error">{{ form.errors.messages.author }}</small>
+                  {%- endif %}
+                </div>
+                <div>
+                  <label for="SdaComment-{{ section.id }}-email">
+                    {{- 'blogs.article.email' | t }}
+                    <span aria-hidden="true">*</span></label
+                  ><input
+                    type="email"
+                    name="comment[email]"
+                    id="SdaComment-{{ section.id }}-email"
+                    value="{{ form.email | escape }}"
+                    autocomplete="email"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    required
+                    aria-required="true"
+                    {% if form.errors contains 'email' %}
+                      aria-invalid="true" aria-describedby="SdaComment-{{ section.id }}-email-error"
+                    {% endif %}
+                  >
+                  {%- if form.errors contains 'email' -%}
+                    <small id="SdaComment-{{ section.id }}-email-error">{{ form.errors.messages.email }}</small>
+                  {%- endif %}
+                </div>
               </div>
-            </div>
-          {% endif %}
-          <label for="SdaComment-{{ section.id }}-body">
-            {{- 'blogs.article.message' | t }}
-            <span aria-hidden="true">*</span></label
-          >
-          <textarea
-            rows="5"
-            name="comment[body]"
-            id="SdaComment-{{ section.id }}-body"
-            required
-            aria-required="true"
-            {% if form.errors contains 'body' %}
-              aria-invalid="true" aria-describedby="SdaComment-{{ section.id }}-body-error"
-            {% endif -%}
-          >{{ form.body | escape }}</textarea>
-          {% if form.errors contains 'body' -%}
-            <small id="SdaComment-{{ section.id }}-body-error">{{ form.errors.messages.body }}</small>
-          {%- endif %}
-          {% if blog.moderated? %}
-            <p class="sda-meta">{{ 'blogs.article.moderated' | t }}</p>
-          {% endif %}
-          <button type="submit" class="sda-comment-form__submit button">{{ 'blogs.article.post' | t }}</button>
-        {% endform %}
-      {% else %}
-        <p class="sda-comments__prompt">
-          {{ 'blogs.article.members_prompt' | t }}
-          <a href="{{ routes.account_login_url }}">{{ 'blogs.article.log_in' | t }}</a>
-          {%- if section.settings.join_url != blank %}
-            {{ 'blogs.article.or' | t }}
-            <a href="{{ section.settings.join_url }}">{{ 'blogs.article.join' | t }}</a>
-          {%- endif -%}
-          .
-        </p>
-      {% endif %}
+            {% endif %}
+            <label for="SdaComment-{{ section.id }}-body">
+              {{- 'blogs.article.message' | t }}
+              <span aria-hidden="true">*</span></label
+            >
+            <textarea
+              rows="5"
+              name="comment[body]"
+              id="SdaComment-{{ section.id }}-body"
+              required
+              aria-required="true"
+              {% if form.errors contains 'body' %}
+                aria-invalid="true" aria-describedby="SdaComment-{{ section.id }}-body-error"
+              {% endif -%}
+            >{{ form.body | escape }}</textarea>
+            {% if form.errors contains 'body' -%}
+              <small id="SdaComment-{{ section.id }}-body-error">{{ form.errors.messages.body }}</small>
+            {%- endif %}
+            {% if blog.moderated? %}
+              <p class="sda-meta">{{ 'blogs.article.moderated' | t }}</p>
+            {% endif %}
+            <button type="submit" class="sda-comment-form__submit button">{{ 'blogs.article.post' | t }}</button>
+          {% endform %}
+        {% else %}
+          <p class="sda-comments__prompt">
+            {{ 'blogs.article.members_prompt' | t }}
+            <a href="{{ routes.account_login_url }}">{{ 'blogs.article.log_in' | t }}</a>
+            {%- if section.settings.join_url != blank %}
+              {{ 'blogs.article.or' | t }}
+              <a href="{{ section.settings.join_url }}">{{ 'blogs.article.join' | t }}</a>
+            {%- endif -%}
+            .
+          </p>
+        {% endif %}
+      </div>
     </section>
   {% endif %}
   <button
@@ -563,7 +568,9 @@
     aria-label="{{ 'blogs.article.back_to_top' | t | escape }}"
     hidden
   >
-    ↑
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
   </button>
   <p class="sda-sr-only" data-status role="status" aria-live="polite"></p>
 </sda-article>
