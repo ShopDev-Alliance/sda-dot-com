@@ -1,0 +1,529 @@
+{% liquid
+  assign author_member = article.metafields.custom.author_member.value
+  assign author_name = article.author
+  assign author_photo = blank
+  assign author_role = blank
+  assign author_bio = blank
+  assign author_url = blank
+  assign author_tag = 'span'
+  assign member_profile_url = blank
+  assign can_comment = false
+  assign read_minutes = article.content | strip_html | split: ' ' | size | divided_by: 225 | at_least: 1
+  assign title_html = article.title | escape
+  assign title_accent = article.metafields.custom.title_accent.value | escape
+  assign share_url = canonical_url | url_encode
+  assign share_title = article.title | url_encode
+  assign hero_type = false
+  if article.user != blank
+    assign author_name = article.user.name | default: author_name
+    assign author_photo = article.user.image
+    assign author_bio = article.user.bio
+    assign author_url = article.user.homepage
+  endif
+  if author_member != blank
+    assign author_name = author_member.name.value | default: author_name
+    assign author_photo = author_member.profile_photo.value | default: author_photo
+    assign author_role = author_member.tagline.value
+    if author_member.description != blank
+      assign author_bio = author_member.description | metafield_text
+    endif
+    assign author_url = blank
+    if author_member.profile.value == true
+      assign member_profile_url = author_member.system.url
+      assign author_url = member_profile_url
+    endif
+  endif
+  if author_url != blank
+    assign author_tag = 'a'
+  endif
+  assign author_words = author_name | split: ' '
+  assign author_initials = author_words.first | slice: 0 | upcase
+  if author_words.size > 1
+    assign last_initial = author_words.last | slice: 0 | upcase
+    assign author_initials = author_initials | append: last_initial
+  endif
+  if title_accent != blank and title_html contains title_accent
+    assign accent_markup = title_accent | prepend: '<em>' | append: '</em>'
+    assign title_html = title_html | replace_first: title_accent, accent_markup
+  endif
+  if article.image == blank and section.settings.no_image_style == 'none'
+    assign hero_type = true
+  endif
+  if section.settings.comments_members_only == false
+    assign can_comment = true
+  elsif customer.metafields.custom.sda_member == true
+    assign can_comment = true
+  endif
+%}
+
+{{ 'section-sda-article.css' | asset_url | stylesheet_tag }}
+
+<sda-article
+  class="sda-article color-{{ section.settings.color_scheme }}{% if section.settings.show_drop_cap %} sda-article--drop-cap{% endif %}"
+  data-copy="{{ 'blogs.article.copy' | t | escape }}"
+  data-copied="{{ 'blogs.article.copied' | t | escape }}"
+  data-copy-error="{{ 'blogs.article.copy_error' | t | escape }}"
+  data-heading-label="{{ 'blogs.article.copy_section' | t | escape }}"
+  data-note="{{ 'blogs.article.note' | t | escape }}"
+  data-tip="{{ 'blogs.article.tip' | t | escape }}"
+  data-warning="{{ 'blogs.article.warning' | t | escape }}"
+>
+  <div class="sda-progress" aria-hidden="true" hidden></div>
+  <nav class="sda-crumbs" aria-label="{{ 'blogs.article.breadcrumb' | t | escape }}">
+    <a href="{{ routes.root_url }}">{{ 'blogs.article.home' | t }}</a><span aria-hidden="true">/</span>
+    <a href="{{ blog.url }}">{{ blog.title | escape }}</a><span aria-hidden="true">/</span>
+    <span class="sda-crumbs__current" aria-current="page">{{ article.title | escape }}</span>
+  </nav>
+  <header class="sda-hero{% if hero_type %} sda-hero--type{% endif %}">
+    <div class="sda-tags">
+      <a class="sda-tag sda-tag--accent" href="{{ blog.url }}">{{ blog.title | escape }}</a>
+      {% for tag in article.tags -%}
+        <a class="sda-tag" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag | escape }}</a>
+      {%- endfor %}
+    </div>
+    <h1 class="sda-hero__title">{{ title_html }}</h1>
+    {% if article.excerpt != blank %}
+      <div class="sda-hero__dek">{{ article.excerpt }}</div>
+    {% endif %}
+    <div class="sda-hero__meta">
+      <{{ author_tag }}
+        class="sda-author"
+        {% if author_url != blank %}
+          href="{{ author_url | escape }}"
+        {% endif %}
+      >
+        <span class="sda-avatar" aria-hidden="true">
+          {% if author_photo != blank -%}
+            {{-
+              author_photo
+              | image_url: width: 84
+              | image_tag: widths: '42, 84', sizes: '42px', alt: '', loading: 'eager'
+            -}}
+          {%- else -%}
+            {{- author_initials | escape -}}
+          {%- endif %}
+        </span>
+        <span
+          ><span class="sda-author__name">{{ author_name | escape }}</span>
+          {%- if author_role != blank -%}
+            <span class="sda-author__role">{{ author_role | escape }}</span>
+          {%- endif -%}
+        </span>
+      </{{ author_tag }}>
+      <span class="sda-meta">{{ article.published_at | time_tag: format: 'date' }}</span>
+      <span class="sda-meta">{{ 'blogs.article.read_minutes' | t: count: read_minutes }}</span>
+      <span class="sda-meta sda-meta--progress" hidden
+        ><span data-read-percent>0%</span> {{ 'blogs.article.read' | t -}}
+      </span>
+    </div>
+    {% if article.image != blank %}
+      <div class="sda-hero__image">
+        {{
+          article.image
+          | image_url: width: 2400
+          | image_tag:
+            widths: '375, 750, 1100, 1600, 2400',
+            sizes: '(min-width: 1200px) 1144px, calc(100vw - 56px)',
+            loading: 'eager',
+            fetchpriority: 'high'
+        }}
+      </div>
+    {% elsif section.settings.no_image_style == 'gradient' %}
+      <div class="sda-hero__image sda-hero__image--gradient" aria-hidden="true"></div>
+    {% endif %}
+  </header>
+  <div class="sda-article__layout">
+    <div class="sda-article__column">
+      <div class="sda-article__body">{{ article.content }}</div>
+      {% if section.settings.show_author_card %}
+        <div class="sda-author-card">
+          <span class="sda-avatar sda-avatar--large" aria-hidden="true">
+            {%- if author_photo != blank -%}
+              {{-
+                author_photo
+                | image_url: width: 144
+                | image_tag: widths: '72, 144', sizes: '72px', alt: '', loading: 'lazy'
+              -}}
+            {%- else -%}
+              {{- author_initials | escape -}}
+            {%- endif -%}
+          </span>
+          <div>
+            <h2 class="sda-author-card__name">
+              {% if author_url != blank -%}
+                <a class="sda-author-card__profile" href="{{ author_url | escape }}">{{ author_name | escape }}</a>
+              {%- else -%}
+                {{- author_name | escape -}}
+              {%- endif %}
+            </h2>
+            {% if author_bio != blank %}
+              <p class="sda-author-card__bio">{{ author_bio | strip_html | truncate: 240 | escape }}</p>
+            {% endif %}
+          </div>
+          {% if author_member != blank %}
+            <div class="sda-author-card__socials">
+              {% assign social_fields = 'twitter,linked_in,github,website' | split: ',' %}
+              {% for social_field in social_fields %}
+                {% liquid
+                  assign social_url = author_member[social_field].value
+                  assign social_label = blank
+                  case social_field
+                    when 'twitter'
+                      assign social_label = 'blogs.article.twitter' | t
+                    when 'linked_in'
+                      assign social_label = 'blogs.article.linked_in' | t
+                    when 'github'
+                      assign social_label = 'blogs.article.github' | t
+                    when 'website'
+                      assign social_label = 'blogs.article.website' | t
+                  endcase
+                %}
+                {% if social_url != blank %}
+                  <a
+                    href="{{ social_url | escape }}"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="{{ social_label | escape }}"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.7"
+                      aria-hidden="true"
+                    >
+                      {% case social_field %}
+                        {% when 'twitter' %}<path d="m4 4 16 16M20 4 4 20M4 4h5l11 16h-5Z"/>
+                        {% when 'linked_in' %}<path d="M5 9v11M5 4v1M10 20V9h4v2c4-5 7-1 7 2v7M14 20v-7"/>
+                        {% when 'github' %}<path d="M9 20c-5 2-5-3-7-3m15 5v-4c0-1-.3-2-1-2 4-.5 6-2 6-6 0-2-1-3-2-4 0-1 0-3-1-4-2 0-4 2-4 2a15 15 0 0 0-6 0S7 2 5 2C4 3 4 5 4 6c-1 1-2 2-2 4 0 4 2 5.5 6 6-1 1-1 2-1 3v3"/>
+                        {% else %}<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>
+                      {% endcase %}
+                    </svg>
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+    <aside class="sda-rail">
+      <nav class="sda-rail__group" data-toc-group hidden aria-label="{{ 'blogs.article.on_this_page' | t | escape }}">
+        <button
+          class="sda-rail__toggle"
+          type="button"
+          data-action="toggle-toc"
+          aria-expanded="true"
+          aria-controls="SdaToc-{{ section.id }}"
+        >
+          {{ 'blogs.article.on_this_page' | t -}}
+          <span aria-hidden="true">⌄</span>
+        </button>
+        <ol class="sda-toc-list" id="SdaToc-{{ section.id }}" data-toc></ol>
+      </nav>
+      {% if section.settings.show_share %}
+        <div class="sda-rail__group">
+          <h2 class="sda-eyebrow">{{ 'blogs.article.share' | t }}</h2>
+          <div class="sda-share">
+            <a
+              href="https://twitter.com/intent/tweet?text={{ share_title }}&amp;url={{ share_url }}"
+              target="_blank"
+              rel="noopener"
+            >
+              {{- 'blogs.article.twitter' | t -}}
+            </a>
+            <a
+              href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}"
+              target="_blank"
+              rel="noopener"
+            >
+              {{- 'blogs.article.linked_in' | t -}}
+            </a>
+            <button type="button" data-action="copy-link" hidden>{{ 'blogs.article.copy_link' | t }}</button>
+          </div>
+        </div>
+      {% endif %}
+      {% if article.tags.size > 0 %}
+        <div class="sda-rail__group">
+          <h2 class="sda-eyebrow">{{ 'blogs.article.filed_under' | t }}</h2>
+          <div class="sda-tags">
+            {% for tag in article.tags -%}
+              <a class="sda-tag" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag | escape }}</a>
+            {%- endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </aside>
+  </div>
+
+  {% if blog.comments_enabled? %}
+    {% comment %}Display gating only: the comment endpoint is public. Keep this blog moderated.{% endcomment %}
+    <section class="sda-comments" id="comments" aria-labelledby="SdaComments-{{ section.id }}">
+      <h2 id="SdaComments-{{ section.id }}">{{ 'blogs.article.comments' | t: count: article.comments_count }}</h2>
+      {% paginate article.comments by 20 %}
+        {% if comment.status == 'pending' and comment.content %}
+          <article class="sda-comment" id="{{ comment.id }}">
+            <span class="sda-avatar" aria-hidden="true">{{ comment.author | slice: 0 | upcase | escape }}</span>
+            <div>
+              <div class="sda-comment__head">
+                <strong>{{ comment.author | escape }}</strong
+                ><span class="sda-meta">{{ comment.created_at | time_tag: format: 'date' }}</span>
+              </div>
+              {{ comment.content }}
+            </div>
+          </article>
+        {% endif %}
+        {% for comment in article.comments %}
+          {% liquid
+            assign comment_words = comment.author | split: ' '
+            assign comment_initials = comment_words.first | slice: 0 | upcase
+            if comment_words.size > 1
+              assign comment_last_initial = comment_words.last | slice: 0 | upcase
+              assign comment_initials = comment_initials | append: comment_last_initial
+            endif
+          %}
+          <article class="sda-comment" id="{{ comment.id }}">
+            <span class="sda-avatar" aria-hidden="true">{{ comment_initials | escape }}</span>
+            <div>
+              <div class="sda-comment__head">
+                <strong>{{ comment.author | escape }}</strong>
+                {%- if comment.author == article.author -%}
+                  <span class="sda-comment__badge">{{ 'blogs.article.author_badge' | t }}</span>
+                {%- endif -%}
+                <span class="sda-meta">{{ comment.created_at | time_tag: format: 'date' }}</span>
+              </div>
+              {{ comment.content }}
+            </div>
+          </article>
+        {% endfor %}
+        {% if paginate.pages > 1 %}
+          <nav class="sda-pagination" aria-label="{{ 'general.pagination.label' | t | escape }}">
+            {% if paginate.previous -%}
+              <a
+                href="{{ paginate.previous.url }}#comments"
+                aria-label="{{ 'general.pagination.previous' | t | escape }}"
+                >←</a
+              >
+            {%- endif %}
+            {% for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <a
+                  href="{{ part.url }}#comments"
+                  aria-label="{{ 'general.pagination.page' | t: number: part.title | escape }}"
+                >
+                  {{- part.title -}}
+                </a>
+              {%- else -%}
+                <span
+                  {% if part.title == paginate.current_page %}
+                    aria-current="page"
+                  {% endif %}
+                >
+                  {{- part.title -}}
+                </span>
+              {%- endif -%}
+            {%- endfor %}
+            {% if paginate.next -%}
+              <a href="{{ paginate.next.url }}#comments" aria-label="{{ 'general.pagination.next' | t | escape }}">→</a>
+            {%- endif %}
+          </nav>
+        {% endif %}
+      {% endpaginate %}
+      {% if can_comment %}
+        {% form 'new_comment', article, class: 'sda-comment-form' %}
+          {% liquid
+            assign post_message = 'blogs.article.success'
+            if blog.moderated? and comment.status == 'unapproved'
+              assign post_message = 'blogs.article.success_moderated'
+            endif
+          %}
+          <h2>{{ 'blogs.article.comment_form_title' | t }}</h2>
+          {% if form.errors %}
+            <div class="sda-form-status" role="alert" tabindex="-1" autofocus>
+              <h3>{{ 'templates.contact.form.error_heading' | t }}</h3>
+              <ul>
+                {% for field in form.errors %}
+                  <li>
+                    {% if section.settings.comments_members_only and field != 'body' -%}
+                      {{- form.errors.translated_fields[field] }}
+                      {{ form.errors.messages[field] -}}
+                    {%- else -%}
+                      <a href="#SdaComment-{{ section.id }}-{{ field }}">
+                        {{- form.errors.translated_fields[field] }}
+                        {{ form.errors.messages[field] -}}
+                      </a>
+                    {%- endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% elsif form.posted_successfully? %}
+            <p class="sda-form-status" role="status" tabindex="-1" autofocus>{{ post_message | t }}</p>
+          {% endif %}
+          {% if section.settings.comments_members_only %}
+            <input type="hidden" name="comment[author]" value="{{ customer.name | escape }}">
+            <input type="hidden" name="comment[email]" value="{{ customer.email | escape }}">
+          {% else %}
+            <div class="sda-comment-form__fields">
+              <div>
+                <label for="SdaComment-{{ section.id }}-author">
+                  {{- 'blogs.article.name' | t }}
+                  <span aria-hidden="true">*</span></label
+                ><input
+                  type="text"
+                  name="comment[author]"
+                  id="SdaComment-{{ section.id }}-author"
+                  value="{{ form.author | escape }}"
+                  autocomplete="name"
+                  required
+                  aria-required="true"
+                  {% if form.errors contains 'author' %}
+                    aria-invalid="true" aria-describedby="SdaComment-{{ section.id }}-author-error"
+                  {% endif %}
+                >
+                {%- if form.errors contains 'author' -%}
+                  <small id="SdaComment-{{ section.id }}-author-error">{{ form.errors.messages.author }}</small>
+                {%- endif %}
+              </div>
+              <div>
+                <label for="SdaComment-{{ section.id }}-email">
+                  {{- 'blogs.article.email' | t }}
+                  <span aria-hidden="true">*</span></label
+                ><input
+                  type="email"
+                  name="comment[email]"
+                  id="SdaComment-{{ section.id }}-email"
+                  value="{{ form.email | escape }}"
+                  autocomplete="email"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  required
+                  aria-required="true"
+                  {% if form.errors contains 'email' %}
+                    aria-invalid="true" aria-describedby="SdaComment-{{ section.id }}-email-error"
+                  {% endif %}
+                >
+                {%- if form.errors contains 'email' -%}
+                  <small id="SdaComment-{{ section.id }}-email-error">{{ form.errors.messages.email }}</small>
+                {%- endif %}
+              </div>
+            </div>
+          {% endif %}
+          <label for="SdaComment-{{ section.id }}-body">
+            {{- 'blogs.article.message' | t }}
+            <span aria-hidden="true">*</span></label
+          >
+          <textarea
+            rows="5"
+            name="comment[body]"
+            id="SdaComment-{{ section.id }}-body"
+            required
+            aria-required="true"
+            {% if form.errors contains 'body' %}
+              aria-invalid="true" aria-describedby="SdaComment-{{ section.id }}-body-error"
+            {% endif -%}
+          >{{ form.body | escape }}</textarea>
+          {% if form.errors contains 'body' -%}
+            <small id="SdaComment-{{ section.id }}-body-error">{{ form.errors.messages.body }}</small>
+          {%- endif %}
+          {% if blog.moderated? %}
+            <p class="sda-meta">{{ 'blogs.article.moderated' | t }}</p>
+          {% endif %}
+          <button type="submit" class="sda-comment-form__submit button">{{ 'blogs.article.post' | t }}</button>
+        {% endform %}
+      {% else %}
+        <p class="sda-comments__prompt">
+          {{ 'blogs.article.members_prompt' | t }}
+          <a href="{{ routes.account_login_url }}">{{ 'blogs.article.log_in' | t }}</a>
+          {%- if section.settings.join_url != blank %}
+            {{ 'blogs.article.or' | t }}
+            <a href="{{ section.settings.join_url }}">{{ 'blogs.article.join' | t }}</a>
+          {%- endif -%}
+          .
+        </p>
+      {% endif %}
+    </section>
+  {% endif %}
+  <button
+    class="sda-contents-button"
+    type="button"
+    data-action="open-contents"
+    aria-expanded="false"
+    aria-controls="SdaContents-{{ section.id }}"
+    hidden
+  >
+    {{ 'blogs.article.contents' | t -}}
+    <span class="sda-contents-button__progress" aria-hidden="true"></span>
+  </button>
+  <dialog class="sda-contents" id="SdaContents-{{ section.id }}" aria-labelledby="SdaContentsTitle-{{ section.id }}">
+    <div class="sda-contents__head">
+      <h2 id="SdaContentsTitle-{{ section.id }}">{{ 'blogs.article.on_this_page' | t }}</h2>
+      <button type="button" data-action="close-contents" aria-label="{{ 'accessibility.close' | t | escape }}">
+        ×
+      </button>
+    </div>
+    <nav data-mobile-toc aria-label="{{ 'blogs.article.on_this_page' | t | escape }}"></nav>
+    <div class="sda-contents__actions">
+      {% if section.settings.show_share -%}
+        <button type="button" data-action="copy-link">{{ 'blogs.article.copy_link' | t }}</button>
+      {%- endif -%}
+      <button type="button" data-action="top">{{ 'blogs.article.back_to_top' | t }}</button>
+    </div>
+    <p class="sda-sr-only" data-dialog-status role="status" aria-live="polite"></p>
+  </dialog>
+  <button
+    class="sda-back-to-top"
+    type="button"
+    data-action="top"
+    aria-label="{{ 'blogs.article.back_to_top' | t | escape }}"
+    hidden
+  >
+    ↑
+  </button>
+  <p class="sda-sr-only" data-status role="status" aria-live="polite"></p>
+</sda-article>
+
+<script src="{{ 'sda-article.js' | asset_url }}" defer="defer"></script>
+<script type="application/ld+json">
+  {{ article | structured_data }}
+</script>
+
+{% schema %}
+{
+  "name": "SDA article",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    {
+      "type": "select",
+      "id": "no_image_style",
+      "label": "When there is no featured image",
+      "default": "gradient",
+      "options": [
+        { "value": "gradient", "label": "Gradient band" },
+        { "value": "none", "label": "Large title, no media" }
+      ]
+    },
+    { "type": "checkbox", "id": "show_drop_cap", "label": "Show lead paragraph drop cap", "default": true },
+    { "type": "checkbox", "id": "show_author_card", "label": "Show author card", "default": true },
+    { "type": "checkbox", "id": "show_share", "label": "Show sharing links", "default": true },
+    {
+      "type": "paragraph",
+      "content": "Comments appear only when enabled on the blog. Member restrictions control display only; keep the blog moderated."
+    },
+    {
+      "type": "checkbox",
+      "id": "comments_members_only",
+      "label": "Show comment form to members only",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "join_url",
+      "label": "Join page",
+      "visible_if": "{{ section.settings.comments_members_only }}"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,89 @@
+{% liquid
+  assign member_count = shop.metaobjects.members.values.count | default: 0
+  assign heading = section.settings.heading | replace: '[count]', member_count
+  assign shown_count = 0
+%}
+{{ 'section-sda-article.css' | asset_url | stylesheet_tag }}
+<section class="sda-join color-{{ section.settings.color_scheme }}" aria-labelledby="SdaJoin-{{ section.id }}">
+  <div class="sda-join__inner">
+    <div>
+      {% if section.settings.eyebrow != blank %}
+        <p class="sda-join__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+      <h2 class="sda-join__title" id="SdaJoin-{{ section.id }}">{{ heading | escape }}</h2>
+      {% if section.settings.text != blank %}
+        <p class="sda-join__text">{{ section.settings.text | escape }}</p>
+      {% endif %}
+      {% if section.settings.show_avatars and member_count > 0 %}
+        {% comment %}TODO: extract a shared avatar-stack snippet with rich-text.liquid in a later phase.{% endcomment %}
+        <ul
+          class="sda-join__avatars avatar-stack"
+          role="list"
+          aria-label="{{ 'blogs.article.community_members' | t | escape }}"
+        >
+          {% paginate shop.metaobjects.members.values by 250 %}
+            {% assign founding_members = shop.metaobjects.members.values | where: 'role', 'Founding Member' %}
+            {% for member in founding_members %}
+              {% if member.profile_photo != blank %}
+                {% assign shown_count = shown_count | plus: 1 %}
+                <li class="sda-join__avatar avatar-stack__avatar">
+                  {{
+                    member.profile_photo.value
+                    | image_url: width: 120
+                    | image_tag: widths: '60, 120', sizes: '60px', loading: 'lazy', alt: member.name.value
+                  }}
+                </li>
+              {% endif %}
+              {% if shown_count == 5 %}{% break %}{% endif %}
+            {% endfor %}
+          {% endpaginate %}
+          {% assign remaining_count = member_count | minus: shown_count | at_least: 0 %}
+          {% if remaining_count > 0 %}
+            <li class="sda-join__avatar sda-join__count avatar-stack__avatar avatar-stack__avatar--number">
+              <span aria-label="{{ 'blogs.article.more_members' | t: count: remaining_count | escape }}"
+                >+{{ remaining_count -}}
+              </span>
+            </li>
+          {% endif %}
+        </ul>
+      {% endif %}
+    </div>
+    {% if section.settings.button_label != blank and section.settings.button_link != blank -%}
+      <a class="sda-join__button button" href="{{ section.settings.button_link }}">
+        {{- section.settings.button_label | escape }}
+        <span aria-hidden="true">→</span></a
+      >
+    {%- endif %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "SDA join CTA",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Built by devs, for devs" },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Ship better with [count] other Shopify devs",
+      "info": "Use [count] for the live member count."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "A curated community of Shopify developers. Share what you know, learn from your peers, and build better together."
+    },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "How to join" },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "visible_if": "{{ section.settings.button_label != blank }}"
+    },
+    { "type": "checkbox", "id": "show_avatars", "label": "Show member photos", "default": true }
+  ],
+  "presets": [{ "name": "SDA join CTA" }]
+}
+{% endschema %}
