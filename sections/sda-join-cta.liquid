@@ -16,7 +16,7 @@
 %}
 {% if show_cta %}
   {{ 'section-sda-article.css' | asset_url | stylesheet_tag }}
-  <section class="sda-join color-{{ section.settings.color_scheme }}" aria-labelledby="SdaJoin-{{ section.id }}">
+  <section class="sda-join color-{{ section.settings.color_scheme }}{% if section.settings.show_background_glow %} sda-join--glow{% endif %}" aria-labelledby="SdaJoin-{{ section.id }}">
     <div class="sda-join__inner">
       <div>
         {% if section.settings.eyebrow != blank %}
@@ -85,6 +85,7 @@
       ]
     },
     { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "checkbox", "id": "show_background_glow", "label": "Show background glow", "default": false },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Built by devs, for devs" },
     {
       "type": "text",

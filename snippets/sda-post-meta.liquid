@@ -1,0 +1,36 @@
+{% doc %}
+  Renders an optional author, publication date, and reading time without nested links.
+
+  @param {article} post - Article to display.
+{% enddoc %}
+{% liquid
+  assign author_member = post.metafields.custom.author_member.value
+  assign author_name = post.author
+  assign author_photo = blank
+  if author_member != blank
+    assign author_name = author_member.name.value | default: author_name
+    assign author_photo = author_member.profile_photo.value
+  endif
+  assign author_words = author_name | split: ' '
+  assign author_initials = author_words.first | slice: 0 | upcase
+  if author_words.size > 1
+    assign last_initial = author_words.last | slice: 0 | upcase
+    assign author_initials = author_initials | append: last_initial
+  endif
+%}
+<div class="sda-meta">
+  {% if author_name != blank %}
+    <span class="sda-meta__item">
+      <span class="sda-avatar" aria-hidden="true">
+        {%- if author_photo != blank -%}
+          {{- author_photo | image_url: width: 52 | image_tag: widths: '26, 52', sizes: '26px', loading: 'lazy', alt: '' -}}
+        {%- else -%}
+          {{- author_initials | escape -}}
+        {%- endif -%}
+      </span>
+      <span>{{ author_name | escape }}</span>
+    </span>
+  {% endif %}
+  <span class="sda-meta__item">{{ post.published_at | time_tag: format: 'date' }}</span>
+  <span class="sda-meta__item">{% render 'sda-read-time', post: post %}</span>
+</div>

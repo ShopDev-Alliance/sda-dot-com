@@ -1,0 +1,63 @@
+{% doc %}
+  Renders one linked dispatch row with optional code, topic, author and image.
+
+  @param {article} post - Article to display.
+  @param {number} index - One-based position for cycling placeholder covers.
+  @param {string} dev_handle - Developer filter tag handle to exclude from topics.
+  @param {string} mer_handle - Merchant filter tag handle to exclude from topics.
+{% enddoc %}
+{% liquid
+  assign topic = blank
+  assign has_kicker = false
+  assign excerpt = post.excerpt | strip_html
+  assign cover_variant = index | modulo: 4
+  assign cover_class = ''
+  capture dispatch_code
+    render 'sda-dispatch-code', post: post, style: 'text'
+  endcapture
+  if post.excerpt == blank
+    assign excerpt = post.content | strip_html | truncatewords: 30
+  endif
+  for tag in post.tags
+    assign tag_handle = tag | handle
+    if tag_handle != dev_handle and tag_handle != mer_handle
+      assign topic = tag
+      break
+    endif
+  endfor
+  if dispatch_code != blank or topic != blank
+    assign has_kicker = true
+  endif
+  case cover_variant
+    when 1
+      assign cover_class = ' sda-cover--grad'
+    when 2
+      assign cover_class = ' sda-cover--deep'
+    when 3
+      assign cover_class = ' sda-cover--ember'
+  endcase
+%}
+<a class="sda-post-row{% unless has_kicker %} sda-post-row--no-kicker{% endunless %}" href="{{ post.url }}">
+  <div class="sda-post-row__code-cell">
+    {% render 'sda-dispatch-code', post: post, style: 'stacked' %}
+  </div>
+  <div class="sda-post-row__body">
+    {% if has_kicker %}
+      <div class="sda-post-row__kicker{% if topic == blank %} sda-post-row__kicker--code-only{% endif %}">
+        {% if dispatch_code != blank %}
+          <span class="sda-sr-only">{{ 'blogs.list.dispatch' | t: code: dispatch_code | escape }}</span>
+          {% render 'sda-dispatch-code', post: post, style: 'pill', class: 'sda-code-pill--inline' %}
+        {% endif %}
+        {% if topic != blank %}<span class="sda-tag">{{ topic | escape }}</span>{% endif %}
+      </div>
+    {% endif %}
+    <h3 class="sda-post-row__title">{{ post.title | escape }}</h3>
+    <p class="sda-post-row__excerpt">{{ excerpt }}</p>
+    {% render 'sda-post-meta', post: post %}
+  </div>
+  <div class="sda-cover{% if post.image == blank %}{{ cover_class }}{% endif %}"{% if post.image == blank %} aria-hidden="true"{% endif %}>
+    {% if post.image != blank %}
+      {{ post.image | image_url: width: 400 | image_tag: widths: '100, 200, 300, 400', sizes: '(max-width: 720px) 96px, (max-width: 960px) 150px, 200px', loading: 'lazy', alt: '' }}
+    {% endif %}
+  </div>
+</a>

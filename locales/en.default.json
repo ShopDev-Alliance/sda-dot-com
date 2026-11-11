@@ -90,6 +90,18 @@
     "complementary_products": "Complementary products"
   },
   "blogs": {
+    "list": {
+      "filter_label": "Filter dispatches by series",
+      "rss": "RSS",
+      "latest": "Latest",
+      "read_post": "Read post",
+      "dispatch": "Dispatch {{ code }}",
+      "page_of": "Page {{ current }} of {{ total }}",
+      "newer": "Newer",
+      "older": "Older",
+      "empty": "No dispatches here yet.",
+      "view_all": "View all dispatches"
+    },
     "article": {
       "blog": "Blog",
       "for_developers": "For developers",

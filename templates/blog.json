@@ -1,19 +1,23 @@
 {
   "sections": {
     "main": {
-      "type": "main-blog",
+      "type": "sda-blog",
       "settings": {
-        "layout": "collage",
-        "show_image": true,
-        "image_height": "medium",
-        "show_date": true,
-        "show_author": false,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "eyebrow": "SDA Dispatches",
+        "title": "Dispatches from the Alliance",
+        "title_accent": "the Alliance",
+        "dek": "Two numbered series from a curated community of Shopify developers. DEV for the people building stores, MER for the merchants running them."
+      }
+    },
+    "join": {
+      "type": "sda-join-cta",
+      "settings": {
+        "button_link": "shopify://pages/how-to-join"
       }
     }
   },
   "order": [
-    "main"
+    "main",
+    "join"
   ]
 }

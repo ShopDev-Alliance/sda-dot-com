@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Blog — ShopDev Alliance</title>
+<meta name="description" content="Engineering notes, tutorials, and member stories from the ShopDev Alliance community." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   ShopDev Alliance — Blog List Template
+   Same tokens as Blog Post.html (dark mode baked in)
+   ========================================================= */
+:root {
+  --navy: #0e1a2d;
+  --navy-2: #152539;
+  --navy-3: #1e3556;
+  --paper: #f7f9fc;
+  --orange: #fd814f;
+  --red: #dc2a3c;
+  --red-2: #e5414d;
+
+  --bg: var(--navy);
+  --fg: var(--paper);
+  --surface: #152539;
+  --surface-2: #1b2c45;
+  --ink: var(--paper);
+  --ink-60: rgba(247, 249, 252, 0.66);
+  --ink-20: rgba(247, 249, 252, 0.22);
+  --ink-10: rgba(247, 249, 252, 0.1);
+  --ink-05: rgba(247, 249, 252, 0.05);
+  --rule: rgba(247, 249, 252, 0.14);
+
+  --f-head: "Titillium Web", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --radius: 4px;
+  --radius-lg: 10px;
+  --grad-hero: linear-gradient(184deg, #fd814f 3.09%, #dc2a3c 93.28%);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--f-body);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
+
+/* ---------- Header (same as post) ---------- */
+.site-header {
+  background: var(--navy);
+  border-bottom: 1px solid rgba(247, 249, 252, 0.06);
+  position: sticky; top: 0; z-index: 50;
+}
+.site-header__inner {
+  max-width: 1200px; margin: 0 auto; padding: 18px 28px;
+  display: flex; align-items: center; justify-content: space-between; gap: 32px;
+}
+.brand { display: inline-flex; align-items: center; gap: 14px; text-decoration: none; color: var(--paper); }
+.brand__mark { width: 34px; height: 34px; display: block; }
+.brand__word { font-family: var(--f-head); font-weight: 700; font-size: 19px; letter-spacing: 0.04em; }
+.nav { display: flex; align-items: center; gap: 32px; font-size: 14px; }
+.nav a { color: var(--paper); text-decoration: none; opacity: 0.85; transition: color .2s, opacity .2s; }
+.nav a:hover, .nav a[aria-current="page"] { color: var(--orange); opacity: 1; }
+.nav__cta {
+  border: 1px solid rgba(247, 249, 252, 0.25); padding: 9px 18px; border-radius: 6px;
+  font-family: var(--f-body); background: transparent; color: var(--paper); cursor: pointer; font-size: 13px;
+  transition: all .2s;
+}
+.nav__cta:hover { border-color: var(--orange); color: var(--orange); }
+
+/* ---------- Blog hero ---------- */
+.blog-hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--rule);
+}
+.blog-hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 700px 260px at 85% 0%, rgba(253,129,79,0.20), transparent 65%),
+    radial-gradient(ellipse 500px 220px at 0% 100%, rgba(220,42,60,0.12), transparent 65%);
+  pointer-events: none;
+}
+.blog-hero__inner {
+  position: relative;
+  max-width: 1200px; margin: 0 auto; padding: 64px 28px 0;
+}
+.eyebrow {
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--orange); margin: 0 0 14px;
+}
+.blog-hero__title {
+  font-family: var(--f-head); font-weight: 700;
+  font-size: clamp(40px, 6vw, 76px); line-height: 0.95; letter-spacing: -0.01em;
+  margin: 0 0 18px; text-transform: uppercase;
+}
+.blog-hero__title em {
+  font-style: normal;
+  background: var(--grad-hero);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.blog-hero__dek { max-width: 56ch; margin: 0 0 36px; color: var(--ink-60); font-size: 15px; }
+
+/* Tag filter tabs */
+.filters {
+  display: flex; gap: 4px; align-items: flex-end; flex-wrap: wrap;
+  margin: 0; padding: 0; list-style: none;
+}
+.filters a {
+  display: inline-block;
+  padding: 10px 14px 12px;
+  font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none; color: var(--ink-60);
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+.filters a:hover { color: var(--fg); }
+.filters a[aria-current="page"] { color: var(--fg); border-bottom-color: var(--orange); }
+.filters__count { opacity: .7; margin-left: 6px; font-size: 11px; }
+.filters__rss {
+  margin-left: auto;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+
+/* ---------- Shared bits ---------- */
+.tag {
+  display: inline-block; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 40px; border: 1px solid var(--ink-20); color: var(--ink);
+}
+.tag--accent { background: var(--grad-hero); color: var(--paper); border-color: transparent; }
+.meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px;
+  font-size: 12px; color: var(--ink-60); letter-spacing: 0.02em;
+}
+.meta__item { display: inline-flex; align-items: center; gap: 6px; }
+.meta__item svg { flex: none; }
+.avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--f-head); font-weight: 700; font-size: 11px; color: var(--paper);
+  background: var(--grad-hero); flex: none;
+}
+.cover {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--rule);
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(247,249,252,0.55); font-size: 10px; letter-spacing: 0.08em;
+  background:
+    linear-gradient(135deg, rgba(253,129,79,0.12), rgba(220,42,60,0.08)),
+    repeating-linear-gradient(45deg, var(--surface) 0 14px, var(--surface-2) 14px 28px);
+}
+.cover--grad { background: var(--grad-hero); border-color: transparent; color: rgba(255,244,236,0.75); }
+.cover--deep { background: linear-gradient(135deg, #1e3556, #0e1a2d); }
+.cover--ember {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(253,129,79,0.55), transparent 55%),
+    linear-gradient(135deg, #1b2c45, #0e1a2d);
+}
+
+/* ---------- Featured post ---------- */
+.featured {
+  max-width: 1200px; margin: 0 auto; padding: 56px 28px 24px;
+}
+.featured__card {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 44px; align-items: center;
+  text-decoration: none; color: inherit;
+}
+.featured__card .cover { aspect-ratio: 16/10; transition: transform .35s ease; }
+.featured__card:hover .cover { transform: translateY(-4px); }
+.featured__label {
+  display: flex; gap: 8px; align-items: center; margin-bottom: 18px;
+}
+.featured__title {
+  font-family: var(--f-head); font-weight: 700;
+  font-size: clamp(28px, 3.4vw, 42px); line-height: 1.05; letter-spacing: -0.01em;
+  margin: 0 0 16px; transition: color .2s;
+}
+.featured__card:hover .featured__title { color: var(--orange); }
+.featured__excerpt { color: var(--ink-60); margin: 0 0 24px; font-size: 14.5px; max-width: 52ch; }
+.featured__foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.read-link {
+  font-family: var(--f-head); font-weight: 700; font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 8px; color: var(--orange);
+}
+.read-link svg { transition: transform .2s; }
+.featured__card:hover .read-link svg { transform: translateX(4px); }
+
+/* ---------- Post list ---------- */
+.list {
+  max-width: 1200px; margin: 0 auto; padding: 40px 28px 24px;
+}
+.list__head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding-bottom: 14px; border-bottom: 1px solid var(--rule);
+}
+.list__label {
+  font-family: var(--f-head); font-weight: 700; font-size: 12px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ink-60); margin: 0;
+}
+.list__count { font-size: 12px; color: var(--ink-60); }
+
+.posts { list-style: none; margin: 0; padding: 0; }
+.post-row {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) 200px;
+  gap: 32px;
+  align-items: start;
+  padding: 28px 16px;
+  margin: 0 -16px;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none; color: inherit;
+  border-radius: var(--radius-lg);
+  transition: background .2s;
+}
+.post-row:hover { background: var(--ink-05); }
+/* Dispatch code: series prefix + issue number (DEV012, MER008) */
+.post-row__code {
+  display: flex; flex-direction: column; gap: 4px; padding-top: 2px;
+  font-family: var(--f-body);
+}
+.post-row__series {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+}
+.post-row__num {
+  font-family: var(--f-body); font-weight: 700; font-size: 34px; line-height: 1;
+  letter-spacing: -0.02em; color: var(--fg);
+}
+.series--dev { --series: var(--orange); }
+.series--mer { --series: #8ecae6; }
+.post-row__series, .code-pill { color: var(--series); }
+.post-row:hover .post-row__num { color: var(--series); }
+.code-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  padding: 3px 9px; border-radius: 4px;
+  border: 1px solid var(--series);
+}
+.code-pill--inline { display: none; }
+/* Filter series dots */
+.filters__dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--series); margin-right: 8px; vertical-align: 1px; }
+.post-row__kicker { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-60); }
+.post-row__kicker .tag { font-size: 10.5px; padding: 3px 9px; }
+.post-row__title {
+  font-family: var(--f-head); font-weight: 700; font-size: 23px; line-height: 1.2;
+  margin: 0 0 10px; letter-spacing: -0.005em; transition: color .2s;
+}
+.post-row:hover .post-row__title { color: var(--orange); }
+.post-row__excerpt {
+  margin: 0 0 16px; color: var(--ink-60); font-size: 14px; line-height: 1.6;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  max-width: 64ch;
+}
+.post-row .cover { aspect-ratio: 16/10; }
+.meta__mobile-date { display: none; }
+
+/* ---------- Pagination ---------- */
+.pager {
+  max-width: 1200px; margin: 0 auto; padding: 24px 28px 72px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.pager__btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 18px; border: 1px solid var(--ink-20); border-radius: 6px;
+  font-size: 12px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; color: var(--fg);
+  transition: border-color .2s, color .2s;
+}
+.pager__btn:hover { border-color: var(--orange); color: var(--orange); }
+.pager__btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+.pager__pages { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; }
+.pager__pages a, .pager__pages span {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 36px; height: 36px; padding: 0 8px; border-radius: 6px;
+  font-size: 13px; text-decoration: none; color: var(--ink-60);
+}
+.pager__pages a:hover { color: var(--fg); background: var(--ink-05); }
+.pager__pages [aria-current="page"] { color: var(--navy); background: var(--paper); font-weight: 700; }
+
+/* ---------- Join CTA (same as post) ---------- */
+.cta-join { background: var(--navy-2); position: relative; overflow: hidden; border-top: 1px solid var(--rule); }
+.cta-join::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 800px 300px at 20% 110%, rgba(253,129,79,0.28), transparent 60%),
+    radial-gradient(ellipse 600px 300px at 85% 0%, rgba(220,42,60,0.18), transparent 60%);
+}
+.cta-join__inner {
+  max-width: 1200px; margin: 0 auto; padding: 80px 28px; position: relative;
+  display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center;
+}
+.cta-join__title {
+  font-family: var(--f-head); font-weight: 700; font-size: clamp(30px, 4vw, 48px); line-height: 1;
+  letter-spacing: -0.01em; margin: 0 0 14px; text-transform: uppercase;
+}
+.cta-join__dek { font-size: 15px; line-height: 1.6; color: rgba(247,249,252,0.72); margin: 0; max-width: 52ch; }
+.cta-join__btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--paper); color: var(--navy);
+  font-family: var(--f-head); font-weight: 700; font-size: 15px; letter-spacing: 0.02em;
+  padding: 18px 28px; border-radius: 6px; text-decoration: none;
+  box-shadow: -4px 4px 0 var(--red-2); transition: transform .2s, box-shadow .2s;
+}
+.cta-join__btn:hover { transform: translate(-2px, 2px); box-shadow: -2px 2px 0 var(--red-2); }
+
+/* ---------- Footer (same as post) ---------- */
+.site-footer { background: var(--navy); padding: 60px 28px 28px; border-top: 1px solid rgba(247,249,252,0.06); }
+.site-footer__inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
+.site-footer h4 {
+  font-family: var(--f-head); font-weight: 700; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  margin: 0 0 14px; color: rgba(247,249,252,0.6);
+}
+.site-footer ul { list-style: none; margin: 0; padding: 0; }
+.site-footer li { margin-bottom: 8px; }
+.site-footer a { color: rgba(247,249,252,0.85); font-size: 13px; text-decoration: none; }
+.site-footer a:hover { color: var(--orange); }
+.site-footer__brand-word { font-family: var(--f-head); font-weight: 700; font-size: 16px; letter-spacing: 0.04em; margin: 14px 0 10px; }
+.site-footer__tag { font-size: 12.5px; line-height: 1.5; color: rgba(247,249,252,0.62); max-width: 36ch; margin: 0; }
+.site-footer__bottom {
+  max-width: 1200px; margin: 40px auto 0; padding-top: 22px; border-top: 1px solid rgba(247,249,252,0.08);
+  display: flex; justify-content: space-between; font-size: 11px; color: rgba(247,249,252,0.6); letter-spacing: 0.04em;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .featured__card { grid-template-columns: 1fr; gap: 24px; }
+  .post-row { grid-template-columns: 90px minmax(0, 1fr) 150px; gap: 22px; }
+}
+@media (max-width: 720px) {
+  .site-header__inner { padding: 16px 20px; }
+  .nav { gap: 16px; font-size: 13px; }
+  .nav a { display: none; }
+  .blog-hero__inner, .featured, .list, .pager, .cta-join__inner, .site-footer { padding-left: 20px; padding-right: 20px; }
+  .blog-hero__inner { padding-top: 44px; }
+  .filters { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -20px; padding: 0 20px; }
+  .filters::-webkit-scrollbar { display: none; }
+  .filters a { white-space: nowrap; }
+  .filters__rss { display: none; }
+  .featured { padding-top: 36px; }
+
+  .post-row { grid-template-columns: minmax(0, 1fr) 96px; gap: 16px; padding: 22px 12px; margin: 0 -12px; }
+  .post-row__code { display: none; }
+  .code-pill--inline { display: inline-flex; }
+  .post-row__title { font-size: 19px; }
+  .post-row__excerpt { font-size: 13.5px; margin-bottom: 12px; }
+  .post-row .cover { aspect-ratio: 1; margin-top: 30px; }
+
+  .pager__pages { display: none; }
+  .cta-join__inner { grid-template-columns: 1fr; gap: 32px; padding-top: 60px; padding-bottom: 60px; }
+  .site-footer__inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 460px) {
+  .site-footer__inner { grid-template-columns: 1fr; }
+  .meta { gap: 6px 10px; }
+}
+</style>
+</head>
+<body data-mode="dark">
+
+<!-- ==================== HEADER ==================== -->
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="#" class="brand" aria-label="ShopDev Alliance home">
+      <svg class="brand__mark" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs><linearGradient id="lm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fd814f"/><stop offset="1" stop-color="#dc2a3c"/></linearGradient></defs>
+        <path d="M24 3 L42 11 L42 28 C42 38 34 44 24 46 C14 44 6 38 6 28 L6 11 Z" fill="url(#lm)"/>
+        <path d="M24 3 L42 11 L42 28 C42 38 34 44 24 46 C14 44 6 38 6 28 L6 11 Z" fill="none" stroke="#fff4ec" stroke-width="1.2" opacity="0.35"/>
+        <path d="M14 17 H34 V21 H26 V34 H22 V21 H14 Z" fill="#fff4ec"/>
+      </svg>
+      <span class="brand__word">SHOPDEV ALLIANCE</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#">How to Join</a>
+      <a href="#">Benefits</a>
+      <a href="#">Members</a>
+      <a href="#" aria-current="page">Blog</a>
+      <button class="nav__cta" type="button">Get a Quote</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ==================== BLOG HERO + FILTERS ==================== -->
+<section class="blog-hero">
+  <div class="blog-hero__inner">
+    <p class="eyebrow">SDA Dispatches</p>
+    <h1 class="blog-hero__title">Dispatches from <em>the Alliance</em></h1>
+    <p class="blog-hero__dek">Two numbered series from a curated community of Shopify developers. DEV for the people building stores, MER for the merchants running them.</p>
+
+    <nav aria-label="Filter dispatches by series">
+      <ul class="filters">
+        <li><a href="#" aria-current="page">All dispatches<span class="filters__count">20</span></a></li>
+        <li><a href="#" class="series--dev"><span class="filters__dot" aria-hidden="true"></span>DEV · For developers<span class="filters__count">12</span></a></li>
+        <li><a href="#" class="series--mer"><span class="filters__dot" aria-hidden="true"></span>MER · For merchants<span class="filters__count">8</span></a></li>
+        <li class="filters__rss"><a href="#">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1.5" fill="currentColor"/></svg>
+          RSS
+        </a></li>
+      </ul>
+    </nav>
+  </div>
+</section>
+
+<!-- ==================== FEATURED (latest post) ==================== -->
+<section class="featured" aria-labelledby="featured-title">
+  <a href="#" class="featured__card">
+    <div class="cover cover--grad">[cover — 1200×750]</div>
+    <div>
+      <div class="featured__label">
+        <span class="code-pill series--dev">DEV012</span>
+        <span class="tag tag--accent">Latest</span>
+        <span class="tag">Engineering</span>
+      </div>
+      <h2 class="featured__title" id="featured-title">Building a Metaobject-Powered Blog on Shopify (Without Hating Yourself)</h2>
+      <p class="featured__excerpt">Shopify blogs get a bad rap for a reason, but with a little Liquid, a sprinkle of metaobjects, and the right reading UX, you can ship something that feels like it belongs on a framework's engineering blog.</p>
+      <div class="featured__foot">
+        <div class="meta">
+          <span class="meta__item"><span class="avatar" aria-hidden="true">MR</span>Maya Rossi</span>
+          <span class="meta__item"><time datetime="2026-11-04">Nov 4, 2026</time></span>
+          <span class="meta__item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            8 min read
+          </span>
+        </div>
+        <span class="read-link">Read post
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </div>
+    </div>
+  </a>
+</section>
+
+<!-- ==================== POST LIST ==================== -->
+<section class="list" aria-labelledby="list-label">
+  <div class="list__head">
+    <h2 class="list__label" id="list-label">All dispatches</h2>
+    <span class="list__count">Page 1 of 3</span>
+  </div>
+
+  <ul class="posts">
+    <li>
+      <a href="#" class="post-row">
+        <div class="post-row__code series--mer" aria-label="Dispatch MER008"><span class="post-row__series">MER</span><span class="post-row__num">008</span></div>
+        <div>
+          <div class="post-row__kicker"><span class="code-pill code-pill--inline series--mer">MER008</span><span class="tag">Strategy</span></div>
+          <h3 class="post-row__title">Hydrogen vs Liquid: choosing the right tool for the job</h3>
+          <p class="post-row__excerpt">A decision framework we use with merchants when they ask whether to go headless, and the three questions that settle it faster than any architecture diagram.</p>
+          <div class="meta">
+            <span class="meta__item"><span class="avatar" aria-hidden="true" style="background:linear-gradient(135deg,#8ecae6,#1e3556)">JK</span>Jonas Keller</span>
+            <span class="meta__item"><time datetime="2026-10-28">Oct 28, 2026</time></span>
+            <span class="meta__item">12 min read</span>
+          </div>
+        </div>
+        <div class="cover cover--deep" aria-hidden="true">[cover]</div>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="post-row">
+        <div class="post-row__code series--dev" aria-label="Dispatch DEV011"><span class="post-row__series">DEV</span><span class="post-row__num">011</span></div>
+        <div>
+          <div class="post-row__kicker"><span class="code-pill code-pill--inline series--dev">DEV011</span><span class="tag">Community</span></div>
+          <h3 class="post-row__title">Member spotlight: building localization-first themes for LatAm merchants</h3>
+          <p class="post-row__excerpt">How a team of three ships multi-currency, multi-language storefronts for Brazilian and Mexican brands, and what they wish Markets did differently.</p>
+          <div class="meta">
+            <span class="meta__item"><span class="avatar" aria-hidden="true" style="background:linear-gradient(135deg,#3a8a4a,#1e3556)">RL</span>Rafael Lima</span>
+            <span class="meta__item"><time datetime="2026-10-21">Oct 21, 2026</time></span>
+            <span class="meta__item">6 min read</span>
+          </div>
+        </div>
+        <div class="cover cover--ember" aria-hidden="true">[cover]</div>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="post-row">
+        <div class="post-row__code series--dev" aria-label="Dispatch DEV010"><span class="post-row__series">DEV</span><span class="post-row__num">010</span></div>
+        <div>
+          <div class="post-row__kicker"><span class="code-pill code-pill--inline series--dev">DEV010</span><span class="tag">Tutorials</span></div>
+          <h3 class="post-row__title">Debugging Shopify webhooks without losing your afternoon</h3>
+          <p class="post-row__excerpt">A practical workflow with Shopify CLI, a local tunnel, and some hard-won log filters for when the payload you expected never shows up.</p>
+          <div class="meta">
+            <span class="meta__item"><span class="avatar" aria-hidden="true" style="background:linear-gradient(135deg,#ffd27a,#fd814f)">AN</span>Ava Nguyen</span>
+            <span class="meta__item"><time datetime="2026-10-14">Oct 14, 2026</time></span>
+            <span class="meta__item">9 min read</span>
+          </div>
+        </div>
+        <div class="cover" aria-hidden="true">[cover]</div>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="post-row">
+        <div class="post-row__code series--dev" aria-label="Dispatch DEV009"><span class="post-row__series">DEV</span><span class="post-row__num">009</span></div>
+        <div>
+          <div class="post-row__kicker"><span class="code-pill code-pill--inline series--dev">DEV009</span><span class="tag">Engineering</span></div>
+          <h3 class="post-row__title">Cart Transform in production: lessons from six bundle launches</h3>
+          <p class="post-row__excerpt">Expand, merge, and update operations look simple in the docs. Here is what actually broke at checkout, and the guardrails we now ship by default.</p>
+          <div class="meta">
+            <span class="meta__item"><span class="avatar" aria-hidden="true" style="background:linear-gradient(135deg,#e1b5ff,#8ecae6)">SP</span>Sam Patel</span>
+            <span class="meta__item"><time datetime="2026-10-07">Oct 7, 2026</time></span>
+            <span class="meta__item">11 min read</span>
+          </div>
+        </div>
+        <div class="cover cover--grad" aria-hidden="true">[cover]</div>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="post-row">
+        <div class="post-row__code series--mer" aria-label="Dispatch MER007"><span class="post-row__series">MER</span><span class="post-row__num">007</span></div>
+        <div>
+          <div class="post-row__kicker"><span class="code-pill code-pill--inline series--mer">MER007</span><span class="tag">Briefings</span></div>
+          <h3 class="post-row__title">September briefing: what the Editions changes mean for your store</h3>
+          <p class="post-row__excerpt">The platform updates our members flagged this month, translated into what a merchant needs to act on this quarter and what can safely wait.</p>
+          <div class="meta">
+            <span class="meta__item"><span class="avatar" aria-hidden="true">SDA</span>SDA Team</span>
+            <span class="meta__item"><time datetime="2026-09-30">Sep 30, 2026</time></span>
+            <span class="meta__item">5 min read</span>
+          </div>
+        </div>
+        <div class="cover cover--deep" aria-hidden="true">[cover]</div>
+      </a>
+    </li>
+  </ul>
+</section>
+
+<!-- ==================== PAGINATION ==================== -->
+<nav class="pager" aria-label="Pagination">
+  <a href="#" class="pager__btn" aria-disabled="true">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Newer
+  </a>
+  <ul class="pager__pages">
+    <li><span aria-current="page">1</span></li>
+    <li><a href="#" aria-label="Page 2">2</a></li>
+    <li><a href="#" aria-label="Page 3">3</a></li>
+  </ul>
+  <a href="#" class="pager__btn">
+    Older
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </a>
+</nav>
+</main>
+
+<!-- ==================== JOIN CTA ==================== -->
+<section class="cta-join">
+  <div class="cta-join__inner">
+    <div>
+      <p class="eyebrow">Join the Alliance</p>
+      <h2 class="cta-join__title">Ship better with 142 other Shopify devs</h2>
+      <p class="cta-join__dek">A curated Slack community of senior Shopify developers. Code reviews, referrals, hiring, and the occasional 2am debugging session. Invitation only.</p>
+    </div>
+    <a href="#" class="cta-join__btn">
+      Request an invite
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <svg width="32" height="32" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs><linearGradient id="lmf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fd814f"/><stop offset="1" stop-color="#dc2a3c"/></linearGradient></defs>
+        <path d="M24 3 L42 11 L42 28 C42 38 34 44 24 46 C14 44 6 38 6 28 L6 11 Z" fill="url(#lmf)"/>
+        <path d="M14 17 H34 V21 H26 V34 H22 V21 H14 Z" fill="#fff4ec"/>
+      </svg>
+      <p class="site-footer__brand-word">SHOPDEV ALLIANCE</p>
+      <p class="site-footer__tag">A curated, invite-only community for senior Shopify developers. Spanning 18 timezones and counting.</p>
+    </div>
+    <div>
+      <h4>Community</h4>
+      <ul><li><a href="#">How to Join</a></li><li><a href="#">Benefits</a></li><li><a href="#">Members</a></li><li><a href="#">Code of Conduct</a></li></ul>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <ul><li><a href="#">Blog</a></li><li><a href="#">Briefings</a></li><li><a href="#">For Merchants</a></li><li><a href="#">Contact</a></li></ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul><li><a href="#">GitHub</a></li><li><a href="#">X / Twitter</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">Instagram</a></li></ul>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <span>© 2026 ShopDev Alliance</span>
+    <span>Made by members, for members</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -964,7 +964,7 @@
   position: relative;
   overflow: hidden;
 }
-.sda-join::before {
+.sda-join.sda-join--glow::before {
   content: "";
   position: absolute;
   inset: 0;

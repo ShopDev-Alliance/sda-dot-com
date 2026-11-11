@@ -1,0 +1,181 @@
+{% liquid
+  assign dev_tag = section.settings.dev_tag
+  assign mer_tag = section.settings.mer_tag
+  assign dev_handle = dev_tag | handle
+  assign mer_handle = mer_tag | handle
+  assign active_series = 'all'
+  assign is_filtered = false
+  assign title_text = section.settings.title | default: blog.title
+  assign title_html = title_text | escape
+  assign title_accent = section.settings.title_accent | escape
+  assign list_label = section.settings.all_label
+  for tag in current_tags
+    assign tag_handle = tag | handle
+    if dev_tag != blank and tag_handle == dev_handle
+      assign active_series = 'dev'
+    endif
+    if mer_tag != blank and tag_handle == mer_handle
+      assign active_series = 'mer'
+    endif
+  endfor
+  if current_tags != blank
+    assign is_filtered = true
+  endif
+  if title_accent != blank and title_html contains title_accent
+    assign accent_markup = title_accent | prepend: '<em>' | append: '</em>'
+    assign title_html = title_html | replace_first: title_accent, accent_markup
+  endif
+  if active_series == 'dev'
+    assign list_label = section.settings.dev_label
+  elsif active_series == 'mer'
+    assign list_label = section.settings.mer_label
+  endif
+  if is_filtered and active_series == 'all'
+    assign list_label = current_tags | join: ', '
+  endif
+%}
+{{ 'section-sda-blog.css' | asset_url | stylesheet_tag }}
+{% paginate blog.articles by section.settings.posts_per_page %}
+  {% liquid
+    assign show_featured = false
+    assign list_count = blog.articles.size
+    if section.settings.show_featured and is_filtered == false and paginate.current_page == 1
+      assign show_featured = true
+      assign list_count = list_count | minus: 1
+    endif
+  %}
+  <div class="sda-blog color-{{ section.settings.color_scheme }}">
+    <header class="sda-blog-hero{% if section.settings.show_background_glow %} sda-blog-hero--glow{% endif %}">
+      <div class="sda-blog-hero__inner">
+        {% if section.settings.eyebrow != blank %}<p class="sda-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+        <h1 class="sda-blog-hero__title">{{ title_html }}</h1>
+        {% if section.settings.dek != blank %}<p class="sda-blog-hero__dek">{{ section.settings.dek | escape }}</p>{% endif %}
+        <nav aria-label="{{ 'blogs.list.filter_label' | t | escape }}">
+          <ul class="sda-filters" role="list">
+            <li><a href="{{ blog.url }}"{% if active_series == 'all' and is_filtered == false %} aria-current="page"{% endif %}>{{ section.settings.all_label | escape }}</a></li>
+            {% if dev_tag != blank %}
+              <li><a class="sda-series--dev" href="{{ blog.url }}/tagged/{{ dev_handle }}"{% if active_series == 'dev' %} aria-current="page"{% endif %}><span class="sda-filters__dot" aria-hidden="true"></span>{{ section.settings.dev_label | escape }}</a></li>
+            {% endif %}
+            {% if mer_tag != blank %}
+              <li><a class="sda-series--mer" href="{{ blog.url }}/tagged/{{ mer_handle }}"{% if active_series == 'mer' %} aria-current="page"{% endif %}><span class="sda-filters__dot" aria-hidden="true"></span>{{ section.settings.mer_label | escape }}</a></li>
+            {% endif %}
+            {% if section.settings.show_rss %}
+              <li class="sda-filters__rss"><a href="{{ blog.url }}.atom"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1.5" fill="currentColor"/></svg> {{ 'blogs.list.rss' | t }}</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </header>
+    {% if blog.articles.size == 0 %}
+      <div class="sda-blog__empty">
+        <p>{{ 'blogs.list.empty' | t }}</p>
+        {% if is_filtered %}<a href="{{ blog.url }}">{{ 'blogs.list.view_all' | t }}</a>{% endif %}
+      </div>
+    {% else %}
+      {% if show_featured %}
+        {% liquid
+          assign post = blog.articles.first
+          assign topic = blank
+          assign excerpt = post.excerpt | strip_html
+          capture dispatch_code
+            render 'sda-dispatch-code', post: post, style: 'text'
+          endcapture
+          if post.excerpt == blank
+            assign excerpt = post.content | strip_html | truncatewords: 30
+          endif
+          for tag in post.tags
+            assign tag_handle = tag | handle
+            if tag_handle != dev_handle and tag_handle != mer_handle
+              assign topic = tag
+              break
+            endif
+          endfor
+        %}
+        <section class="sda-featured" aria-labelledby="SdaFeatured-{{ section.id }}">
+          <a class="sda-featured__card" href="{{ post.url }}">
+            <div class="sda-cover{% if post.image == blank %} sda-cover--grad{% endif %}"{% if post.image == blank %} aria-hidden="true"{% endif %}>
+              {% if post.image != blank %}
+                {{ post.image | image_url: width: 1280 | image_tag: widths: '375, 640, 960, 1280', sizes: '(max-width: 960px) calc(100vw - 56px), 620px', loading: 'eager', fetchpriority: 'high', alt: '' }}
+              {% endif %}
+            </div>
+            <div class="sda-featured__body">
+              <div class="sda-featured__label">
+                {% if dispatch_code != blank %}<span class="sda-sr-only">{{ 'blogs.list.dispatch' | t: code: dispatch_code | escape }}</span>{% endif %}
+                {% render 'sda-dispatch-code', post: post, style: 'pill' %}
+                <span class="sda-tag sda-tag--accent">{{ 'blogs.list.latest' | t }}</span>
+                {% if topic != blank %}<span class="sda-tag">{{ topic | escape }}</span>{% endif %}
+              </div>
+              <h2 class="sda-featured__title" id="SdaFeatured-{{ section.id }}">{{ post.title | escape }}</h2>
+              <p class="sda-featured__excerpt">{{ excerpt }}</p>
+              <div class="sda-featured__foot">
+                {% render 'sda-post-meta', post: post %}
+                <span class="sda-read-link">{{ 'blogs.list.read_post' | t }} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></span>
+              </div>
+            </div>
+          </a>
+        </section>
+      {% endif %}
+      {% if list_count > 0 %}
+        <section class="sda-list" aria-labelledby="SdaList-{{ section.id }}">
+          <div class="sda-list__head">
+            <h2 class="sda-list__label" id="SdaList-{{ section.id }}">{{ list_label | escape }}</h2>
+            {% if paginate.pages > 1 %}<span class="sda-list__count">{{ 'blogs.list.page_of' | t: current: paginate.current_page, total: paginate.pages }}</span>{% endif %}
+          </div>
+          <ul class="sda-posts" role="list">
+            {% for post in blog.articles %}
+              {% if show_featured and forloop.first %}{% continue %}{% endif %}
+              <li>{% render 'sda-post-row', post: post, index: forloop.index, dev_handle: dev_handle, mer_handle: mer_handle %}</li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+    {% endif %}
+    {% if paginate.pages > 1 %}
+      <nav class="sda-pager" aria-label="{{ 'general.pagination.label' | t | escape }}">
+        {% if paginate.previous %}<a class="sda-pager__btn" href="{{ paginate.previous.url }}">{% else %}<span class="sda-pager__btn" aria-disabled="true">{% endif %}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m7 7-7-7 7-7"/></svg>{{ 'blogs.list.newer' | t }}
+        {% if paginate.previous %}</a>{% else %}</span>{% endif %}
+        <ul class="sda-pager__pages" role="list">
+          {% for part in paginate.parts %}
+            <li>
+              {% if part.is_link %}
+                <a href="{{ part.url }}" aria-label="{{ 'general.pagination.page' | t: number: part.title | escape }}">{{ part.title }}</a>
+              {% elsif part.title == paginate.current_page %}
+                <span aria-current="page">{{ part.title }}</span>
+              {% else %}
+                <span>{{ part.title }}</span>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+        {% if paginate.next %}<a class="sda-pager__btn" href="{{ paginate.next.url }}">{% else %}<span class="sda-pager__btn" aria-disabled="true">{% endif %}
+          {{ 'blogs.list.older' | t }}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+        {% if paginate.next %}</a>{% else %}</span>{% endif %}
+      </nav>
+    {% endif %}
+  </div>
+{% endpaginate %}
+{% schema %}
+{
+  "name": "SDA blog",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "header", "content": "Hero" },
+    { "type": "checkbox", "id": "show_background_glow", "label": "Show background glow", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "title", "label": "Title", "info": "Leave blank to use the blog title." },
+    { "type": "text", "id": "title_accent", "label": "Title accent", "info": "Part of the title to show in the gradient.", "visible_if": "{{ section.settings.title != blank }}" },
+    { "type": "textarea", "id": "dek", "label": "Introduction" },
+    { "type": "header", "content": "Filters" },
+    { "type": "text", "id": "all_label", "label": "All posts label", "default": "All dispatches" },
+    { "type": "text", "id": "dev_tag", "label": "Developer tag", "default": "Developers", "info": "Posts with this tag appear under the developer tab." },
+    { "type": "text", "id": "dev_label", "label": "Developer tab label", "default": "DEV · For developers", "visible_if": "{{ section.settings.dev_tag != blank }}" },
+    { "type": "text", "id": "mer_tag", "label": "Merchant tag", "default": "Merchants" },
+    { "type": "text", "id": "mer_label", "label": "Merchant tab label", "default": "MER · For merchants", "visible_if": "{{ section.settings.mer_tag != blank }}" },
+    { "type": "checkbox", "id": "show_rss", "label": "Show RSS link", "default": true },
+    { "type": "header", "content": "Posts" },
+    { "type": "checkbox", "id": "show_featured", "label": "Feature the newest post on the first page", "default": true },
+    { "type": "range", "id": "posts_per_page", "label": "Posts per page", "min": 4, "max": 24, "step": 1, "default": 10 }
+  ]
+}
+{% endschema %}

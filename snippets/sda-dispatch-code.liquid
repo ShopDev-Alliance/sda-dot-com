@@ -1,0 +1,36 @@
+{% doc %}
+  Prints a decorative dispatch code, or plain text for a caller's accessible label.
+  A missing number produces no output. Numbers above three digits remain whole.
+
+  @param {article} post - Article containing audience and dispatch number metafields.
+  @param {string} style - 'pill', 'stacked', or 'text'.
+  @param {string} [class] - Additional CSS classes for visual forms.
+{% enddoc %}
+{%- liquid
+  assign number = post.metafields.custom.dispatch_number.value
+  assign series = 'DEV'
+  assign modifier = 'dev'
+  assign audience = post.metafields.custom.audience.value | downcase
+  assign padded_number = number
+  if audience == 'merchants'
+    assign series = 'MER'
+    assign modifier = 'mer'
+  endif
+  if number != blank
+    if number < 10
+      assign padded_number = number | prepend: '00'
+    elsif number < 100
+      assign padded_number = number | prepend: '0'
+    endif
+  endif
+-%}
+{%- if number != blank -%}
+  {%- case style -%}
+    {%- when 'text' -%}
+      {{- series -}}{{- padded_number -}}
+    {%- when 'stacked' -%}
+      <span class="sda-post-row__code sda-series--{{ modifier }}{% if class != blank %} {{ class | escape }}{% endif %}" aria-hidden="true"><span class="sda-post-row__series">{{ series }}</span><span class="sda-post-row__num">{{ padded_number }}</span></span>
+    {%- else -%}
+      <span class="sda-code-pill sda-series--{{ modifier }}{% if class != blank %} {{ class | escape }}{% endif %}" aria-hidden="true">{{ series }}{{ padded_number }}</span>
+  {%- endcase -%}
+{%- endif -%}
