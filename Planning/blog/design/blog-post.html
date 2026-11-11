@@ -1,0 +1,2727 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Building a Metaobject-Powered Blog on Shopify — ShopDev Alliance</title>
+<meta name="description" content="A deep dive on building rich, flexible blog posts using Shopify metaobjects and Liquid, with code-friendly UX patterns." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   ShopDev Alliance — Blog Post Template
+   Matches homepage tokens from config/settings_data.json
+   ========================================================= */
+
+:root {
+  /* Brand colors */
+  --navy: #0e1a2d;
+  --navy-2: #152539;
+  --navy-3: #1e3556;
+  --cream: #fff4ec;
+  --paper: #f7f9fc;
+  --orange: #fd814f;
+  --red: #dc2a3c;
+  --red-2: #e5414d;
+  --ink: #0e1a2d;
+  --ink-60: rgba(14, 26, 45, 0.6);
+  --ink-40: rgba(14, 26, 45, 0.4);
+  --ink-20: rgba(14, 26, 45, 0.2);
+  --ink-10: rgba(14, 26, 45, 0.1);
+  --ink-05: rgba(14, 26, 45, 0.06);
+  --rule: rgba(14, 26, 45, 0.12);
+
+  /* Type */
+  --f-head: "Titillium Web", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  /* Reading */
+  --reading-size: 17px;
+  --reading-line: 1.7;
+  --measure: 68ch;
+
+  /* Surfaces */
+  --bg: var(--cream);
+  --fg: var(--ink);
+  --surface: #ffffff;
+  --surface-2: #fbeadd;
+
+  --radius: 4px;
+  --radius-lg: 10px;
+
+  --grad-hero: linear-gradient(184deg, #fd814f 3.09%, #dc2a3c 93.28%);
+}
+
+/* ---------- Dark reading mode ---------- */
+body[data-mode="dark"] {
+  --bg: var(--navy);
+  --fg: var(--paper);
+  --surface: #152539;
+  --surface-2: #1b2c45;
+  --ink: var(--paper);
+  --ink-60: rgba(247, 249, 252, 0.6);
+  --ink-40: rgba(247, 249, 252, 0.4);
+  --ink-20: rgba(247, 249, 252, 0.22);
+  --ink-10: rgba(247, 249, 252, 0.1);
+  --ink-05: rgba(247, 249, 252, 0.06);
+  --rule: rgba(247, 249, 252, 0.14);
+}
+
+/* ---------- Reset ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--f-body);
+  font-size: var(--reading-size);
+  line-height: var(--reading-line);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+/* ---------- Reading progress bar ---------- */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--orange), var(--red));
+  z-index: 100;
+  transition: width 0.08s linear;
+  box-shadow: 0 0 12px rgba(253, 129, 79, 0.4);
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  background: var(--navy);
+  color: var(--paper);
+  border-bottom: 1px solid rgba(247, 249, 252, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: saturate(140%);
+}
+.site-header__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--paper);
+}
+.brand__mark {
+  width: 34px;
+  height: 34px;
+  display: block;
+}
+.brand__word {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: 0.04em;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-size: 14px;
+}
+.nav a {
+  color: var(--paper);
+  text-decoration: none;
+  opacity: 0.85;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+.nav a:hover { color: var(--orange); opacity: 1; }
+.nav__cta {
+  border: 1px solid rgba(247, 249, 252, 0.25);
+  padding: 9px 18px;
+  border-radius: 6px;
+  font-family: var(--f-body);
+  background: transparent;
+  color: var(--paper);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 13px;
+}
+.nav__cta:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+.nav__avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--grad-hero);
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  color: var(--paper);
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 14px;
+  border: 2px solid rgba(247,249,252,0.12);
+}
+
+/* ---------- Breadcrumb ---------- */
+.crumbs {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 22px 28px 0;
+  font-size: 12px;
+  color: var(--ink-60);
+  letter-spacing: 0.04em;
+}
+.crumbs a { color: var(--ink-60); text-decoration: none; }
+.crumbs a:hover { color: var(--orange); }
+.crumbs__sep { margin: 0 10px; opacity: 0.5; }
+
+/* ---------- Hero ---------- */
+.hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 28px 24px;
+}
+.hero__tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.tag {
+  display: inline-block;
+  font-family: var(--f-body);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border: 1px solid var(--ink-20);
+  border-radius: 40px;
+  color: var(--ink);
+  text-decoration: none;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+.tag:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+.tag--accent {
+  background: var(--grad-hero);
+  color: var(--paper);
+  border-color: transparent;
+}
+.tag--accent:hover { color: var(--paper); }
+
+.hero__title {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: clamp(36px, 5.5vw, 68px);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  margin: 0 0 22px;
+  max-width: 22ch;
+}
+.hero__title em {
+  font-style: normal;
+  background: var(--grad-hero);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero__dek {
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--ink-60);
+  max-width: 60ch;
+  margin: 0 0 32px;
+}
+
+.hero__meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 20px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.author {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+.author__avatar {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: var(--grad-hero);
+  border: 2px solid var(--bg);
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  font-family: var(--f-head);
+  font-weight: 700;
+  color: var(--paper);
+  font-size: 15px;
+}
+.author__name {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.2;
+}
+.author__role {
+  font-size: 11px;
+  color: var(--ink-60);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+.meta-dot {
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--ink-40);
+}
+.meta-item {
+  font-size: 12px;
+  color: var(--ink-60);
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.meta-item svg { opacity: 0.7; }
+.meta-push { margin-left: auto; }
+
+/* Hero image */
+.hero__image {
+  margin: 28px 0 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  aspect-ratio: 16 / 7;
+  background:
+    linear-gradient(135deg, rgba(253,129,79,0.1), rgba(220,42,60,0.08)),
+    repeating-linear-gradient(45deg, var(--surface) 0 16px, var(--surface-2) 16px 32px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero__image::after {
+  content: "[hero image — 1600×700]";
+  font-size: 11px;
+  color: var(--ink-40);
+  letter-spacing: 0.08em;
+}
+.hero__image--gradient {
+  background: var(--grad-hero);
+}
+.hero__image--gradient::after {
+  color: rgba(255, 244, 236, 0.55);
+}
+
+/* Hero variant: bold type, no image */
+body[data-hero="type"] .hero__image { display: none; }
+body[data-hero="type"] .hero__title { font-size: clamp(48px, 8vw, 104px); }
+
+/* Hero variant: gradient */
+body[data-hero="gradient"] .hero__image { background: var(--grad-hero); border-color: transparent; }
+body[data-hero="gradient"] .hero__image::after { color: rgba(255,244,236,0.6); }
+
+/* ---------- Layout ---------- */
+.article-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 28px 60px;
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr) 240px;
+  gap: 60px;
+}
+
+/* ---------- TOC ---------- */
+.toc {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+  font-size: 13px;
+}
+.toc__label {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+  margin: 0 0 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.toc__label svg { opacity: 0.6; }
+.toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: toc;
+}
+.toc li {
+  counter-increment: toc;
+  position: relative;
+  margin-bottom: 2px;
+}
+.toc a {
+  display: block;
+  padding: 7px 0 7px 28px;
+  text-decoration: none;
+  color: var(--ink-60);
+  font-size: 13px;
+  line-height: 1.45;
+  border-left: 2px solid transparent;
+  margin-left: -2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+.toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  position: absolute;
+  left: 8px;
+  font-size: 10px;
+  color: var(--ink-40);
+  letter-spacing: 0.04em;
+  top: 9px;
+}
+.toc a:hover {
+  color: var(--ink);
+  border-left-color: var(--ink-20);
+}
+.toc a.is-active {
+  color: var(--orange);
+  border-left-color: var(--orange);
+  font-weight: 500;
+}
+.toc a.is-active::before { color: var(--orange); }
+
+.toc__sub {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 4px 28px;
+  counter-reset: none;
+  border-left: 1px solid var(--rule);
+}
+.toc__sub li { counter-increment: none; }
+.toc__sub a {
+  padding: 5px 0 5px 14px;
+  font-size: 12px;
+  border-left: 2px solid transparent;
+  margin-left: -1px;
+}
+.toc__sub a::before { display: none; }
+
+/* ---------- Article content ---------- */
+.article {
+  min-width: 0;
+  max-width: 68ch;
+  margin: 0 auto;
+}
+.article p,
+.article ul,
+.article ol {
+  font-size: var(--reading-size);
+  line-height: var(--reading-line);
+  margin: 0 0 1.4em;
+  color: var(--fg);
+}
+.article ul, .article ol {
+  padding-left: 1.6em;
+}
+.article li {
+  margin-bottom: 0.4em;
+}
+.article li::marker {
+  color: var(--orange);
+}
+.article strong {
+  color: var(--fg);
+  font-weight: 700;
+}
+.article a:not(.heading-anchor) {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  transition: color 0.2s ease;
+}
+.article a:not(.heading-anchor):hover {
+  color: var(--orange);
+}
+
+/* Headings */
+.article h2,
+.article h3 {
+  font-family: var(--f-head);
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  line-height: 1.15;
+  position: relative;
+  scroll-margin-top: 100px;
+}
+.article h2 {
+  font-size: clamp(26px, 3vw, 34px);
+  margin: 2.6em 0 0.7em;
+  padding-top: 0.5em;
+}
+.article h2::before {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: var(--grad-hero);
+  margin-bottom: 24px;
+  border-radius: 2px;
+}
+.article h3 {
+  font-size: clamp(19px, 2vw, 22px);
+  margin: 2em 0 0.6em;
+  color: var(--fg);
+}
+
+/* Heading anchor (copy-link on hover) */
+.heading-anchor {
+  position: absolute;
+  left: -34px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 26px; height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  color: var(--ink-40);
+  text-decoration: none;
+  transition: opacity 0.2s ease, color 0.2s ease;
+  border-radius: 4px;
+  top: 0.9em;
+}
+.article h2:hover .heading-anchor,
+.article h3:hover .heading-anchor {
+  opacity: 1;
+}
+.heading-anchor:hover {
+  color: var(--orange);
+  background: var(--ink-05);
+}
+.heading-anchor.copied {
+  color: var(--orange);
+  opacity: 1;
+}
+
+/* Lead / first paragraph */
+.article__lead {
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--fg);
+  font-weight: 400;
+  margin-bottom: 1.8em !important;
+}
+.article__lead::first-letter {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 4.2em;
+  float: left;
+  line-height: 0.9;
+  margin: 6px 14px 0 0;
+  color: transparent;
+  background: var(--grad-hero);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Pull quote */
+.pullquote {
+  margin: 2.2em -40px;
+  padding: 28px 36px;
+  font-family: var(--f-head);
+  font-weight: 600;
+  font-size: clamp(22px, 2.4vw, 28px);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  border-left: 4px solid var(--orange);
+  color: var(--fg);
+  background: var(--ink-05);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  position: relative;
+}
+.pullquote::before {
+  content: "“";
+  position: absolute;
+  top: 6px;
+  right: 22px;
+  font-family: var(--f-head);
+  font-size: 90px;
+  line-height: 1;
+  color: var(--orange);
+  opacity: 0.25;
+}
+.pullquote cite {
+  display: block;
+  margin-top: 14px;
+  font-style: normal;
+  font-size: 13px;
+  font-family: var(--f-body);
+  font-weight: 400;
+  color: var(--ink-60);
+  letter-spacing: 0.04em;
+}
+.pullquote cite::before { content: "— "; }
+
+/* Callouts */
+.callout {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 16px;
+  margin: 2em 0;
+  padding: 20px 24px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  position: relative;
+}
+.callout__icon {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--paper);
+  margin-top: 2px;
+}
+.callout__body { min-width: 0; }
+.callout__title {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0 0 6px;
+  color: var(--fg);
+}
+.callout p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-60); }
+.callout code { background: var(--ink-10); }
+
+.callout--note    { border-left: 3px solid var(--navy-3); }
+.callout--note    .callout__icon { background: var(--navy-3); }
+.callout--tip     { border-left: 3px solid #2f8a4b; }
+.callout--tip     .callout__icon { background: #2f8a4b; }
+.callout--warning { border-left: 3px solid var(--red); }
+.callout--warning .callout__icon { background: var(--red); }
+
+/* Code blocks */
+figure.code {
+  margin: 1.8em 0;
+  background: var(--navy);
+  color: var(--paper);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(247,249,252,0.08);
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+figure.code .code__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(247,249,252,0.08);
+  background: rgba(0,0,0,0.2);
+}
+figure.code .code__file {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: rgba(247,249,252,0.7);
+}
+figure.code .code__file::before {
+  content: "";
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 12px 0 0 var(--red-2), 24px 0 0 #3a8a4a;
+  margin-right: 22px;
+}
+figure.code .code__lang {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 3px;
+  background: rgba(253, 129, 79, 0.15);
+  color: var(--orange);
+  font-weight: 600;
+}
+figure.code .code__copy {
+  background: none;
+  border: 1px solid rgba(247,249,252,0.15);
+  color: rgba(247,249,252,0.75);
+  font-family: var(--f-body);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+figure.code .code__copy:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+figure.code .code__copy.copied {
+  border-color: #3a8a4a;
+  color: #7fd99a;
+}
+figure.code pre {
+  margin: 0;
+  padding: 18px 20px 18px 56px;
+  overflow-x: auto;
+  font-family: var(--f-body);
+  counter-reset: line;
+  position: relative;
+}
+figure.code pre code { font-family: inherit; background: none; padding: 0; color: inherit; }
+figure.code pre .ln {
+  display: block;
+  counter-increment: line;
+  position: relative;
+}
+figure.code pre .ln::before {
+  content: counter(line);
+  position: absolute;
+  left: -40px;
+  width: 28px;
+  text-align: right;
+  color: rgba(247,249,252,0.25);
+  font-size: 12px;
+  user-select: none;
+}
+
+/* Syntax tokens */
+.t-kw   { color: #fd814f; }
+.t-str  { color: #a9e49a; }
+.t-num  { color: #ffb37a; }
+.t-com  { color: rgba(247,249,252,0.4); font-style: italic; }
+.t-fn   { color: #8ecae6; }
+.t-tag  { color: #ff8a9a; }
+.t-attr { color: #ffd27a; }
+.t-var  { color: #e1b5ff; }
+.t-op   { color: rgba(247,249,252,0.7); }
+.t-prop { color: #8ecae6; }
+
+/* Inline code */
+.article :not(figure) > code,
+.article p code,
+.article li code,
+.article h2 code,
+.article h3 code {
+  font-family: var(--f-body);
+  font-size: 0.88em;
+  background: var(--ink-10);
+  color: var(--fg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--rule);
+  white-space: nowrap;
+}
+
+/* Figure images */
+figure.figure {
+  margin: 2em 0;
+}
+.figure__media {
+  aspect-ratio: 16/9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  background:
+    repeating-linear-gradient(45deg, var(--surface) 0 14px, var(--surface-2) 14px 28px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-40);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+.figure figcaption {
+  font-family: var(--f-body);
+  font-size: 12.5px;
+  color: var(--ink-60);
+  margin-top: 12px;
+  padding-left: 16px;
+  border-left: 2px solid var(--orange);
+  letter-spacing: 0.01em;
+}
+
+/* Divider */
+.article hr {
+  border: none;
+  text-align: center;
+  margin: 3em 0;
+  color: var(--ink-40);
+}
+.article hr::before {
+  content: "· · ·";
+  font-size: 18px;
+  letter-spacing: 0.5em;
+}
+
+/* ---------- Right rail ---------- */
+.rail {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.rail__group {
+  border-top: 1px solid var(--rule);
+  padding-top: 16px;
+}
+.rail__label {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+  margin: 0 0 12px;
+}
+.share {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.share button,
+.share a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  font-family: var(--f-body);
+  font-size: 12px;
+  color: var(--ink);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.share button:hover,
+.share a:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+.share button.copied {
+  border-color: #3a8a4a;
+  color: #3a8a4a;
+}
+
+.reactions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.reaction {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 40px;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--f-body);
+  font-size: 12px;
+  color: var(--fg);
+  transition: all 0.2s ease;
+}
+.reaction:hover { border-color: var(--orange); transform: translateY(-1px); }
+.reaction.active {
+  border-color: var(--orange);
+  background: rgba(253, 129, 79, 0.1);
+  color: var(--orange);
+}
+.reaction__emoji { font-size: 14px; }
+
+/* ---------- Back to top ---------- */
+.back-to-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--paper);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease;
+  box-shadow: 0 8px 24px rgba(14, 26, 45, 0.25);
+}
+.back-to-top.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.back-to-top:hover {
+  background: var(--orange);
+}
+
+/* ---------- Author card ---------- */
+.author-card {
+  margin: 60px auto 0;
+  max-width: 68ch;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  gap: 22px;
+  align-items: center;
+}
+.author-card__avatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--grad-hero);
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  color: var(--paper);
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 26px;
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 0 1px var(--rule);
+}
+.author-card__name {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 18px;
+  margin: 0 0 4px;
+}
+.author-card__bio {
+  font-size: 13.5px;
+  color: var(--ink-60);
+  line-height: 1.5;
+  margin: 0;
+}
+.author-card__socials {
+  display: flex;
+  gap: 8px;
+}
+.author-card__socials a {
+  width: 34px; height: 34px;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  color: var(--fg);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.author-card__socials a:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+/* ---------- Related posts ---------- */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 28px;
+}
+.section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--rule);
+}
+.section__label {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+  margin: 0;
+}
+.section__title {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 30px);
+  margin: 4px 0 0;
+  letter-spacing: -0.01em;
+}
+.section__link {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+.section__link:hover { color: var(--orange); }
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+.post-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+.post-card:hover { transform: translateY(-4px); }
+.post-card__image {
+  aspect-ratio: 16/10;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, rgba(253,129,79,0.1), rgba(220,42,60,0.08)),
+    repeating-linear-gradient(45deg, var(--surface) 0 14px, var(--surface-2) 14px 28px);
+  border: 1px solid var(--rule);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-40);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+.post-card__image--grad {
+  background: var(--grad-hero);
+  color: rgba(255, 244, 236, 0.6);
+}
+.post-card__image--dark {
+  background:
+    linear-gradient(135deg, #0e1a2d, #1e3556),
+    var(--navy);
+  color: rgba(247, 249, 252, 0.3);
+}
+.post-card__meta {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+  margin: 0;
+}
+.post-card__title {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.25;
+  margin: 0;
+  transition: color 0.2s ease;
+}
+.post-card:hover .post-card__title { color: var(--orange); }
+.post-card__desc {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-60);
+  margin: 0;
+}
+
+/* ---------- Join CTA ---------- */
+.cta-join {
+  background: var(--navy);
+  color: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+.cta-join::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 800px 300px at 20% 110%, rgba(253,129,79,0.28), transparent 60%),
+    radial-gradient(ellipse 600px 300px at 85% 0%, rgba(220,42,60,0.18), transparent 60%);
+  pointer-events: none;
+}
+.cta-join__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 28px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 48px;
+  align-items: center;
+  position: relative;
+}
+.cta-join__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin: 0 0 14px;
+}
+.cta-join__title {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  margin: 0 0 14px;
+  text-transform: uppercase;
+}
+.cta-join__dek {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(247, 249, 252, 0.7);
+  margin: 0;
+  max-width: 52ch;
+}
+.cta-join__avatars {
+  display: flex;
+  align-items: center;
+  margin-top: 22px;
+}
+.cta-join__avatars > * + * { margin-left: -12px; }
+.cta-join__avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--navy);
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--paper);
+}
+.cta-join__avatar--count {
+  background: var(--navy);
+  border-color: var(--paper);
+  font-size: 11px;
+}
+.cta-join__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--paper);
+  color: var(--navy);
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  padding: 18px 28px;
+  border-radius: 6px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: -4px 4px 0 var(--red-2);
+}
+.cta-join__btn:hover {
+  transform: translate(-2px, 2px);
+  box-shadow: -2px 2px 0 var(--red-2);
+}
+
+/* ---------- Comments ---------- */
+.comments {
+  max-width: 68ch;
+  margin: 0 auto;
+  padding: 60px 28px;
+}
+.comments__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.comments__title {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 18px;
+  margin: 0;
+}
+.comments__count {
+  font-size: 12px;
+  color: var(--ink-60);
+  letter-spacing: 0.04em;
+}
+.comment {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.comment__avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--grad-hero);
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  color: var(--paper);
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 14px;
+}
+.comment__head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.comment__name {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 14px;
+}
+.comment__badge {
+  font-size: 10px;
+  padding: 2px 6px;
+  background: var(--grad-hero);
+  color: var(--paper);
+  border-radius: 3px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.comment__time {
+  font-size: 11px;
+  color: var(--ink-60);
+  margin-left: auto;
+}
+.comment p {
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0;
+  color: var(--fg);
+}
+.comment-form {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 24px;
+}
+.comment-form textarea {
+  flex: 1;
+  min-height: 80px;
+  font-family: var(--f-body);
+  font-size: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  resize: vertical;
+  background: var(--surface);
+  color: var(--fg);
+  line-height: 1.5;
+}
+.comment-form textarea:focus {
+  outline: none;
+  border-color: var(--orange);
+}
+.comment-form button {
+  background: var(--navy);
+  color: var(--paper);
+  border: none;
+  border-radius: var(--radius);
+  padding: 12px 18px;
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: -3px 3px 0 var(--red-2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.comment-form button:hover {
+  transform: translate(-1px, 1px);
+  box-shadow: -2px 2px 0 var(--red-2);
+}
+
+body[data-mode="dark"] .comment-form textarea { background: var(--surface); }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: var(--navy);
+  color: var(--paper);
+  padding: 60px 28px 28px;
+}
+.site-footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+.site-footer h4 {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0 0 14px;
+  color: rgba(247, 249, 252, 0.5);
+}
+.site-footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.site-footer li { margin-bottom: 8px; }
+.site-footer a {
+  color: rgba(247, 249, 252, 0.85);
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.site-footer a:hover { color: var(--orange); }
+.site-footer__brand-word {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  margin: 14px 0 10px;
+}
+.site-footer__tag {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: rgba(247, 249, 252, 0.55);
+  max-width: 36ch;
+  margin: 0;
+}
+.site-footer__bottom {
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding-top: 22px;
+  border-top: 1px solid rgba(247, 249, 252, 0.08);
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: rgba(247, 249, 252, 0.5);
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Tweaks panel ---------- */
+.tweaks {
+  position: fixed;
+  bottom: 22px;
+  left: 22px;
+  background: var(--navy);
+  color: var(--paper);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  z-index: 60;
+  font-family: var(--f-body);
+  font-size: 12px;
+  box-shadow: 0 12px 40px rgba(14, 26, 45, 0.35), 0 0 0 1px rgba(247,249,252,0.08);
+  min-width: 240px;
+  display: none;
+}
+.tweaks.is-open { display: block; }
+.tweaks__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(247,249,252,0.1);
+}
+.tweaks__title {
+  font-family: var(--f-head);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: rgba(247,249,252,0.6);
+}
+.tweaks__row {
+  margin-bottom: 12px;
+}
+.tweaks__row:last-child { margin-bottom: 0; }
+.tweaks__label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(247,249,252,0.55);
+  margin-bottom: 6px;
+}
+.tweaks__opts {
+  display: flex;
+  gap: 4px;
+  background: rgba(0,0,0,0.25);
+  padding: 3px;
+  border-radius: 5px;
+}
+.tweaks__opt {
+  flex: 1;
+  padding: 6px 10px;
+  background: transparent;
+  border: none;
+  color: rgba(247,249,252,0.6);
+  font-family: var(--f-body);
+  font-size: 11px;
+  cursor: pointer;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+  transition: all 0.2s ease;
+}
+.tweaks__opt:hover { color: var(--paper); }
+.tweaks__opt.is-active {
+  background: var(--grad-hero);
+  color: var(--paper);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .article-layout {
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 40px;
+  }
+  .rail { display: none; }
+}
+@media (max-width: 820px) {
+  .site-header__inner { padding: 16px 20px; }
+  .nav { gap: 18px; font-size: 13px; }
+  .nav a:not(.nav__cta) { display: none; }
+  .crumbs, .hero, .article-layout, .section, .comments, .site-footer__inner {
+    padding-left: 20px; padding-right: 20px;
+  }
+  .article-layout {
+    grid-template-columns: 1fr;
+    padding-top: 20px;
+    gap: 0;
+  }
+  .toc {
+    position: static;
+    margin-bottom: 32px;
+    padding: 16px;
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--rule);
+  }
+  .toc__label { margin-bottom: 0; padding-bottom: 0; border-bottom: none; cursor: pointer; }
+  .toc__label.is-collapsed + ol { display: none; }
+  .toc ol { margin-top: 14px; }
+  .related-grid { grid-template-columns: 1fr; }
+  .cta-join__inner { grid-template-columns: 1fr; gap: 32px; }
+  .site-footer__inner { grid-template-columns: 1fr 1fr; }
+  .author-card { grid-template-columns: 56px 1fr; }
+  .author-card__socials { grid-column: 1 / -1; }
+  .heading-anchor { display: none; }
+  .pullquote { margin-left: 0; margin-right: 0; }
+}
+
+@media (max-width: 500px) {
+  .hero__meta { flex-wrap: wrap; }
+  .meta-push { margin-left: 0; }
+  .site-footer__inner { grid-template-columns: 1fr; }
+  .tweaks { left: 10px; right: 10px; bottom: 10px; min-width: auto; }
+  .back-to-top { bottom: 14px; right: 14px; }
+}
+
+
+/* =========================================================
+   Layout v2 — TOC moved into right rail
+   ========================================================= */
+.article-layout {
+  grid-template-columns: minmax(0, 1fr) 260px !important;
+  gap: 56px !important;
+  max-width: 1100px !important;
+}
+.article { margin: 0 !important; max-width: 72ch !important; }
+
+/* Rail — keep sticky */
+.rail {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Collapsible header for rail groups */
+.rail__toggle {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0 0 12px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  color: var(--ink-60);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 12px;
+  font-family: var(--f-body);
+}
+.rail__toggle .rail__label {
+  font-family: var(--f-head);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+}
+.rail__chev {
+  transition: transform 0.2s ease;
+  opacity: 0.5;
+}
+.rail__toggle[aria-expanded="false"] .rail__chev { transform: rotate(-90deg); }
+.rail__toggle:hover { color: var(--fg); }
+.rail__toggle:hover .rail__chev { opacity: 0.9; }
+
+/* TOC list inside rail */
+.rail .toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: toc;
+  overflow: hidden;
+  max-height: 1200px;
+  transition: max-height 0.35s ease, opacity 0.2s ease, margin 0.25s ease;
+}
+.rail__toggle[aria-expanded="false"] + .toc-list {
+  max-height: 0 !important;
+  opacity: 0;
+  margin-top: -12px;
+}
+.rail .toc-list > li {
+  counter-increment: toc;
+  position: relative;
+  margin: 0;
+}
+.rail .toc-list > li > a {
+  display: block;
+  padding: 7px 0 7px 26px;
+  text-decoration: none;
+  color: var(--ink-60);
+  font-size: 12.5px;
+  line-height: 1.4;
+  border-left: 2px solid transparent;
+  margin-left: -2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+.rail .toc-list > li > a::before {
+  content: counter(toc, decimal-leading-zero);
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  font-size: 9.5px;
+  color: var(--ink-40);
+  letter-spacing: 0.04em;
+}
+.rail .toc-list a:hover {
+  color: var(--ink);
+  border-left-color: var(--ink-20);
+}
+.rail .toc-list a.is-active {
+  color: var(--orange);
+  border-left-color: var(--orange);
+  font-weight: 500;
+}
+.rail .toc-list a.is-active::before { color: var(--orange); }
+.rail .toc__sub {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 4px 26px;
+  border-left: 1px solid var(--rule);
+}
+.rail .toc__sub a {
+  display: block;
+  padding: 4px 0 4px 12px;
+  font-size: 11.5px;
+  color: var(--ink-60);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  margin-left: -1px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.rail .toc__sub a:hover { color: var(--ink); }
+.rail .toc__sub a.is-active {
+  color: var(--orange);
+  border-left-color: var(--orange);
+}
+
+/* =========================================================
+   Mobile: hide desktop rail, show FAB + bottom drawer
+   ========================================================= */
+.toc-fab,
+.toc-drawer { display: none; }
+
+@media (max-width: 1080px) {
+  .article-layout {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0 !important;
+    max-width: 760px !important;
+  }
+  .rail { display: none !important; }
+
+  /* Floating action button — pinned bottom center on mobile */
+  .toc-fab {
+    display: inline-flex;
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    z-index: 45;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 18px 11px 14px;
+    background: var(--navy);
+    color: var(--paper);
+    border: 1px solid rgba(247,249,252,0.1);
+    border-radius: 999px;
+    font-family: var(--f-body);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    box-shadow: 0 12px 32px rgba(14,26,45,0.3), 0 0 0 1px rgba(14,26,45,0.04);
+    transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+    overflow: hidden;
+  }
+  .toc-fab:hover { background: var(--navy-3); }
+  .toc-fab:active { transform: translateX(-50%) scale(0.97); }
+  .toc-fab__label {
+    font-family: var(--f-head);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .toc-fab__progress {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 2px;
+    background: rgba(247,249,252,0.12);
+  }
+  .toc-fab__progress > span {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--orange), var(--red));
+    transition: width 0.08s linear;
+  }
+  /* Hide FAB when drawer is open or user scrolls to top */
+  body.toc-open .toc-fab { opacity: 0; pointer-events: none; }
+
+  /* Drawer */
+  .toc-drawer {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    pointer-events: none;
+  }
+  .toc-drawer__scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(14,26,45,0.45);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .toc-drawer__panel {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    background: var(--bg);
+    color: var(--fg);
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    padding: 10px 20px 24px;
+    max-height: 78vh;
+    overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 -20px 60px rgba(14,26,45,0.35);
+    border-top: 1px solid var(--rule);
+  }
+  body.toc-open .toc-drawer { pointer-events: auto; }
+  body.toc-open .toc-drawer__scrim { opacity: 1; }
+  body.toc-open .toc-drawer__panel { transform: translateY(0); }
+
+  .toc-drawer__handle {
+    width: 44px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--ink-20);
+    margin: 0 auto 14px;
+  }
+  .toc-drawer__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .toc-drawer__title {
+    font-family: var(--f-head);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-60);
+    margin: 0;
+  }
+  .toc-drawer__close {
+    appearance: none;
+    background: none;
+    border: 0;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    color: var(--ink-60);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .toc-drawer__close:hover { background: var(--ink-10); color: var(--fg); }
+
+  .toc-list--drawer {
+    list-style: none;
+    padding: 12px 0 0;
+    margin: 0;
+    counter-reset: toc;
+  }
+  .toc-list--drawer > li {
+    counter-increment: toc;
+    position: relative;
+  }
+  .toc-list--drawer > li > a {
+    display: block;
+    padding: 12px 8px 12px 40px;
+    text-decoration: none;
+    color: var(--fg);
+    font-size: 15px;
+    line-height: 1.35;
+    border-radius: 8px;
+    position: relative;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .toc-list--drawer > li > a::before {
+    content: counter(toc, decimal-leading-zero);
+    position: absolute;
+    left: 10px;
+    top: 14px;
+    font-family: var(--f-body);
+    font-size: 11px;
+    color: var(--ink-40);
+    letter-spacing: 0.04em;
+  }
+  .toc-list--drawer a:hover { background: var(--ink-05); }
+  .toc-list--drawer a.is-active {
+    color: var(--orange);
+    background: rgba(253, 129, 79, 0.08);
+  }
+  .toc-list--drawer a.is-active::before { color: var(--orange); }
+  .toc-list--drawer .toc__sub {
+    list-style: none;
+    padding: 0 0 0 40px;
+    margin: 0 0 6px;
+  }
+  .toc-list--drawer .toc__sub a {
+    display: block;
+    padding: 8px 8px 8px 14px;
+    font-size: 13.5px;
+    color: var(--ink-60);
+    text-decoration: none;
+    border-left: 1px solid var(--rule);
+    border-radius: 0 6px 6px 0;
+  }
+  .toc-list--drawer .toc__sub a:hover { color: var(--fg); background: var(--ink-05); }
+  .toc-list--drawer .toc__sub a.is-active {
+    color: var(--orange);
+    border-left-color: var(--orange);
+    background: rgba(253, 129, 79, 0.06);
+  }
+
+  .toc-drawer__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--rule);
+  }
+  .toc-drawer__action {
+    appearance: none;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    color: var(--fg);
+    padding: 12px;
+    border-radius: 8px;
+    font-family: var(--f-body);
+    font-size: 13px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .toc-drawer__action:hover { border-color: var(--orange); color: var(--orange); }
+
+  /* Keep back-to-top hidden on mobile — FAB handles it */
+  .back-to-top { display: none !important; }
+}
+
+/* Wider breakpoint fallback — also collapse to single column if very narrow */
+@media (max-width: 820px) {
+  .article-layout {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    padding-top: 20px !important;
+  }
+}
+
+/* Ensure progress bar still sits above everything */
+.progress-bar { z-index: 90; }
+
+</style>
+</head>
+<body data-mode="light" data-hero="image" data-size="default">
+
+<!-- Reading progress bar -->
+<div class="progress-bar" id="progressBar" aria-hidden="true"></div>
+
+<!-- ==================== HEADER ==================== -->
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="#" class="brand" aria-label="ShopDev Alliance">
+      <svg class="brand__mark" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="lm" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fd814f"/>
+            <stop offset="1" stop-color="#dc2a3c"/>
+          </linearGradient>
+        </defs>
+        <path d="M24 3 L42 11 L42 28 C42 38 34 44 24 46 C14 44 6 38 6 28 L6 11 Z" fill="url(#lm)"/>
+        <path d="M24 3 L42 11 L42 28 C42 38 34 44 24 46 C14 44 6 38 6 28 L6 11 Z" fill="none" stroke="#fff4ec" stroke-width="1.2" opacity="0.35"/>
+        <path d="M14 17 H34 V21 H26 V34 H22 V21 H14 Z" fill="#fff4ec"/>
+      </svg>
+      <span class="brand__word">SHOPDEV ALLIANCE</span>
+    </a>
+    <nav class="nav">
+      <a href="#">How to Join</a>
+      <a href="#">Benefits</a>
+      <a href="#">Members</a>
+      <a href="#" style="color:var(--orange)">Blog</a>
+      <button class="nav__cta">Get a Quote</button>
+      <span class="nav__avatar" title="You">TP</span>
+    </nav>
+  </div>
+</header>
+
+<!-- ==================== CRUMBS ==================== -->
+<nav class="crumbs" aria-label="breadcrumb">
+  <a href="#">Home</a>
+  <span class="crumbs__sep">/</span>
+  <a href="#">Blog</a>
+  <span class="crumbs__sep">/</span>
+  <a href="#">Engineering</a>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="hero__tags">
+    <a class="tag tag--accent" href="#">Engineering</a>
+    <a class="tag" href="#">Shopify Liquid</a>
+    <a class="tag" href="#">Metaobjects</a>
+    <a class="tag" href="#">8 min read</a>
+  </div>
+  <h1 class="hero__title">Building a <em>Metaobject-Powered</em> Blog on Shopify (Without Hating Yourself)</h1>
+  <p class="hero__dek">Shopify blogs get a bad rap for a reason — but with a little Liquid, a sprinkle of metaobjects, and the right reading UX, you can ship something that feels like it belongs on <code>vercel.com/blog</code>.</p>
+
+  <div class="hero__meta">
+    <a href="#" class="author">
+      <span class="author__avatar">MR</span>
+      <span>
+        <span class="author__name">Maya Rossi</span><br/>
+        <span class="author__role">Senior Shopify Engineer · SDA #072</span>
+      </span>
+    </a>
+    <span class="meta-dot"></span>
+    <span class="meta-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      April 14, 2026
+    </span>
+    <span class="meta-dot"></span>
+    <span class="meta-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      8 min read
+    </span>
+    <span class="meta-item meta-push" id="readStatus">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      <span id="readPct">0%</span> read
+    </span>
+  </div>
+
+  <div class="hero__image" id="heroImage" aria-hidden="true"></div>
+</section>
+
+<!-- ==================== ARTICLE LAYOUT ==================== -->
+<div class="article-layout">
+
+
+
+  <!-- ARTICLE -->
+  <article class="article" id="article">
+
+    <p class="article__lead">
+      If you've ever tried to build a technical blog on Shopify, you know the feeling. You open the rich text editor, paste in a code block, and watch your <code>&lt;div&gt;</code> turn into HTML entities. The image has a mystery <code>&lt;p&gt;</code> wrapper. There's no table of contents. And don't even <em>think</em> about a reading progress bar.
+    </p>
+
+    <p>
+      This post is about how we fixed all of that at ShopDev Alliance — without leaving Shopify, without a headless rebuild, and without giving up the editor-friendliness that keeps the marketing team from sending us angry Slack messages at 11pm.
+    </p>
+
+    <h2 id="intro">The problem with Shopify blogs<a class="heading-anchor" href="#intro" aria-label="Copy link">#</a></h2>
+
+    <p>
+      Out of the box, a Shopify article is a single <code>article.content</code> rich-text blob. That's fine for a press release. It's not fine for anything with structure — tutorials, engineering posts, interviews, changelogs. You end up fighting TinyMCE to do things like:
+    </p>
+    <ul>
+      <li>Render a <strong>code block</strong> with a language label, line numbers, and copy button</li>
+      <li>Add <strong>callouts</strong> (note / warning / tip) inline between paragraphs</li>
+      <li>Insert a <strong>product card</strong>, <strong>embedded tweet</strong>, or <strong>diagram</strong></li>
+      <li>Generate a <strong>table of contents</strong> that automatically stays in sync</li>
+    </ul>
+
+    <div class="callout callout--note">
+      <span class="callout__icon">i</span>
+      <div class="callout__body">
+        <p class="callout__title">Heads up</p>
+        <p>This guide assumes you're on <strong>Online Store 2.0</strong> with access to metaobjects. If you're still on a 1.0 theme, the Liquid is similar — you'll just swap <code>metaobjects</code> for custom app-data JSON.</p>
+      </div>
+    </div>
+
+    <h2 id="metaobjects">Modeling posts with metaobjects<a class="heading-anchor" href="#metaobjects" aria-label="Copy link">#</a></h2>
+
+    <p>
+      Instead of relying on <code>article.content</code> as one giant blob, we model each post as a <em>sequence of typed blocks</em>. Metaobjects are perfect for this — they give you structured data with references, and the theme editor picks them up for free.
+    </p>
+
+    <h3 id="fields">Defining the fields</h3>
+
+    <p>
+      Here's the metaobject definition we use for a <code>post_block</code>. Each block has a <code>type</code> discriminator and a small set of typed fields. We keep them <em>narrow</em> — the editor picks the block kind, and only the relevant fields show up.
+    </p>
+
+    <figure class="code">
+      <div class="code__header">
+        <span class="code__file">config/metaobjects/post_block.json</span>
+        <span class="code__lang">JSON</span>
+        <button class="code__copy" data-copy>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+<pre><code><span class="ln">{</span><span class="ln">  <span class="t-prop">"type"</span>: <span class="t-str">"post_block"</span>,</span><span class="ln">  <span class="t-prop">"fields"</span>: [</span><span class="ln">    { <span class="t-prop">"key"</span>: <span class="t-str">"kind"</span>, <span class="t-prop">"type"</span>: <span class="t-str">"single_line_text"</span> },</span><span class="ln">    { <span class="t-prop">"key"</span>: <span class="t-str">"body"</span>, <span class="t-prop">"type"</span>: <span class="t-str">"rich_text"</span> },</span><span class="ln">    { <span class="t-prop">"key"</span>: <span class="t-str">"code"</span>, <span class="t-prop">"type"</span>: <span class="t-str">"multi_line_text"</span> },</span><span class="ln">    { <span class="t-prop">"key"</span>: <span class="t-str">"language"</span>, <span class="t-prop">"type"</span>: <span class="t-str">"single_line_text"</span> },</span><span class="ln">    { <span class="t-prop">"key"</span>: <span class="t-str">"image"</span>, <span class="t-prop">"type"</span>: <span class="t-str">"file_reference"</span> },</span><span class="ln">    { <span class="t-prop">"key"</span>: <span class="t-str">"caption"</span>, <span class="t-prop">"type"</span>: <span class="t-str">"single_line_text"</span> },</span><span class="ln">    { <span class="t-prop">"key"</span>: <span class="t-str">"callout_variant"</span>, <span class="t-prop">"type"</span>: <span class="t-str">"single_line_text"</span> }</span><span class="ln">  ]</span><span class="ln">}</span></code></pre>
+    </figure>
+
+    <h3 id="references">Linking blocks to articles</h3>
+
+    <p>
+      Each <code>article</code> gets a metafield called <code>custom.blocks</code> with type <code>list.metaobject_reference</code>. Authors drag blocks in, reorder them, and the theme renders them in sequence. No more wrestling with the rich text editor.
+    </p>
+
+    <figure class="figure">
+      <div class="figure__media">[screenshot — editor metaobject block picker]</div>
+      <figcaption>The editor experience: each block is a typed object, selectable from a dropdown. Authors can reorder via drag-and-drop.</figcaption>
+    </figure>
+
+    <div class="pullquote">
+      The trick isn't making Shopify more like Notion — it's making the editor surface the <em>right</em> fields for the <em>right</em> block type.
+      <cite>Maya Rossi, writing this post</cite>
+    </div>
+
+    <h2 id="liquid">Rendering blocks in Liquid<a class="heading-anchor" href="#liquid" aria-label="Copy link">#</a></h2>
+
+    <p>
+      With the data structured, the Liquid gets pleasantly boring. Here's the render loop we ship in <code>sections/main-article.liquid</code>:
+    </p>
+
+    <figure class="code">
+      <div class="code__header">
+        <span class="code__file">sections/main-article.liquid</span>
+        <span class="code__lang">Liquid</span>
+        <button class="code__copy" data-copy>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+<pre><code><span class="ln"><span class="t-com">{%- liquid</span></span><span class="ln"><span class="t-com">  assign blocks = article.metafields.custom.blocks.value</span></span><span class="ln"><span class="t-com">-%}</span></span><span class="ln"></span><span class="ln"><span class="t-op">&lt;</span><span class="t-tag">article</span> <span class="t-attr">class</span>=<span class="t-str">"article"</span><span class="t-op">&gt;</span></span><span class="ln">  {% <span class="t-kw">for</span> block <span class="t-kw">in</span> blocks %}</span><span class="ln">    {% <span class="t-kw">case</span> block.kind %}</span><span class="ln">      {% <span class="t-kw">when</span> <span class="t-str">'prose'</span> %}</span><span class="ln">        {{ block.body | metafield_tag }}</span><span class="ln">      {% <span class="t-kw">when</span> <span class="t-str">'code'</span> %}</span><span class="ln">        {% <span class="t-kw">render</span> <span class="t-str">'post-code'</span>, block: block %}</span><span class="ln">      {% <span class="t-kw">when</span> <span class="t-str">'callout'</span> %}</span><span class="ln">        {% <span class="t-kw">render</span> <span class="t-str">'post-callout'</span>, block: block %}</span><span class="ln">      {% <span class="t-kw">when</span> <span class="t-str">'image'</span> %}</span><span class="ln">        {% <span class="t-kw">render</span> <span class="t-str">'post-image'</span>, block: block %}</span><span class="ln">      {% <span class="t-kw">when</span> <span class="t-str">'quote'</span> %}</span><span class="ln">        {% <span class="t-kw">render</span> <span class="t-str">'post-quote'</span>, block: block %}</span><span class="ln">    {% <span class="t-kw">endcase</span> %}</span><span class="ln">  {% <span class="t-kw">endfor</span> %}</span><span class="ln"><span class="t-op">&lt;/</span><span class="t-tag">article</span><span class="t-op">&gt;</span></span></code></pre>
+    </figure>
+
+    <p>
+      Each snippet is under 40 lines. <code>post-code</code>, for example, just wraps the stored <code>code</code> field in a <code>&lt;pre&gt;</code>, applies the language label, and injects a copy button with a sprinkle of JS:
+    </p>
+
+    <figure class="code">
+      <div class="code__header">
+        <span class="code__file">snippets/post-code.liquid</span>
+        <span class="code__lang">Liquid</span>
+        <button class="code__copy" data-copy>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+<pre><code><span class="ln"><span class="t-op">&lt;</span><span class="t-tag">figure</span> <span class="t-attr">class</span>=<span class="t-str">"code"</span> <span class="t-attr">data-lang</span>=<span class="t-str">"{{ block.language }}"</span><span class="t-op">&gt;</span></span><span class="ln">  <span class="t-op">&lt;</span><span class="t-tag">div</span> <span class="t-attr">class</span>=<span class="t-str">"code__header"</span><span class="t-op">&gt;</span></span><span class="ln">    <span class="t-op">&lt;</span><span class="t-tag">span</span> <span class="t-attr">class</span>=<span class="t-str">"code__file"</span><span class="t-op">&gt;</span>{{ block.caption }}<span class="t-op">&lt;/</span><span class="t-tag">span</span><span class="t-op">&gt;</span></span><span class="ln">    <span class="t-op">&lt;</span><span class="t-tag">span</span> <span class="t-attr">class</span>=<span class="t-str">"code__lang"</span><span class="t-op">&gt;</span>{{ block.language }}<span class="t-op">&lt;/</span><span class="t-tag">span</span><span class="t-op">&gt;</span></span><span class="ln">    <span class="t-op">&lt;</span><span class="t-tag">button</span> <span class="t-attr">data-copy</span> <span class="t-attr">type</span>=<span class="t-str">"button"</span><span class="t-op">&gt;</span>Copy<span class="t-op">&lt;/</span><span class="t-tag">button</span><span class="t-op">&gt;</span></span><span class="ln">  <span class="t-op">&lt;/</span><span class="t-tag">div</span><span class="t-op">&gt;</span></span><span class="ln">  <span class="t-op">&lt;</span><span class="t-tag">pre</span><span class="t-op">&gt;&lt;</span><span class="t-tag">code</span><span class="t-op">&gt;</span>{{ block.code | escape }}<span class="t-op">&lt;/</span><span class="t-tag">code</span><span class="t-op">&gt;&lt;/</span><span class="t-tag">pre</span><span class="t-op">&gt;</span></span><span class="ln"><span class="t-op">&lt;/</span><span class="t-tag">figure</span><span class="t-op">&gt;</span></span></code></pre>
+    </figure>
+
+    <div class="callout callout--tip">
+      <span class="callout__icon">✓</span>
+      <div class="callout__body">
+        <p class="callout__title">Pro tip</p>
+        <p>For syntax highlighting, lazy-load <code>prism.js</code> only on pages that have <code>figure.code</code> — save yourself ~40kb of JS on non-blog pages.</p>
+      </div>
+    </div>
+
+    <h2 id="reading-ux">Reading UX that respects your readers<a class="heading-anchor" href="#reading-ux" aria-label="Copy link">#</a></h2>
+
+    <p>
+      A great blog post earns attention — but a great <em>blog</em> makes attention comfortable. These are the UX affordances we consider table-stakes on every post we ship:
+    </p>
+
+    <ol>
+      <li><strong>Reading progress bar</strong> — pin a thin bar to the top that fills as the reader scrolls the article.</li>
+      <li><strong>Sticky table of contents</strong> with active-section highlighting using <code>IntersectionObserver</code>.</li>
+      <li><strong>Copy-link on every heading</strong> — hover reveals a <code>#</code> anchor that copies a URL to the clipboard.</li>
+      <li><strong>Copy-to-clipboard on code blocks</strong>, with a confirmed state.</li>
+      <li><strong>Generous line-height</strong> (1.6–1.75) and a readable measure (60–75 characters).</li>
+    </ol>
+
+    <figure class="figure">
+      <div class="figure__media">[diagram — IntersectionObserver tracking active TOC section]</div>
+      <figcaption>One observer per <code>h2</code>/<code>h3</code>. Toggle <code>.is-active</code> on the matching TOC anchor. That's it — no scroll-listener gymnastics.</figcaption>
+    </figure>
+
+    <hr/>
+
+    <h2 id="performance">A note on performance<a class="heading-anchor" href="#performance" aria-label="Copy link">#</a></h2>
+
+    <p>
+      Metaobject rendering is server-side — the theme fetches references during Liquid evaluation, so the first paint is already complete HTML. The only client JS we ship for the post template is <strong>~3kb</strong> for progress, TOC, and copy buttons. Everything else (syntax highlighter, comments, reactions) is lazy-loaded when it enters the viewport.
+    </p>
+
+    <p>
+      We also precompute read-time on publish and store it as a metafield — no runtime word-counting.
+    </p>
+
+    <h2 id="takeaways">Takeaways<a class="heading-anchor" href="#takeaways" aria-label="Copy link">#</a></h2>
+
+    <ul>
+      <li>Shopify's blog is only as limited as the data model you give it. Use metaobjects to structure posts into typed blocks.</li>
+      <li>Keep snippets tiny and focused — one per block kind. Let Liquid's <code>case</code> be your router.</li>
+      <li>Invest in reading UX: progress bar, sticky TOC, copy-anchors, copy-code. None of it is expensive; all of it is noticed.</li>
+      <li>Ship ~3kb of post-template JS. Anything more and you're punishing your readers for <em>your</em> feature choices.</li>
+    </ul>
+
+    <p>
+      If you want the full code, it's open-source on our <a href="#">GitHub</a>, and we demo this exact setup in the <strong>#theme-building</strong> channel in Slack every other Friday. Come say hi.
+    </p>
+
+    <!-- Author card -->
+    <aside class="author-card">
+      <span class="author-card__avatar">MR</span>
+      <div>
+        <p class="author-card__name">Maya Rossi</p>
+        <p class="author-card__bio">Senior Shopify engineer, SDA member since 2023. Based in Turin, currently obsessing over Hydrogen + Oxygen deploys and the editorial experience of Shopify blogs.</p>
+      </div>
+      <div class="author-card__socials">
+        <a href="#" aria-label="Twitter/X">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="#" aria-label="GitHub">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.475 2 2 6.475 2 12a9.994 9.994 0 0 0 6.838 9.488c.5.087.687-.212.687-.475 0-.237-.013-1.024-.013-1.862-2.512.463-3.162-.612-3.362-1.175-.113-.287-.6-1.175-1.025-1.412-.35-.188-.85-.65-.013-.663.788-.013 1.35.725 1.538 1.025.9 1.512 2.337 1.087 2.912.825.088-.65.35-1.088.638-1.338-2.225-.25-4.55-1.112-4.55-4.937 0-1.088.387-1.987 1.025-2.687-.1-.25-.45-1.275.1-2.65 0 0 .837-.262 2.75 1.025a9.28 9.28 0 0 1 2.5-.337c.85 0 1.7.112 2.5.337 1.912-1.3 2.75-1.025 2.75-1.025.55 1.375.2 2.4.1 2.65.637.7 1.025 1.587 1.025 2.687 0 3.838-2.337 4.688-4.562 4.938.362.312.675.912.675 1.85 0 1.337-.013 2.412-.013 2.75 0 .262.188.574.688.474A10.016 10.016 0 0 0 22 12c0-5.525-4.475-10-10-10z"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68zm1.39 9.94v-8.37H5.5v8.37z"/></svg>
+        </a>
+      </div>
+    </aside>
+  </article>
+
+  <!-- RIGHT RAIL -->
+  <aside class="rail" aria-label="Article actions">
+    <div class="rail__group rail__group--toc" style="border-top: none; padding-top: 0;">
+      <button class="rail__toggle" type="button" aria-expanded="true" aria-controls="toc" id="tocToggle">
+        <span class="rail__label" style="margin:0;">On this page</span>
+        <svg class="rail__chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <ol id="toc" class="toc-list">
+        <li><a href="#intro">The problem with Shopify blogs</a></li>
+        <li><a href="#metaobjects">Modeling posts with metaobjects</a>
+          <ul class="toc__sub">
+            <li><a href="#fields">Defining the fields</a></li>
+            <li><a href="#references">Linking to articles</a></li>
+          </ul>
+        </li>
+        <li><a href="#liquid">Rendering blocks in Liquid</a></li>
+        <li><a href="#reading-ux">Reading UX that respects your readers</a></li>
+        <li><a href="#performance">A note on performance</a></li>
+        <li><a href="#takeaways">Takeaways</a></li>
+      </ol>
+    </div>
+    <div class="rail__group">
+      <p class="rail__label">Share</p>
+      <div class="share">
+        <button data-share="twitter">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Post to X
+        </button>
+        <a href="#" data-share="linkedin">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68zm1.39 9.94v-8.37H5.5v8.37z"/></svg>
+          Share on LinkedIn
+        </a>
+        <button data-share="copy">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <span class="share-copy-label">Copy link</span>
+        </button>
+      </div>
+    </div>
+    <div class="rail__group">
+      <p class="rail__label">Reactions</p>
+      <div class="reactions" id="reactions">
+        <button class="reaction" data-r="love"><span class="reaction__emoji">❤️</span><span data-count>42</span></button>
+        <button class="reaction" data-r="fire"><span class="reaction__emoji">🔥</span><span data-count>28</span></button>
+        <button class="reaction" data-r="mind"><span class="reaction__emoji">🤯</span><span data-count>11</span></button>
+        <button class="reaction" data-r="party"><span class="reaction__emoji">🎉</span><span data-count>7</span></button>
+      </div>
+    </div>
+    <div class="rail__group">
+      <p class="rail__label">Filed under</p>
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <a class="tag" href="#" style="font-size:10px;">Liquid</a>
+        <a class="tag" href="#" style="font-size:10px;">Theme dev</a>
+        <a class="tag" href="#" style="font-size:10px;">Metaobjects</a>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<!-- ==================== COMMENTS ==================== -->
+<section class="comments" id="comments">
+  <div class="comments__head">
+    <h3 class="comments__title">Discussion</h3>
+    <span class="comments__count">3 comments · SDA members only</span>
+  </div>
+  <div class="comment">
+    <span class="comment__avatar">JK</span>
+    <div>
+      <div class="comment__head">
+        <span class="comment__name">Jamie Klein</span>
+        <span class="comment__badge">SDA #014</span>
+        <span class="comment__time">2 days ago</span>
+      </div>
+      <p>The <code>list.metaobject_reference</code> approach is exactly what we landed on last sprint. One gotcha: if you query <code>.value</code> on a drop, Liquid returns the array of refs but <em>not</em> resolved — you have to iterate to trigger resolution. Cost us an afternoon of "why is everything null".</p>
+    </div>
+  </div>
+  <div class="comment">
+    <span class="comment__avatar">AC</span>
+    <div>
+      <div class="comment__head">
+        <span class="comment__name">Alex Chen</span>
+        <span class="comment__badge">SDA #109</span>
+        <span class="comment__time">1 day ago</span>
+      </div>
+      <p>Would love to see how you handle <strong>image alt text</strong> at the block level. Marketing keeps asking us to add it post-publish and I'm tired.</p>
+    </div>
+  </div>
+  <div class="comment">
+    <span class="comment__avatar">MR</span>
+    <div>
+      <div class="comment__head">
+        <span class="comment__name">Maya Rossi</span>
+        <span class="comment__badge">Author</span>
+        <span class="comment__time">22h ago</span>
+      </div>
+      <p>@Alex — add an <code>alt</code> field to the <code>image</code> block metaobject and bind it to the <code>&lt;img alt=...&gt;</code> in the snippet. The editor gets a proper text field, no post-publish patching.</p>
+    </div>
+  </div>
+  <form class="comment-form" onsubmit="event.preventDefault(); this.reset(); alert('Comment submitted (demo)');">
+    <textarea placeholder="Leave a comment — visible to SDA members"></textarea>
+    <button type="submit">Reply</button>
+  </form>
+</section>
+
+<!-- ==================== RELATED ==================== -->
+<section class="section">
+  <div class="section__head">
+    <div>
+      <p class="section__label">Keep reading</p>
+      <h3 class="section__title">More from the Alliance</h3>
+    </div>
+    <a href="#" class="section__link">All posts →</a>
+  </div>
+  <div class="related-grid">
+    <a href="#" class="post-card">
+      <div class="post-card__image post-card__image--grad">[cover — 1200×750]</div>
+      <p class="post-card__meta">Engineering · 12 min read</p>
+      <h4 class="post-card__title">Hydrogen vs Liquid: choosing the right tool for the job</h4>
+      <p class="post-card__desc">A decision framework we use with merchants when they ask whether to go headless.</p>
+    </a>
+    <a href="#" class="post-card">
+      <div class="post-card__image post-card__image--dark">[cover — 1200×750]</div>
+      <p class="post-card__meta">Community · 6 min read</p>
+      <h4 class="post-card__title">Member spotlight: Rafael Lima on building for Brazilian merchants</h4>
+      <p class="post-card__desc">How a team of three ships localization-first themes for LatAm commerce.</p>
+    </a>
+    <a href="#" class="post-card">
+      <div class="post-card__image">[cover — 1200×750]</div>
+      <p class="post-card__meta">Tutorial · 9 min read</p>
+      <h4 class="post-card__title">Debugging Shopify webhooks without losing your afternoon</h4>
+      <p class="post-card__desc">A practical workflow with ngrok, Shopify CLI, and some hard-won log filters.</p>
+    </a>
+  </div>
+</section>
+
+<!-- ==================== JOIN CTA ==================== -->
+<section class="cta-join">
+  <div class="cta-join__inner">
+    <div>
+      <p class="cta-join__eyebrow">Join the Alliance</p>
+      <h3 class="cta-join__title">Ship better with 142 other Shopify devs</h3>
+      <p class="cta-join__dek">A curated Slack community of senior Shopify developers. Code reviews, referrals, hiring, and the occasional 2am debugging session. Invitation only.</p>
+      <div class="cta-join__avatars">
+        <span class="cta-join__avatar" style="background:linear-gradient(135deg,#fd814f,#dc2a3c)">M</span>
+        <span class="cta-join__avatar" style="background:linear-gradient(135deg,#3a8a4a,#1e3556)">J</span>
+        <span class="cta-join__avatar" style="background:linear-gradient(135deg,#e1b5ff,#8ecae6)">A</span>
+        <span class="cta-join__avatar" style="background:linear-gradient(135deg,#ffd27a,#fd814f)">R</span>
+        <span class="cta-join__avatar" style="background:linear-gradient(135deg,#8ecae6,#1e3556)">K</span>
+        <span class="cta-join__avatar cta-join__avatar--count">+142</span>
+      </div>
+    </div>
+    <a href="#" class="cta-join__btn">
+      Request an invite
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <svg width="32" height="32" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="lmf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fd814f"/><stop offset="1" stop-color="#dc2a3c"/></linearGradient></defs>
+        <path d="M24 3 L42 11 L42 28 C42 38 34 44 24 46 C14 44 6 38 6 28 L6 11 Z" fill="url(#lmf)"/>
+        <path d="M14 17 H34 V21 H26 V34 H22 V21 H14 Z" fill="#fff4ec"/>
+      </svg>
+      <p class="site-footer__brand-word">SHOPDEV ALLIANCE</p>
+      <p class="site-footer__tag">A curated, invite-only community for senior Shopify developers. Spanning 18 timezones and counting.</p>
+    </div>
+    <div>
+      <h4>Community</h4>
+      <ul>
+        <li><a href="#">How to Join</a></li>
+        <li><a href="#">Benefits</a></li>
+        <li><a href="#">Members</a></li>
+        <li><a href="#">Code of Conduct</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Briefings</a></li>
+        <li><a href="#">For Merchants</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="#">GitHub</a></li>
+        <li><a href="#">X / Twitter</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <span>© 2026 ShopDev Alliance</span>
+    <span>Made by members, for members</span>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<!-- Tweaks panel -->
+<div class="tweaks" id="tweaks">
+  <div class="tweaks__head">
+    <span class="tweaks__title">Tweaks</span>
+  </div>
+  <div class="tweaks__row">
+    <label class="tweaks__label">Reading mode</label>
+    <div class="tweaks__opts" data-group="mode">
+      <button class="tweaks__opt is-active" data-val="light">Light</button>
+      <button class="tweaks__opt" data-val="dark">Dark</button>
+    </div>
+  </div>
+  <div class="tweaks__row">
+    <label class="tweaks__label">Text size</label>
+    <div class="tweaks__opts" data-group="size">
+      <button class="tweaks__opt" data-val="small">S</button>
+      <button class="tweaks__opt is-active" data-val="default">M</button>
+      <button class="tweaks__opt" data-val="large">L</button>
+    </div>
+  </div>
+  <div class="tweaks__row">
+    <label class="tweaks__label">Hero style</label>
+    <div class="tweaks__opts" data-group="hero">
+      <button class="tweaks__opt is-active" data-val="image">Image</button>
+      <button class="tweaks__opt" data-val="gradient">Gradient</button>
+      <button class="tweaks__opt" data-val="type">Type-only</button>
+    </div>
+  </div>
+</div>
+
+<!-- Persistable tweak defaults -->
+<script>
+  window.__TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "mode": "dark",
+    "size": "small",
+    "hero": "image"
+  }/*EDITMODE-END*/;
+</script>
+
+<script>
+/* ==============================================================
+   ShopDev Alliance — Blog post interactions
+   ============================================================== */
+
+(function () {
+  const qs = (sel, ctx = document) => ctx.querySelector(sel);
+  const qsa = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+  const body = document.body;
+
+  /* ---------------- Reading progress + read status + back to top ---------------- */
+  const progress = qs('#progressBar');
+  const readPct = qs('#readPct');
+  const backToTop = qs('#backToTop');
+  const article = qs('#article');
+
+  function updateProgress() {
+    if (!article) return;
+    const rect = article.getBoundingClientRect();
+    const total = rect.height - window.innerHeight + rect.top;
+    const scrolled = Math.min(
+      Math.max(-rect.top + rect.height + rect.top - rect.height, 0),
+      total
+    );
+    // Simpler: use document scroll within article bounds
+    const articleTop = window.scrollY + rect.top;
+    const articleBottom = articleTop + rect.height;
+    const viewportBottom = window.scrollY + window.innerHeight;
+    let pct = 0;
+    if (viewportBottom <= articleTop) pct = 0;
+    else if (viewportBottom >= articleBottom) pct = 100;
+    else pct = ((viewportBottom - articleTop) / (articleBottom - articleTop)) * 100;
+    pct = Math.max(0, Math.min(100, pct));
+    progress.style.width = pct.toFixed(1) + '%';
+    if (readPct) readPct.textContent = Math.round(pct) + '%';
+
+    if (window.scrollY > 600) backToTop.classList.add('is-visible');
+    else backToTop.classList.remove('is-visible');
+  }
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
+
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ---------------- TOC active state via IntersectionObserver ---------------- */
+  const headings = qs('.article h2[id], .article h3[id]');
+  const tocLinks = qsa('#toc a');
+  const idToLink = new Map(tocLinks.map(a => [a.getAttribute('href').slice(1), a]));
+
+  if ('IntersectionObserver' in window && headings.length) {
+    const visible = new Set();
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) visible.add(e.target.id);
+          else visible.delete(e.target.id);
+        });
+        // Pick the topmost heading still in the (upper half of) viewport
+        let activeId = null;
+        let minTop = Infinity;
+        headings.forEach(h => {
+          const r = h.getBoundingClientRect();
+          if (r.top < window.innerHeight * 0.5 && r.top > -r.height) {
+            if (r.top < minTop) { minTop = r.top; activeId = h.id; }
+          }
+        });
+        // Fallback: first visible
+        if (!activeId && visible.size) {
+          activeId = Array.from(visible)[0];
+        }
+        tocLinks.forEach(l => l.classList.remove('is-active'));
+        if (activeId && idToLink.has(activeId)) {
+          idToLink.get(activeId).classList.add('is-active');
+        }
+      },
+      { rootMargin: '-80px 0px -55% 0px', threshold: [0, 1] }
+    );
+    headings.forEach(h => io.observe(h));
+  }
+
+  // Mobile TOC collapse
+  const tocLabel = qs('#tocLabel');
+  if (tocLabel) {
+    tocLabel.addEventListener('click', () => {
+      if (window.matchMedia('(max-width: 820px)').matches) {
+        tocLabel.classList.toggle('is-collapsed');
+      }
+    });
+    if (window.matchMedia('(max-width: 820px)').matches) tocLabel.classList.add('is-collapsed');
+  }
+
+  /* ---------------- Copy heading anchors ---------------- */
+  qsa('.heading-anchor').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const href = a.getAttribute('href');
+      const url = location.origin + location.pathname + href;
+      history.replaceState(null, '', href);
+      navigator.clipboard && navigator.clipboard.writeText(url).catch(() => {});
+      a.classList.add('copied');
+      const orig = a.textContent;
+      a.textContent = '✓';
+      setTimeout(() => { a.classList.remove('copied'); a.textContent = orig; }, 1200);
+      // Scroll to the target
+      const target = document.getElementById(href.slice(1));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  /* ---------------- Copy code blocks ---------------- */
+  qsa('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const fig = btn.closest('figure.code');
+      if (!fig) return;
+      const codeEl = fig.querySelector('pre code');
+      const text = codeEl ? codeEl.innerText : '';
+      navigator.clipboard && navigator.clipboard.writeText(text).catch(() => {});
+      btn.classList.add('copied');
+      const label = btn.querySelector('span');
+      const orig = label ? label.textContent : '';
+      if (label) label.textContent = 'Copied!';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        if (label) label.textContent = orig;
+      }, 1400);
+    });
+  });
+
+  /* ---------------- Share buttons ---------------- */
+  qsa('[data-share]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      const kind = el.getAttribute('data-share');
+      const url = location.href;
+      const title = document.title;
+      if (kind === 'copy') {
+        e.preventDefault();
+        navigator.clipboard && navigator.clipboard.writeText(url).catch(() => {});
+        el.classList.add('copied');
+        const label = el.querySelector('.share-copy-label');
+        if (label) label.textContent = 'Copied!';
+        setTimeout(() => {
+          el.classList.remove('copied');
+          if (label) label.textContent = 'Copy link';
+        }, 1400);
+      } else if (kind === 'twitter') {
+        e.preventDefault();
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank', 'noopener');
+      } else if (kind === 'linkedin') {
+        e.preventDefault();
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank', 'noopener');
+      }
+    });
+  });
+
+  /* ---------------- Reactions ---------------- */
+  const reactionStore = (() => {
+    try {
+      return JSON.parse(localStorage.getItem('sda_reactions') || '{}');
+    } catch { return {}; }
+  })();
+  qsa('.reaction').forEach(btn => {
+    const key = btn.dataset.r;
+    const countEl = btn.querySelector('[data-count]');
+    let base = parseInt(countEl.textContent, 10) || 0;
+    if (reactionStore[key]) {
+      btn.classList.add('active');
+      countEl.textContent = base + 1;
+    }
+    btn.addEventListener('click', () => {
+      const active = btn.classList.toggle('active');
+      reactionStore[key] = active;
+      localStorage.setItem('sda_reactions', JSON.stringify(reactionStore));
+      countEl.textContent = base + (active ? 1 : 0);
+      if (active) {
+        btn.animate([
+          { transform: 'scale(1)' },
+          { transform: 'scale(1.15)' },
+          { transform: 'scale(1)' }
+        ], { duration: 260, easing: 'ease-out' });
+      }
+    });
+  });
+
+  /* ====================================================
+     Tweaks — light/dark mode, text size, hero variant
+     ==================================================== */
+  const tweaks = qs('#tweaks');
+  const defaults = window.__TWEAK_DEFAULTS || { mode: 'light', size: 'default', hero: 'image' };
+  const saved = (() => {
+    try { return JSON.parse(localStorage.getItem('sda_tweaks') || '{}'); } catch { return {}; }
+  })();
+  const state = Object.assign({}, defaults, saved);
+
+  function applyState() {
+    body.dataset.mode = state.mode;
+    body.dataset.size = state.size;
+    body.dataset.hero = state.hero;
+    // Font size scaling
+    const size = state.size;
+    const map = { small: '15px', default: '17px', large: '19px' };
+    document.documentElement.style.setProperty('--reading-size', map[size] || map.default);
+    // Reflect in UI
+    qsa('#tweaks .tweaks__opts').forEach(group => {
+      const key = group.dataset.group;
+      qsa('.tweaks__opt', group).forEach(btn => {
+        btn.classList.toggle('is-active', btn.dataset.val === state[key]);
+      });
+    });
+  }
+  applyState();
+
+  qsa('#tweaks .tweaks__opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const group = btn.closest('.tweaks__opts').dataset.group;
+      state[group] = btn.dataset.val;
+      localStorage.setItem('sda_tweaks', JSON.stringify(state));
+      applyState();
+      // Persist via host (for file-based tweaks)
+      try {
+        window.parent.postMessage({
+          type: '__edit_mode_set_keys',
+          edits: { [group]: btn.dataset.val }
+        }, '*');
+      } catch (e) {}
+    });
+  });
+
+  // Edit-mode bridge
+  window.addEventListener('message', (e) => {
+    const data = e && e.data;
+    if (!data || !data.type) return;
+    if (data.type === '__activate_edit_mode') tweaks.classList.add('is-open');
+    else if (data.type === '__deactivate_edit_mode') tweaks.classList.remove('is-open');
+  });
+  try {
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+  } catch (e) {}
+})();
+
+</script>
+
+<!-- Mobile TOC FAB + bottom drawer -->
+<button class="toc-fab" id="tocFab" type="button" aria-label="Open table of contents" aria-expanded="false">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+  <span class="toc-fab__label">Contents</span>
+  <span class="toc-fab__progress"><span id="tocFabBar"></span></span>
+</button>
+<div class="toc-drawer" id="tocDrawer" aria-hidden="true" role="dialog" aria-labelledby="tocDrawerTitle">
+  <div class="toc-drawer__scrim" data-close></div>
+  <div class="toc-drawer__panel">
+    <div class="toc-drawer__handle"></div>
+    <div class="toc-drawer__head">
+      <h4 class="toc-drawer__title" id="tocDrawerTitle">On this page</h4>
+      <button class="toc-drawer__close" type="button" data-close aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <ol class="toc-list toc-list--drawer" id="tocDrawerList">
+      <li><a href="#intro" data-close>The problem with Shopify blogs</a></li>
+      <li><a href="#metaobjects" data-close>Modeling posts with metaobjects</a>
+        <ul class="toc__sub">
+          <li><a href="#fields" data-close>Defining the fields</a></li>
+          <li><a href="#references" data-close>Linking to articles</a></li>
+        </ul>
+      </li>
+      <li><a href="#liquid" data-close>Rendering blocks in Liquid</a></li>
+      <li><a href="#reading-ux" data-close>Reading UX that respects your readers</a></li>
+      <li><a href="#performance" data-close>A note on performance</a></li>
+      <li><a href="#takeaways" data-close>Takeaways</a></li>
+    </ol>
+    <div class="toc-drawer__actions">
+      <button class="toc-drawer__action" type="button" data-drawer-action="share">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Copy link
+      </button>
+      <button class="toc-drawer__action" type="button" data-drawer-action="top">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+        Back to top
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function init(){
+    
+
+  /* ---------------- Rail TOC collapse ---------------- */
+  const tocToggle = document.getElementById('tocToggle');
+  if (tocToggle) {
+    tocToggle.addEventListener('click', () => {
+      const expanded = tocToggle.getAttribute('aria-expanded') === 'true';
+      tocToggle.setAttribute('aria-expanded', String(!expanded));
+    });
+  }
+
+  /* ---------------- Mobile TOC drawer ---------------- */
+  const tocFab = document.getElementById('tocFab');
+  const tocDrawer = document.getElementById('tocDrawer');
+  const tocFabBar = document.getElementById('tocFabBar');
+
+  function openDrawer() {
+    document.body.classList.add('toc-open');
+    if (tocFab) tocFab.setAttribute('aria-expanded', 'true');
+    if (tocDrawer) tocDrawer.setAttribute('aria-hidden', 'false');
+    document.documentElement.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    document.body.classList.remove('toc-open');
+    if (tocFab) tocFab.setAttribute('aria-expanded', 'false');
+    if (tocDrawer) tocDrawer.setAttribute('aria-hidden', 'true');
+    document.documentElement.style.overflow = '';
+  }
+  if (tocFab) tocFab.addEventListener('click', () => {
+    document.body.classList.contains('toc-open') ? closeDrawer() : openDrawer();
+  });
+  if (tocDrawer) {
+    tocDrawer.addEventListener('click', (e) => {
+      const t = e.target;
+      if (t.closest('[data-close]')) {
+        // let anchor navigation happen, but close drawer after
+        setTimeout(closeDrawer, 60);
+      }
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.body.classList.contains('toc-open')) closeDrawer();
+  });
+
+  // Drawer action buttons
+  document.querySelectorAll('[data-drawer-action]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const act = btn.getAttribute('data-drawer-action');
+      if (act === 'top') {
+        closeDrawer();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (act === 'share') {
+        const url = location.href;
+        navigator.clipboard && navigator.clipboard.writeText(url).catch(() => {});
+        const label = btn.querySelector(':scope > :not(svg)') || btn;
+        const orig = btn.textContent.trim();
+        btn.innerHTML = btn.innerHTML.replace('Copy link', 'Copied!');
+        setTimeout(() => { btn.innerHTML = btn.innerHTML.replace('Copied!', 'Copy link'); }, 1400);
+      }
+    });
+  });
+
+  /* ---------------- Sync drawer list + FAB progress ---------------- */
+  const drawerLinks = Array.from(document.querySelectorAll('#tocDrawerList a'));
+  const drawerIdToLink = new Map(drawerLinks.map(a => [a.getAttribute('href').slice(1), a]));
+
+  function syncActiveDrawer() {
+    const railActive = document.querySelector('#toc a.is-active');
+    drawerLinks.forEach(l => l.classList.remove('is-active'));
+    if (railActive) {
+      const id = railActive.getAttribute('href').slice(1);
+      const d = drawerIdToLink.get(id);
+      if (d) d.classList.add('is-active');
+    }
+  }
+
+  function syncFabBar() {
+    if (!tocFabBar) return;
+    const pctStr = (document.getElementById('progressBar') || {}).style;
+    if (pctStr && pctStr.width) tocFabBar.style.width = pctStr.width;
+  }
+
+  // Piggyback on scroll — light overhead
+  document.addEventListener('scroll', () => {
+    syncActiveDrawer();
+    syncFabBar();
+  }, { passive: true });
+  syncActiveDrawer();
+  syncFabBar();
+
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% doc %}
+  Renders a related article as one linked card with a cycling image fallback.
+
+  @param {article} post - Article to display.
+  @param {blog} post_blog - Blog containing the article.
+  @param {number} index - One-based position in the related grid.
+{% enddoc %}
+{% liquid
+  assign read_minutes = post.content | strip_html | split: ' ' | size | divided_by: 225 | at_least: 1
+  assign image_variant = index | minus: 1 | modulo: 3
+  assign card_excerpt = post.excerpt | default: post.content | strip_html | truncate: 140
+%}
+<a class="sda-post-card" href="{{ post.url }}">
+  <div
+    class="sda-post-card__image sda-post-card__image--{{ image_variant }}"
+    {% if post.image == blank %}
+      aria-hidden="true"
+    {% endif %}
+  >
+    {% if post.image != blank -%}
+      {{-
+        post.image
+        | image_url: width: 900
+        | image_tag: widths: '350, 600, 900', sizes: '(max-width: 820px) calc(100vw - 40px), 360px', loading: 'lazy'
+      -}}
+    {%- endif %}
+  </div>
+  <p class="sda-post-card__meta">
+    {{ post_blog.title | escape }} · {{ 'blogs.article.read_minutes' | t: count: read_minutes }}
+  </p>
+  <h3 class="sda-post-card__title">{{ post.title | escape }}</h3>
+  {% if card_excerpt != blank %}
+    <p class="sda-post-card__description">{{ card_excerpt | escape }}</p>
+  {% endif %}
+</a>

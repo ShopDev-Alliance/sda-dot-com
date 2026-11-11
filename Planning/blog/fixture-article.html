@@ -1,0 +1,100 @@
+<p>This first paragraph is the lead. It should render larger than the rest and start with an orange drop cap. It includes <code>inline code</code>, <strong>bold</strong>, <em>italic</em> and a <a href="https://shopify.dev">link</a> so every inline style shows up above the fold.</p>
+
+<p>A normal paragraph follows. It is long enough to wrap on a phone so the measure and line height can be judged properly against the design at 375px, 768px and 1280px wide.</p>
+
+<h2>First section heading</h2>
+
+<p>Hover the heading above on desktop: a # link should appear, and clicking it copies the section URL.</p>
+
+<ul>
+  <li>Unordered item with <strong>bold</strong> text</li>
+  <li>Unordered item with <code>article.content</code> inline code</li>
+  <li>A longer unordered item that wraps onto a second line on narrow screens to check the hanging indent</li>
+</ul>
+
+<blockquote>
+  <p>[!NOTE] Heads up</p>
+  <p>This is a note callout with a custom title. It mentions <code>Online Store 2.0</code> inline.</p>
+</blockquote>
+
+<h3>A sub-heading inside the first section</h3>
+
+<p>Sub-headings nest under their parent in the table of contents.</p>
+
+<pre data-file="config/example.json" title="config/example.json"><code class="language-json">{
+  "type": "post",
+  "fields": [
+    { "key": "title", "type": "single_line_text_field" },
+    { "key": "author", "type": "metaobject_reference" }
+  ]
+}</code></pre>
+
+<h3>A second sub-heading</h3>
+
+<ol>
+  <li>Ordered item one</li>
+  <li>Ordered item two with a <a href="https://shopdevalliance.com">link</a></li>
+  <li>Ordered item three</li>
+</ol>
+
+<blockquote>
+  <p>The trick is not making Shopify more like Notion. It is giving authors the right fields for the right content.</p>
+  <p>— A member, writing this post</p>
+</blockquote>
+
+<h2>Second section: Liquid code</h2>
+
+<p>Liquid braces must survive untouched and the long line must scroll inside the block, not the page.</p>
+
+<pre data-file="sections/sda-article.liquid" title="sections/sda-article.liquid"><code class="language-liquid">{%- liquid
+  assign author_member = article.metafields.custom.author_member.value
+  assign read_minutes = article.content | strip_html | split: ' ' | size | divided_by: 225 | at_least: 1
+-%}
+
+&lt;article class="sda-article"&gt;
+  {{ article.content }}
+&lt;/article&gt;</code></pre>
+
+<blockquote>
+  <p>[!TIP]</p>
+  <p>A tip callout with no custom title. It should fall back to "Tip".</p>
+</blockquote>
+
+<pre><code>A code block with no language and no filename.
+It should still get the shell and a Copy button.</code></pre>
+
+<h2>Third section: media and tables</h2>
+
+<p><img src="https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png" alt="Placeholder image"></p>
+
+<figure>
+  <img src="https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png" alt="Placeholder image inside a figure">
+  <figcaption>A figure caption with <code>inline code</code>.</figcaption>
+</figure>
+
+<table>
+  <thead>
+    <tr><th>Approach</th><th>URLs</th><th>Feed</th><th>Comments</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Native article</td><td>/blogs/...</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Metaobject page</td><td>/pages/...</td><td>No</td><td>No</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<h2>Fourth section: warnings and the end</h2>
+
+<blockquote>
+  <p>[!WARNING] Careful</p>
+  <p>A warning callout. Comment gating in the theme is display only.</p>
+</blockquote>
+
+<h4>A fourth-level heading</h4>
+
+<p>Fourth-level headings are styled but do not appear in the table of contents.</p>
+
+<h2>First section heading</h2>
+
+<p>This heading repeats the first one on purpose. Its anchor should be de-duplicated (ending in <code>-2</code>) and both should work from the table of contents.</p>
