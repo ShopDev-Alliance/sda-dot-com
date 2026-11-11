@@ -91,6 +91,10 @@
   },
   "blogs": {
     "list": {
+      "authors_more": {
+        "one": "{{ name }} and {{ count }} other",
+        "other": "{{ name }} and {{ count }} others"
+      },
       "filter_label": "Filter dispatches by series",
       "rss": "RSS",
       "latest": "Latest",
@@ -103,6 +107,12 @@
       "view_all": "View all dispatches"
     },
     "article": {
+      "authors_and": "and",
+      "authors_others": {
+        "one": "{{ count }} other",
+        "other": "{{ count }} others"
+      },
+      "contributors": "Contributors",
       "blog": "Blog",
       "for_developers": "For developers",
       "for_merchants": "For merchants",

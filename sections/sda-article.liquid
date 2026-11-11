@@ -54,14 +54,47 @@
       assign structured_author_url = shop.url | append: member_profile_url
     endif
   endif
+  # Promote the first valid co-author only when every lead fallback is blank.
+  assign co_authors = article.metafields.custom.co_authors.value
+  assign author_count = 0
+  if author_name != blank
+    assign author_count = 1
+  endif
+  if co_authors.count > 0
+    for co_author in co_authors
+      if co_author.name.value == blank or co_author.system.handle == author_member.system.handle
+        continue
+      endif
+      if author_name == blank
+        assign author_member = co_author
+        assign author_name = co_author.name.value
+        assign author_photo = co_author.profile_photo.value
+        assign author_role = co_author.tagline.value
+        assign author_bio = blank
+        assign author_url = blank
+        assign structured_author_url = blank
+        if co_author.description != blank
+          assign author_bio = co_author.description | metafield_text
+        endif
+        if co_author.profile.value == true
+          assign author_url = co_author.system.url
+          assign structured_author_url = shop.url | append: author_url
+        endif
+      endif
+      assign author_count = author_count | plus: 1
+    endfor
+  endif
+  assign compact_authors = false
+  assign hero_avatar_count = 1
+  assign other_author_count = author_count | minus: 1
+  assign authors_and = 'blogs.article.authors_and' | t
+  assign other_authors_label = blank
+  if author_count >= 4
+    assign compact_authors = true
+    assign other_authors_label = 'blogs.article.authors_others' | t: count: other_author_count
+  endif
   if author_url != blank
     assign author_tag = 'a'
-  endif
-  assign author_words = author_name | split: ' '
-  assign author_initials = author_words.first | slice: 0 | upcase
-  if author_words.size > 1
-    assign last_initial = author_words.last | slice: 0 | upcase
-    assign author_initials = author_initials | append: last_initial
   endif
   if title_accent != blank and title_html contains title_accent
     assign accent_markup = title_accent | prepend: '<em>' | append: '</em>'
@@ -115,30 +148,73 @@
       <div class="sda-hero__dek">{{ article.excerpt }}</div>
     {% endif %}
     <div class="sda-hero__meta">
-      <{{ author_tag }}
-        class="sda-author"
-        {% if author_url != blank %}
-          href="{{ author_url | escape }}"
-        {% endif %}
-      >
-        <span class="sda-avatar" aria-hidden="true">
-          {% if author_photo != blank -%}
-            {{-
-              author_photo
-              | image_url: width: 84
-              | image_tag: widths: '42, 84', sizes: '42px', alt: '', loading: 'eager'
-            -}}
-          {%- else -%}
-            {{- author_initials | escape -}}
-          {%- endif %}
-        </span>
-        <span
-          ><span class="sda-author__name">{{ author_name | escape }}</span>
-          {%- if author_role != blank -%}
-            <span class="sda-author__role">{{ author_role | escape }}</span>
-          {%- endif -%}
-        </span>
-      </{{ author_tag }}>
+      {% if author_count > 1 %}
+        <div class="sda-author sda-author--multi">
+          <span class="sda-avatar-stack">
+            {% render 'sda-avatar', name: author_name, photo: author_photo, size: 42, loading: 'eager' %}
+            {% for co_author in co_authors %}
+              {% liquid
+                if co_author.name.value == blank or co_author.system.handle == author_member.system.handle
+                  continue
+                endif
+                if hero_avatar_count == 4
+                  break
+                endif
+                assign hero_avatar_count = hero_avatar_count | plus: 1
+              %}
+              {% render 'sda-avatar', name: co_author.name.value, photo: co_author.profile_photo.value, size: 42, loading: 'eager' %}
+            {% endfor %}
+          </span>
+          <span class="sda-author__name">
+            {%- if author_url != blank -%}
+              <a href="{{ author_url | escape }}">{{ author_name | escape }}</a>
+            {%- else -%}
+              {{- author_name | escape -}}
+            {%- endif -%}
+            {%- if compact_authors %}
+              {{ authors_and }}
+              {% if section.settings.show_author_card %}
+                <a href="#authors">{{ other_authors_label | escape }}</a>
+              {% else %}
+                {{ other_authors_label | escape }}
+              {% endif %}
+            {% else %}
+              {%- liquid
+                assign author_index = 1
+              -%}
+              {%- for co_author in co_authors -%}
+                {%- liquid
+                  if co_author.name.value == blank or co_author.system.handle == author_member.system.handle
+                    continue
+                  endif
+                  assign author_index = author_index | plus: 1
+                -%}
+                {%- if author_index == author_count %} {{ 'blogs.article.authors_and' | t }} {% else %}, {% endif -%}
+                {%- if co_author.profile.value == true and co_author.system.url != blank -%}
+                  <a href="{{ co_author.system.url | escape }}">{{ co_author.name.value | escape }}</a>
+                {%- else -%}
+                  {{- co_author.name.value | escape -}}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </span>
+        </div>
+      {% elsif author_count == 1 %}
+        <{{ author_tag }}
+          class="sda-author"
+          {% if author_url != blank %}
+            href="{{ author_url | escape }}"
+          {% endif %}
+        >
+          {% render 'sda-avatar', name: author_name, photo: author_photo, size: 42, loading: 'eager' %}
+          <span
+            ><span class="sda-author__name">{{ author_name | escape }}</span>
+            {%- if author_role != blank -%}
+              <span class="sda-author__role">{{ author_role | escape }}</span>
+            {%- endif -%}
+          </span>
+        </{{ author_tag }}>
+      {% endif %}
       <span class="sda-meta">{{ article.published_at | time_tag: format: 'date' }}</span>
       <span class="sda-meta">{{ 'blogs.article.read_minutes' | t: count: read_minutes }}</span>
     </div>
@@ -162,77 +238,30 @@
     <div class="sda-article__column">
       <div class="sda-article__body">{{ article.content }}</div>
       {% if section.settings.show_author_card %}
-        <div class="sda-author-card">
-          <span class="sda-avatar sda-avatar--large" aria-hidden="true">
-            {%- if author_photo != blank -%}
-              {{-
-                author_photo
-                | image_url: width: 144
-                | image_tag: widths: '72, 144', sizes: '72px', alt: '', loading: 'lazy'
-              -}}
-            {%- else -%}
-              {{- author_initials | escape -}}
-            {%- endif -%}
-          </span>
-          <div>
-            <h2 class="sda-author-card__name">
-              {% if author_url != blank -%}
-                <a class="sda-author-card__profile" href="{{ author_url | escape }}">{{ author_name | escape }}</a>
-              {%- else -%}
-                {{- author_name | escape -}}
-              {%- endif %}
-            </h2>
-            {% if author_bio != blank %}
-              <p class="sda-author-card__bio">{{ author_bio | strip_html | truncate: 240 | escape }}</p>
+        {% if author_count > 0 %}
+          <div class="sda-author-cards{% if compact_authors %} sda-author-cards--grid{% endif %}"{% if compact_authors %} id="authors"{% endif %}>
+            {% if compact_authors %}
+              <h2 class="sda-author-cards__heading">{{ 'blogs.article.contributors' | t }}</h2>
             {% endif %}
+            {% render 'sda-author-card', name: author_name, photo: author_photo, bio: author_bio, url: author_url, member: author_member, role: author_role, compact: compact_authors %}
+            {% for co_author in co_authors %}
+              {% liquid
+                if co_author.name.value == blank or co_author.system.handle == author_member.system.handle
+                  continue
+                endif
+                assign co_author_bio = blank
+                assign co_author_url = blank
+                if co_author.description != blank
+                  assign co_author_bio = co_author.description | metafield_text
+                endif
+                if co_author.profile.value == true
+                  assign co_author_url = co_author.system.url
+                endif
+              %}
+              {% render 'sda-author-card', name: co_author.name.value, photo: co_author.profile_photo.value, bio: co_author_bio, url: co_author_url, member: co_author, role: co_author.tagline.value, compact: compact_authors %}
+            {% endfor %}
           </div>
-          {% if author_member != blank %}
-            <div class="sda-author-card__socials">
-              {% assign social_fields = 'twitter,linked_in,github,website' | split: ',' %}
-              {% for social_field in social_fields %}
-                {% liquid
-                  assign social_url = author_member[social_field].value
-                  assign social_label = blank
-                  case social_field
-                    when 'twitter'
-                      assign social_label = 'blogs.article.twitter' | t
-                    when 'linked_in'
-                      assign social_label = 'blogs.article.linked_in' | t
-                    when 'github'
-                      assign social_label = 'blogs.article.github' | t
-                    when 'website'
-                      assign social_label = 'blogs.article.website' | t
-                  endcase
-                %}
-                {% if social_url != blank %}
-                  <a
-                    href="{{ social_url | escape }}"
-                    target="_blank"
-                    rel="noopener"
-                    aria-label="{{ social_label | escape }}"
-                  >
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.7"
-                      aria-hidden="true"
-                    >
-                      {% case social_field %}
-                        {% when 'twitter' %}<path d="m4 4 16 16M20 4 4 20M4 4h5l11 16h-5Z"/>
-                        {% when 'linked_in' %}<path d="M5 9v11M5 4v1M10 20V9h4v2c4-5 7-1 7 2v7M14 20v-7"/>
-                        {% when 'github' %}<path d="M9 20c-5 2-5-3-7-3m15 5v-4c0-1-.3-2-1-2 4-.5 6-2 6-6 0-2-1-3-2-4 0-1 0-3-1-4-2 0-4 2-4 2a15 15 0 0 0-6 0S7 2 5 2C4 3 4 5 4 6c-1 1-2 2-2 4 0 4 2 5.5 6 6-1 1-1 2-1 3v3"/>
-                        {% else %}<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>
-                      {% endcase %}
-                    </svg>
-                  </a>
-                {% endif %}
-              {% endfor %}
-            </div>
-          {% endif %}
-        </div>
+        {% endif %}
       {% endif %}
     </div>
     <aside class="sda-rail">
@@ -311,6 +340,20 @@
           {% endif %}
           {% for comment in article.comments %}
             {% liquid
+              # Whole-name comparisons also handle names containing delimiter characters.
+              assign comment_is_author = false
+              if author_name != blank and comment.author == author_name
+                assign comment_is_author = true
+              endif
+              for co_author in co_authors
+                if co_author.name.value == blank or co_author.system.handle == author_member.system.handle
+                  continue
+                endif
+                if comment.author == co_author.name.value
+                  assign comment_is_author = true
+                  break
+                endif
+              endfor
               assign comment_words = comment.author | split: ' '
               assign comment_initials = comment_words.first | slice: 0 | upcase
               if comment_words.size > 1
@@ -323,7 +366,7 @@
               <div>
                 <div class="sda-comment__head">
                   <strong>{{ comment.author | escape }}</strong>
-                  {%- if comment.author == author_name -%}
+                  {%- if comment_is_author -%}
                     <span class="sda-comment__badge">{{ 'blogs.article.author_badge' | t }}</span>
                   {%- endif -%}
                   <span class="sda-meta">{{ comment.created_at | time_tag: format: 'date' }}</span>
@@ -587,11 +630,27 @@
     {% endif %}
     "datePublished": {{ structured_published_at | json }},
     "dateModified": {{ structured_updated_at | json }},
-    "author": {
+    "author": {% if author_count > 1 %}[{% endif %}
+    {
       "@type": {{ 'Person' | json }},
       "name": {{ author_name | json }}
       {% if structured_author_url != blank %}, "url": {{ structured_author_url | json }}{% endif %}
-    },
+    }
+    {% for co_author in co_authors %}
+      {% liquid
+        if co_author.name.value == blank or co_author.system.handle == author_member.system.handle
+          continue
+        endif
+      %}
+      , {
+        "@type": {{ 'Person' | json }},
+        "name": {{ co_author.name.value | json }}
+        {% if co_author.profile.value == true and co_author.system.url != blank %}
+          , "url": {{ shop.url | append: co_author.system.url | json }}
+        {% endif %}
+      }
+    {% endfor %}
+    {% if author_count > 1 %}]{% endif %},
     "publisher": {
       "@type": {{ 'Organization' | json }},
       "name": {{ shop.name | json }}

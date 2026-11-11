@@ -11,24 +11,70 @@
     assign author_name = author_member.name.value | default: author_name
     assign author_photo = author_member.profile_photo.value
   endif
-  assign author_words = author_name | split: ' '
-  assign author_initials = author_words.first | slice: 0 | upcase
-  if author_words.size > 1
-    assign last_initial = author_words.last | slice: 0 | upcase
-    assign author_initials = author_initials | append: last_initial
+  assign co_authors = post.metafields.custom.co_authors.value
+  # Preserve the existing single-author list output; use the staff lead for co-authored posts.
+  if author_member == blank and post.user != blank and co_authors.count > 0
+    for co_author in co_authors
+      if co_author.name.value != blank
+        assign author_name = post.user.name | default: author_name
+        assign author_photo = post.user.image
+        break
+      endif
+    endfor
   endif
+  assign author_count = 0
+  assign second_author_name = blank
+  assign avatar_count = 1
+  if author_name != blank
+    assign author_count = 1
+  endif
+  if co_authors.count > 0
+    for co_author in co_authors
+      if co_author.name.value == blank or co_author.system.handle == author_member.system.handle
+        continue
+      endif
+      if author_name == blank
+        assign author_member = co_author
+        assign author_name = co_author.name.value
+        assign author_photo = co_author.profile_photo.value
+      elsif second_author_name == blank
+        assign second_author_name = co_author.name.value
+      endif
+      assign author_count = author_count | plus: 1
+    endfor
+  endif
+  assign other_author_count = author_count | minus: 1
 %}
 <div class="sda-meta">
   {% if author_name != blank %}
-    <span class="sda-meta__item">
-      <span class="sda-avatar" aria-hidden="true">
-        {%- if author_photo != blank -%}
-          {{- author_photo | image_url: width: 52 | image_tag: widths: '26, 52', sizes: '26px', loading: 'lazy', alt: '' -}}
-        {%- else -%}
-          {{- author_initials | escape -}}
-        {%- endif -%}
-      </span>
-      <span>{{ author_name | escape }}</span>
+    <span class="sda-meta__item{% if author_count > 1 %} sda-meta__item--authors{% endif %}">
+      {% if author_count > 1 %}
+        <span class="sda-avatar-stack">
+          {% render 'sda-avatar', name: author_name, photo: author_photo, size: 26, loading: 'lazy' %}
+          {% for co_author in co_authors %}
+            {% liquid
+              if co_author.name.value == blank or co_author.system.handle == author_member.system.handle
+                continue
+              endif
+              if avatar_count == 3
+                break
+              endif
+              assign avatar_count = avatar_count | plus: 1
+            %}
+            {% render 'sda-avatar', name: co_author.name.value, photo: co_author.profile_photo.value, size: 26, loading: 'lazy' %}
+          {% endfor %}
+        </span>
+        <span class="sda-meta__authors">
+          {% if author_count == 2 %}
+            {{ author_name | escape }} {{ 'blogs.article.authors_and' | t }} {{ second_author_name | escape }}
+          {% else %}
+            {{ 'blogs.list.authors_more' | t: name: author_name, count: other_author_count | escape }}
+          {% endif %}
+        </span>
+      {% else %}
+        {% render 'sda-avatar', name: author_name, photo: author_photo, size: 26, loading: 'lazy' %}
+        <span>{{ author_name | escape }}</span>
+      {% endif %}
     </span>
   {% endif %}
   <span class="sda-meta__item">{{ post.published_at | time_tag: format: 'date' }}</span>

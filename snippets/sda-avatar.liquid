@@ -1,0 +1,27 @@
+{% doc %}
+  Renders a decorative author photo or initials at the size supplied by its section CSS.
+
+  @param {string} name - Author name for initials.
+  @param {image} [photo] - Author photo.
+  @param {number} size - Image size in pixels.
+  @param {string} loading - Image loading mode.
+  @param {string} [class] - Additional avatar class.
+{% enddoc %}
+{% liquid
+  assign words = name | split: ' '
+  assign initials = words.first | slice: 0 | upcase
+  assign double_size = size | times: 2
+  assign widths = size | append: ', ' | append: double_size
+  assign sizes = size | append: 'px'
+  if words.size > 1
+    assign last_initial = words.last | slice: 0 | upcase
+    assign initials = initials | append: last_initial
+  endif
+%}
+<span class="sda-avatar{% if class != blank %} {{ class | escape }}{% endif %}" aria-hidden="true">
+  {%- if photo != blank -%}
+    {{- photo | image_url: width: double_size | image_tag: widths: widths, sizes: sizes, alt: '', loading: loading -}}
+  {%- else -%}
+    {{- initials | escape -}}
+  {%- endif -%}
+</span>

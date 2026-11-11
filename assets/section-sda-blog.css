@@ -120,6 +120,26 @@
   font-family: var(--font-heading-family); font-weight: 700; font-size: 11px; color: var(--sda-fg);
   background: var(--sda-gradient); flex: none;
 }
+.sda-blog .sda-avatar-stack {
+  display: inline-flex;
+  flex: none;
+  padding-inline-start: 8px;
+}
+.sda-blog .sda-avatar-stack .sda-avatar {
+  margin-inline-start: -8px;
+  border: 2px solid var(--sda-avatar-ring, var(--sda-bg));
+}
+.sda-blog .sda-meta__item--authors {
+  max-width: 100%;
+}
+.sda-blog .sda-meta__authors {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+/* Match the translucent row hover composited over the section background. */
+.sda-blog .sda-post-row:hover {
+  --sda-avatar-ring: color-mix(in srgb, var(--sda-fg) 6%, var(--sda-bg));
+}
 .sda-blog .sda-cover {
   border-radius: 10px;
   border: 1px solid var(--sda-rule);
@@ -278,6 +298,7 @@
   .sda-blog .sda-read-link svg { transition: transform .2s; }
   .sda-blog .sda-featured__card:hover .sda-read-link svg { transform: translateX(4px); }
   .sda-blog .sda-post-row { transition: background .2s; }
+  .sda-blog .sda-avatar-stack .sda-avatar { transition: border-color .2s; }
   .sda-blog .sda-pager__btn { transition: border-color .2s, color .2s; }
 }
 @media (max-width: 960px) {
