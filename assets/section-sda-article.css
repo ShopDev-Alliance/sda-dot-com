@@ -533,6 +533,28 @@
   overflow-y: auto;
   padding: 5px;
 }
+/* Thin rail scrollbar in the progress-bar orange. */
+.sda-article .sda-rail::-webkit-scrollbar {
+  width: 8px;
+}
+.sda-article .sda-rail::-webkit-scrollbar-track {
+  background: var(--sda-bg);
+}
+.sda-article .sda-rail::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: var(--sda-orange) padding-box;
+}
+.sda-article .sda-rail::-webkit-scrollbar-thumb:hover,
+.sda-article .sda-rail::-webkit-scrollbar-thumb:active {
+  background: var(--sda-gradient) padding-box;
+}
+@supports not selector(::-webkit-scrollbar) {
+  .sda-article .sda-rail {
+    scrollbar-width: thin;
+    scrollbar-color: var(--sda-orange) var(--sda-bg);
+  }
+}
 /* Cover the rail's top padding while its contents scroll underneath. */
 .sda-article .sda-rail__progress {
   position: sticky;
