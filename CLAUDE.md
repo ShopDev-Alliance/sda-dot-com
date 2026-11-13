@@ -2,13 +2,11 @@
 
 This document outlines the coding standards and best practices to follow when developing for this Shopify theme.
 
+Read @AGENTS.md first: hard limits, build rules and the checks to run before a change is done. Branches and pull requests are in [CONTRIBUTING.md](./CONTRIBUTING.md).
+
 ## Theme-Specific Information
 
-### Brand Colors and Typography
-
-
-### Key Theme Classes
-
+Colors, type, `--sda-*` tokens and the `sda-` components are documented in [DESIGN.md](./DESIGN.md).
 
 ## File Structure and Organization
 
@@ -54,6 +52,7 @@ Files should be organized in the following order for optimal performance and mai
 
 ### Theme-Specific CSS Examples
 
+See the token rules and accent flowchart in [DESIGN.md](./DESIGN.md).
 
 ## JavaScript Best Practices
 
@@ -216,20 +215,7 @@ Before committing changes:
 
 ## Theme-Specific Conventions
 
-### Typography
-
-
-### Focus States
-
-
-### Animation Patterns
-
-
-### Responsive Breakpoints
-
-
-### App-Specific Styling
-
+Typography, focus states, motion and breakpoints are in [DESIGN.md](./DESIGN.md).
 
 ---
 
