@@ -19,6 +19,14 @@
     assign avatar_class = 'sda-avatar--compact'
   endif
   assign social_fields = 'twitter,linked_in,github,website' | split: ','
+  assign bio_text = blank
+  if bio != blank
+    assign bio_text = bio | strip_html | replace: '&nbsp;', ' '
+    assign bio_text = bio_text | replace: '&#39;', "'" | replace: '&#x27;', "'" | replace: '&apos;', "'"
+    assign bio_text = bio_text | replace: '&quot;', '"' | replace: '&#34;', '"'
+    assign bio_text = bio_text | replace: '&lt;', '<' | replace: '&gt;', '>' | replace: '&amp;', '&'
+    assign bio_text = bio_text | strip | truncate: 240
+  endif
 %}
 <div class="sda-author-card{% if compact %} sda-author-card--compact{% endif %}">
   {% render 'sda-avatar', name: name, photo: photo, size: avatar_size, loading: 'lazy', class: avatar_class %}
@@ -35,7 +43,7 @@
         <p class="sda-author-card__bio">{{ role | escape }}</p>
       {% endif %}
     {% elsif bio != blank %}
-      <p class="sda-author-card__bio">{{ bio | strip_html | truncate: 240 | escape }}</p>
+      <p class="sda-author-card__bio">{{ bio_text | escape_once }}</p>
     {% endif %}
   </div>
   {% if member != blank and compact != true %}

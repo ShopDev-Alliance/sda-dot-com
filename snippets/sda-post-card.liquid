@@ -8,7 +8,11 @@
 {% liquid
   assign read_minutes = post.content | strip_html | split: ' ' | size | divided_by: 225 | at_least: 1
   assign image_variant = index | minus: 1 | modulo: 3
-  assign card_excerpt = post.excerpt | default: post.content | strip_html | truncate: 140
+  assign card_excerpt = post.excerpt | default: post.content | strip_html | replace: '&nbsp;', ' '
+  assign card_excerpt = card_excerpt | replace: '&#39;', "'" | replace: '&#x27;', "'" | replace: '&apos;', "'"
+  assign card_excerpt = card_excerpt | replace: '&quot;', '"' | replace: '&#34;', '"'
+  assign card_excerpt = card_excerpt | replace: '&lt;', '<' | replace: '&gt;', '>' | replace: '&amp;', '&'
+  assign card_excerpt = card_excerpt | strip | truncate: 140
 %}
 <a class="sda-post-card" href="{{ post.url }}">
   <div
@@ -30,6 +34,6 @@
   </p>
   <h3 class="sda-post-card__title">{{ post.title | escape }}</h3>
   {% if card_excerpt != blank %}
-    <p class="sda-post-card__description">{{ card_excerpt | escape }}</p>
+    <p class="sda-post-card__description">{{ card_excerpt | escape_once }}</p>
   {% endif %}
 </a>
