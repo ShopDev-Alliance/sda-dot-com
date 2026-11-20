@@ -7,7 +7,7 @@ Using an AI agent? Point it at [`AGENTS.md`](./AGENTS.md) first.
 ## Before you start
 
 - Read [`CLAUDE.md`](./CLAUDE.md) for coding conventions and [`DESIGN.md`](./DESIGN.md) for colors, type and components.
-- For anything bigger than a fix, check `Planning/` for an existing plan. If there isn't one, write a short plan in `Planning/<area>/` and agree it with a maintainer before building.
+- For anything bigger than a fix, check `Planning/` for an existing plan. If there isn't one, write a short plan in `Planning/` and agree it with a maintainer before building.
 - Search open PRs so two people don't build the same thing.
 
 ## Branches
@@ -19,6 +19,10 @@ Branch from an up-to-date `main` and name the branch after the work:
 | `feature/` | New sections, features, site changes | `feature/members-directory` |
 | `blog/` | The blog and article templates | `blog/launch` |
 | `update/` | Dawn version updates | `update/dawn-15-0-0` |
+| `fix/` or `bug/` | Bug fixes | `fix/briefings-date-sort` |
+| `design/` | Visual and brand changes with no new feature | `design/bring-on-the-logos` |
+
+A branch name may carry the issue number after the prefix (`feature/8-member-card-links`).
 
 One concern per branch. A scrollbar tweak and a new section are two PRs.
 
@@ -49,6 +53,6 @@ Merchants edit `templates/*.json` and `config/settings_data.json` in the theme e
 ## Checks before review
 
 - `shopify theme check` adds no new offenses compared with `main`.
-- Pages render with no console errors at desktop width (1080px and up) and phone width.
+- Pages render with no console errors at desktop width (wider than 1080px: 1081px and up) and phone width; 1080px and below gets the mobile layout.
 - Keyboard: every control can be reached and shows a focus ring.
 - No secrets, passwords, tokens or member data in code, commits or screenshots.

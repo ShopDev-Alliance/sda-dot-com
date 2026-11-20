@@ -1,6 +1,6 @@
 # DESIGN.md
 
-How ShopDev Alliance looks on the site, and the rules for keeping new work consistent. Every token and class named here exists in the files cited; if it isn't listed, it doesn't exist yet. Build rules are in [`AGENTS.md`](./AGENTS.md).
+How ShopDev Alliance's blog and article system looks on the site (the `sda-*` sections and snippets), and the rules for keeping new work consistent. The members, briefings, benefits and globe sections are not documented here yet. Every token and class named here exists in the files cited; for `--sda-*` tokens and `sda-` components, if it isn't listed, it doesn't exist yet. Build rules are in [`AGENTS.md`](./AGENTS.md).
 
 **Character:** a dark navy technical journal. Monospace body text, bold Titillium Web headings, one warm orange-to-red accent. The accent marks state and emphasis; the navy and the type carry the rest.
 
@@ -14,7 +14,7 @@ Set in the theme editor (`config/settings_data.json`), exposed as CSS variables:
 | Body | `type_body_font`: `mono` (system monospace) | `--font-body-family` |
 
 - Use the variables, never a font name. Don't add a webfont: it costs load time on every page.
-- Labels and eyebrows use the heading font, bold, uppercase, 11–12px, with letter-spacing 0.14em (articles: `.sda-eyebrow`, `.sda-rail__read`) or 0.18em (blog listing: `.sda-blog .sda-eyebrow`).
+- Labels and eyebrows use the heading font, bold, uppercase, 11–12px, with letter-spacing 0.14em (articles: `.sda-eyebrow`, `.sda-rail__read`) or 0.18em (blog listing: `.sda-blog .sda-eyebrow`; join call to action: `.sda-join .sda-join__eyebrow`).
 
 ## Color schemes
 
@@ -33,6 +33,8 @@ Use a scheme before writing colors into a section. A new scheme is a theme-edito
 ## Brand tokens (`--sda-*`)
 
 Defined at the top of `assets/section-sda-article.css` (on `.sda-article`, `.sda-related`, `.sda-join`) and copied into `assets/section-sda-blog.css` (on `.sda-blog`). If you change or add a token, change both blocks. Section CSS uses these tokens, never raw hex.
+
+Known cleanup debt: `assets/section-sda-blog.css` uses raw hex in `.sda-blog .sda-cover--deep` at line 153 and `.sda-blog .sda-cover--ember` at line 157.
 
 | Token | Value | Use it for |
 |---|---|---|
@@ -85,7 +87,7 @@ Article body extras, added by `sda-article.js`:
 
 ## Shape, layout, motion
 
-- Radii: 10px for cards and callouts, 6px for buttons and pager controls (`buttons_radius` is 6), 4px for focus outlines on links, 40px (a pill) for `.sda-tag`, 50% for avatars and dots.
-- The article rail shows at 1080px and up. Below that it is hidden and the mobile reading bar opens the contents. Other breakpoints in the SDA stylesheets: 960, 820, 720, 500, 460px. Reuse one of these before adding a new one.
+- Radii: 2px for h2 markers and the rail progress track, 3px for code language labels and comment badges, `18px 18px 0 0` for the mobile contents panel, 10px for cards and callouts, 6px for buttons and pager controls (`buttons_radius` is 6), 4px for focus outlines on links, 40px (a pill) for `.sda-tag`, 50% for avatars and dots.
+- The article rail and desktop layout apply wider than 1080px (1081px and up). At 1080px and below, the mobile layout applies, the rail is hidden and the mobile reading bar opens the contents. Other breakpoints in the SDA stylesheets: 960, 820, 720, 500, 460px. Reuse one of these before adding a new one.
 - Focus: `outline: 2px solid var(--sda-orange)` with a 3–4px offset on every link, button and field. Don't remove it.
 - Motion stays off under `prefers-reduced-motion: reduce`, and smooth scrolling becomes instant (`sda-article.js`). New animation follows the same rule.
