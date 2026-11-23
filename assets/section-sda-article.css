@@ -1114,7 +1114,8 @@
   .sda-article .sda-reading-bar {
     position: fixed;
     inset: auto 0 0;
-    z-index: 4;
+    /* Below Dawn's sticky header (z-index 3) so the open menu drawer covers it. */
+    z-index: 2;
     display: flex;
     align-items: center;
     gap: 12px;
