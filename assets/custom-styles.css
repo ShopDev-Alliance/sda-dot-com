@@ -27,6 +27,19 @@ header.header.header--middle-center {
   grid-area: navigation;
   justify-self: end;
 }
+@media screen and (max-width: 749px) {
+  /* Dawn's 1fr 2fr 1fr gives the logo half the row, even though the cart and
+     search icons are hidden. Equal side columns keep it centred and let it
+     use the free space. */
+  .header.header--mobile-center:not(.header--has-app) {
+    grid-template-columns: minmax(4.4rem, 1fr) auto minmax(4.4rem, 1fr);
+  }
+  /* Keep each word of the shop name whole: one word per line. */
+  .header .header__heading-link .h3 {
+    width: min-content;
+    word-break: normal;
+  }
+}
 
 /* # Footer  */
 svg.icon-github {
